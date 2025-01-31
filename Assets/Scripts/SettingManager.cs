@@ -49,9 +49,6 @@ public class SettingsManager : MonoBehaviour
         // 초기 아이콘 업데이트
         UpdateMuteIcons();
 
-        // 버튼 이벤트 연결
-        koreanButton.onClick.AddListener(() => ChangeLanguage("Korean"));
-        englishButton.onClick.AddListener(() => ChangeLanguage("English"));
     }
 
     private void SetBGMVolume(float volume)
@@ -116,12 +113,5 @@ public class SettingsManager : MonoBehaviour
         sfxText.text = volumePercentage.ToString();
     }
 
-    private void ChangeLanguage(string language)
-    {
-        if (LocalizationManager.Instance != null)
-        {
-            LocalizationManager.Instance.SetLanguage(language);
-        }
-    }
 
 }

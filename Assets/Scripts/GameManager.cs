@@ -1,18 +1,15 @@
 using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject SettingPanel;
-    [SerializeField]
-    private TextMeshProUGUI text1;
-
     public static GameManager Instance;
+    
+    private int SelectedGame = -1; // 1: Game1, 2: Game2
 
-    public int SelectedGame { get; private set; } = -1; // 1: Game1, 2: Game2
+
+    private string selectedCharacterName; // ✅ 선택된 캐릭터 저장
 
     private void Awake()
     {
@@ -27,21 +24,37 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log($"🚀 씬 로드됨: {scene.name}");
+    }
+
+    // 🎮 선택한 게임 설정
     public void SetSelectedGame(int gameIndex)
     {
         SelectedGame = gameIndex;
+        Debug.Log($"🎮 Game {gameIndex} 선택됨!");  
     }
 
+    // 선택한 게임 반환
     public int GetSelectedGame()
     {
         return SelectedGame;
     }
-    
-    public void ShowSettingPanel() {
-        SettingPanel.SetActive(true);
+
+    public void SetSelectedCharacter(string characterName)
+    {
+        selectedCharacterName = characterName;
+        Debug.Log($"🎭 선택된 캐릭터: {selectedCharacterName}");
     }
-    
-    public void HideSettingPanel() {
-        SettingPanel.SetActive(false);
+
+    public string GetSelectedCharacter()
+    {
+        return selectedCharacterName;
     }
 }
