@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     private int SelectedGame = -1; // 1: Game1, 2: Game2
 
 
-    private string selectedCharacterName; // ✅ 선택된 캐릭터 저장
+    private string selectedCharacterName; // 선택된 캐릭터 저장
 
     private void Awake()
     {
@@ -31,14 +31,14 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log($"🚀 씬 로드됨: {scene.name}");
+        Debug.Log($"씬 로드됨: {scene.name}");
     }
 
     // 🎮 선택한 게임 설정
     public void SetSelectedGame(int gameIndex)
     {
         SelectedGame = gameIndex;
-        Debug.Log($"🎮 Game {gameIndex} 선택됨!");  
+        Debug.Log($"Game {gameIndex} 선택됨!");  
     }
 
     // 선택한 게임 반환
@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
     public void SetSelectedCharacter(string characterName)
     {
         selectedCharacterName = characterName;
-        Debug.Log($"🎭 선택된 캐릭터: {selectedCharacterName}");
+        Debug.Log($"선택된 캐릭터: {selectedCharacterName}");
     }
 
     public string GetSelectedCharacter()

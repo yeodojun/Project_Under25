@@ -48,7 +48,7 @@ public class CharacterSelectionController : MonoBehaviour
             characterText.text = description; // 텍스트 변경
         }
 
-         // ✅ GameManager에 선택된 캐릭터 저장
+         // GameManager에 선택된 캐릭터 저장
         if (GameManager.Instance != null)
         {
             GameManager.Instance.SetSelectedCharacter(character.name);
