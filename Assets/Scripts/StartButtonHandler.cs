@@ -12,7 +12,7 @@ public class StartButtonHandler : MonoBehaviour
 
             if (string.IsNullOrEmpty(selectedCharacter))
             {
-                Debug.LogWarning("!!!!캐릭터를 선택해야 합니다!!!!");
+                Debug.LogWarning("!!!! 캐릭터를 선택해야 합니다 !!!!");
                 return;
             }
 
@@ -28,8 +28,13 @@ public class StartButtonHandler : MonoBehaviour
             }
             else
             {
-                Debug.LogError("!!선택된 게임이 없습니다!! GameMainScene에서 게임을 선택하세요.");
+                Debug.LogError("!! 선택된 게임이 없습니다 !! GameMainScene에서 게임을 선택하세요.");
+                SceneManager.LoadScene("GameMainScene"); // 선택된 게임이 없으면 다시 선택하러 감
             }
+        }
+        else
+        {
+            Debug.LogError("GameManager가 존재하지 않습니다! 씬 설정을 확인하세요.");
         }
     }
 }
