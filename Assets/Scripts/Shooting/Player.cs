@@ -27,19 +27,36 @@ public class Player : MonoBehaviour
     private bool isInvincible = false; // 무적 상태 여부
     private SpriteRenderer spriteRenderer; // 플레이어의 스프라이트 렌더러 (플래시 효과용)
 
+    private Vector3 targetPosition; // 목표 위치
+    public float moveSpeed = 5f; // 이동 속도
+
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>(); // 스프라이트 렌더러 가져오기
+        targetPosition = transform.position; // 초기 목표 위치는 현재 위치
     }
 
     void Update()
     {
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        float toX = Mathf.Clamp(mousePos.x, -1.75f, 1.75f);
-        float toY = Mathf.Clamp(mousePos.y, -4.5f, 4.5f);
-        transform.position = new Vector3(toX, toY, transform.position.z);
+        HandleMovement(); // 클릭에 따른 이동 처리
+        Shoot(); // 총알 및 미사일 발사
+    }
 
-        Shoot();
+    void HandleMovement()
+    {
+        // 클릭한 위치를 목표 위치로 설정
+        if (Input.GetMouseButtonDown(0)) // 마우스 왼쪽 클릭 (터치에서도 동작)
+        {
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            targetPosition = new Vector3(
+                Mathf.Clamp(mousePos.x, -1.75f, 1.75f), 
+                Mathf.Clamp(mousePos.y, -4.5f, 4.5f), 
+                transform.position.z
+            );
+        }
+
+        // 목표 위치로 부드럽게 이동
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
     }
 
     void Shoot()
@@ -103,7 +120,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    // 무기 업그레이드 시스템
     public void UpgradeWeapon()
     {
         float rand = Random.value; // 0 ~ 1 사이 랜덤 값
@@ -139,7 +155,7 @@ public class Player : MonoBehaviour
         }
     }
 
-     public void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         if (isInvincible) return; // 무적 상태에서는 데미지 무시
 
@@ -157,7 +173,8 @@ public class Player : MonoBehaviour
             StartCoroutine(Invincibility()); // 무적 상태 활성화
         }
     }
-     private IEnumerator Invincibility()
+
+    private IEnumerator Invincibility()
     {
         isInvincible = true;
 
@@ -172,6 +189,7 @@ public class Player : MonoBehaviour
 
         isInvincible = false; // 무적 상태 해제
     }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Enemy")) // 적과 충돌
