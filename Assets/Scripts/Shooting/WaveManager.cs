@@ -78,14 +78,14 @@ public class WaveManager : MonoBehaviour
                 yield return StartCoroutine(Pattern_N2(enemyCount));
                 break;
             case "N_3":
-                currentpattern = "N_3";
+                currentpattern = "N_98";
                 Debug.Log($"Pattern is {currentpattern}");
-                yield return StartCoroutine(Pattern_N3(enemyCount));
+                yield return StartCoroutine(Pattern_N98(enemyCount));
                 break;
             case "N_4":
-                currentpattern = "N_4";
+                currentpattern = "N_99";
                 Debug.Log($"Pattern is {currentpattern}");
-                yield return StartCoroutine(Pattern_N4(enemyCount));
+                yield return StartCoroutine(Pattern_N99(enemyCount));
                 break;
             case "N_5":
                 yield return StartCoroutine(Pattern_N5(enemyCount));
@@ -152,7 +152,7 @@ public class WaveManager : MonoBehaviour
         }
     }
 
-    IEnumerator Pattern_N3(int enemyCount) // 시계 방향 회전
+    IEnumerator Pattern_N98(int enemyCount) // 시계 방향 회전
     {
         float rotationSpeed = 72f; // 기본 회전 속도 (초당 90도)
 
@@ -173,7 +173,7 @@ public class WaveManager : MonoBehaviour
     }
 
 
-    IEnumerator Pattern_N4(int enemyCount) // 반시계 방향
+    IEnumerator Pattern_N99(int enemyCount) // 반시계 방향
     {
         float rotationSpeed = 72f; // 기본 회전 속도 (초당 90도)
 
@@ -224,7 +224,7 @@ public class WaveManager : MonoBehaviour
         if (enemy != null) Destroy(enemy); // -7 이하로 나오면 이거 실행 몹 없애기
     }
 
-    IEnumerator MoveInEllipseWithSpeed(GameObject enemy, bool clockwise, float rotationSpeed) { // N_3, N_4에서 사용
+    IEnumerator MoveInEllipseWithSpeed(GameObject enemy, bool clockwise, float rotationSpeed) { // N_98, N_99에서 사용
         float angle = 0f;
 
         while (enemy != null)
