@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 
 
     private string selectedCharacterName; // 선택된 캐릭터 저장
+    private Sprite selectedCharacterImage; // 선택된 캐릭터 이미지 저장
 
     private void Awake()
     {
@@ -47,14 +48,20 @@ public class GameManager : MonoBehaviour
         return SelectedGame;
     }
 
-    public void SetSelectedCharacter(string characterName)
+    public void SetSelectedCharacter(string characterName, Sprite characterImage)
     {
         selectedCharacterName = characterName;
+        selectedCharacterImage = characterImage;
         Debug.Log($"선택된 캐릭터: {selectedCharacterName}");
     }
 
     public string GetSelectedCharacter()
     {
         return selectedCharacterName;
+    }
+
+    public Sprite GetSelectedCharacterImage()
+    {
+        return selectedCharacterImage;
     }
 }

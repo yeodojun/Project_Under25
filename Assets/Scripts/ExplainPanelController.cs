@@ -33,6 +33,7 @@ public class ExplainPanelController : MonoBehaviour
         allPanels.Add(this);
     }
 
+    [System.Obsolete]
     public void OnPanelClick()
     {
         if (selectedPanel == this)
@@ -46,7 +47,7 @@ public class ExplainPanelController : MonoBehaviour
             if (GameManager.Instance != null)
             {
                 GameManager.Instance.SetSelectedGame(gameIndex);
-                SceneManager.LoadScene("CharacterScene");
+                SceneManager.LoadScene("CharacterSelectScene");
             }
             else
             {

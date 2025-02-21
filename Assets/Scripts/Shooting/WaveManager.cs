@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class WaveManager : MonoBehaviour
@@ -7,7 +8,15 @@ public class WaveManager : MonoBehaviour
     public float waveDelay = 5f; // 웨이브 간 딜레이
     private int currentWave = 1; // 현재 웨이브
     private bool waveInProgress = false; // 웨이브 진행 여부
-    private string currentpattern = "";
+
+    private Dictionary<int, Vector3[]> waveSpawnPositions = new Dictionary<int, Vector3[]> // 웨이브별 스폰 위치 설정
+    {
+        { 1, new Vector3[] { new Vector3(-2, 5.5f, 0), new Vector3(2, 5.5f, 0) } }, // 첫 번째 웨이브: 좌우 두 곳에서 스폰
+        { 2, new Vector3[] { new Vector3(-1, 4f, 0), new Vector3(0, 4f, 0), new Vector3(1, 5.5f, 0) } }, // 두 번째 웨이브: 세 곳에서 스폰
+        { 3, new Vector3[] { new Vector3(-1, 5.5f, 0), new Vector3(0, 6f, 0), new Vector3(1, 5.5f, 0) } }, // 세 번째 웨이브: 중앙 포함
+        { 4, new Vector3[] { new Vector3(-1, 5f, 0), new Vector3(1, 5f, 0) } }, // 네 번째 웨이브: 좌우
+        { 5, new Vector3[] { new Vector3(0, -6f, 0) } } // 다섯 번째 웨이브: 중앙에서만 스폰
+    };
 
     void Start()
     {
@@ -23,33 +32,34 @@ public class WaveManager : MonoBehaviour
                 waveInProgress = true;
                 Debug.Log($"Starting Wave {currentWave}");
 
-                switch (currentWave) { // 패턴 확률
+                switch (currentWave)
+                {
                     case 1:
-                        yield return StartCoroutine(SpawnPattern("N_0", 10));
+                        yield return StartCoroutine(SpawnPatternSequence(new string[] { "N_0" }, 10));
                         break;
                     case 2:
-                        yield return StartCoroutine(SpawnPattern("N_1", 10));
+                        yield return StartCoroutine(SpawnPatternSequence(new string[] { "N_0", "N_2", "N_3" }, 10));
                         break;
                     case 3:
-                        yield return StartCoroutine(SpawnPattern("N_2", 10));
+                        yield return StartCoroutine(SpawnPatternSequence(new string[] { "N_0", "N_2", "N_0", "N_3" }, 10));
                         break;
                     case 4:
-                        yield return StartCoroutine(SpawnPattern(GetRandomPattern("N_0", "N_1", "N_2"), 10));
+                        yield return StartCoroutine(SpawnPatternSequence(new string[] { "N_4", "N_5" }, 10));
                         break;
                     case 5:
-                        yield return StartCoroutine(SpawnPattern(GetRandomPattern("N_0", "N_1", "N_2", "N_3", "N_4"), 10));
+                        yield return StartCoroutine(SpawnPatternSequence(new string[] { "N_6", "N_7" }, 10));
                         break;
                 }
 
                 Debug.Log($"Wave {currentWave} complete. Waiting {waveDelay} seconds before next wave...");
-                // wave 종료 시 트리거
 
                 yield return new WaitForSeconds(waveDelay);
 
                 currentWave++;
                 waveInProgress = false;
 
-                if (currentWave > 5) { // wave가 5 도달 시 끝
+                if (currentWave > 5)
+                {
                     Debug.Log("All waves completed!");
                     break;
                 }
@@ -59,237 +69,138 @@ public class WaveManager : MonoBehaviour
         }
     }
 
-    IEnumerator SpawnPattern(string pattern, int enemyCount) { // 패턴 불러 오기
+    IEnumerator SpawnPatternSequence(string[] patterns, int enemyCount)
+    {
+        for (int i = 0; i < enemyCount; i++)
+        {
+            Vector3 spawnPosition = GetSpawnPosition(currentWave);
+            GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+
+            if (enemy == null)
+            {
+                Debug.LogError("적 생성 실패! enemyPrefab이 올바르게 설정되어 있는지 확인하세요.");
+                continue;
+            }
+
+            Debug.Log($"적 스폰됨: {enemy.name}, 패턴: {string.Join(", ", patterns)}, 위치: {spawnPosition}");
+
+            StartCoroutine(ExecutePattern(enemy, patterns));
+
+            yield return new WaitForSeconds(0.7f);
+        }
+
+        while (GameObject.FindGameObjectsWithTag("Enemy").Length > 0)
+        {
+            yield return null;
+        }
+    }
+
+    Vector3 GetSpawnPosition(int wave)
+    {
+        if (wave == 1) {
+            return new Vector3(Random.Range(-2f, 2f), 5.5f, 0);
+        }
+        if (waveSpawnPositions.ContainsKey(wave))
+        {
+            Vector3[] positions = waveSpawnPositions[wave];
+            return positions[Random.Range(0, positions.Length)]; // 해당 웨이브의 위치 중 랜덤 선택
+        }
+        else
+        {
+            return new Vector3(Random.Range(-2f, 2f), 5.5f, 0); // 기본 스폰 위치 (랜덤)
+        }
+    }
+
+    IEnumerator ExecutePattern(GameObject enemy, string[] patterns)
+    {
+        if (enemy == null)
+        {
+            Debug.LogError("ExecutePattern() 실행 중 enemy가 null입니다!");
+            yield break;
+        }
+
+        if (PatternManager.Instance == null)
+        {
+            Debug.LogError("PatternManager.Instance가 null입니다! PatternManager가 씬에 있는지 확인하세요.");
+            yield break;
+        }
+
+        Debug.Log($"적 이동 패턴 시작: {enemy.name}");
+
+        while (enemy != null)
+        {
+            foreach (string pattern in patterns)
+            {
+                Vector2[] movementSteps = PatternManager.Instance.GetPattern(pattern);
+                if (movementSteps == null)
+                {
+                    Debug.LogError($"패턴 {pattern}을 찾을 수 없습니다!");
+                    continue;
+                }
+
+                Debug.Log($"패턴 {pattern} 실행: {movementSteps.Length} 스텝");
+
+                foreach (Vector2 step in movementSteps)
+                {
+                    if (enemy == null) yield break;
+
+                    Vector3 targetPosition = enemy.transform.position + new Vector3(step.x, step.y, 0);
+                    float moveTime = 0.5f;
+                    float elapsedTime = 0;
+                    Vector3 startPosition = enemy.transform.position;
+
+                    while (elapsedTime < moveTime)
+                    {
+                        if (enemy == null) yield break;
+
+                        enemy.transform.position = Vector3.Lerp(startPosition, targetPosition, elapsedTime / moveTime);
+                        elapsedTime += Time.deltaTime;
+                        yield return null;
+                    }
+
+                    enemy.transform.position = targetPosition;
+
+                    // 화면 밖으로 나가면 적 제거
+                    if (IsOutOfScreen(enemy.transform.position, pattern))
+                    {
+                        Debug.Log($"적 {enemy.name}이 화면 밖으로 나가 제거됨");
+                        Destroy(enemy);
+                        yield break;
+                    }
+
+                    Debug.Log($"적 이동 완료: {enemy.name} → {targetPosition}");
+                }
+            }
+        }
+    }
+    bool IsOutOfScreen(Vector3 position, string pattern)
+    {
+        float screenTop = 6f;     // 화면 위쪽 한계
+        float screenBottom = -6f; // 화면 아래쪽 한계
+        float screenLeft = -4f;   // 화면 왼쪽 한계
+        float screenRight = 4f;   // 화면 오른쪽 한계
+
         switch (pattern)
         {
-            case "N_0":
-                currentpattern = "N_0";
-                Debug.Log($"Pattern is {currentpattern}");
-                yield return StartCoroutine(Pattern_N0(enemyCount));
+            case "N_0": // 아래로 내려가는 패턴 (Y 좌표 체크)
+                if (position.y < screenBottom) return true;
                 break;
-            case "N_1":
-                currentpattern = "N_1";
-                Debug.Log($"Pattern is {currentpattern}");
-                yield return StartCoroutine(Pattern_N1(enemyCount));
-                break;
-            case "N_2":
-                currentpattern = "N_2";
-                Debug.Log($"Pattern is {currentpattern}");
-                yield return StartCoroutine(Pattern_N2(enemyCount));
-                break;
-            case "N_3":
-                currentpattern = "N_98";
-                Debug.Log($"Pattern is {currentpattern}");
-                yield return StartCoroutine(Pattern_N98(enemyCount));
-                break;
-            case "N_4":
-                currentpattern = "N_99";
-                Debug.Log($"Pattern is {currentpattern}");
-                yield return StartCoroutine(Pattern_N99(enemyCount));
+            case "N_4": // 대각선 방향 (X 또는 Y 벗어날 때 제거)
+                if (position.y < screenBottom || position.x < screenLeft || position.x > screenRight) return true;
                 break;
             case "N_5":
-                yield return StartCoroutine(Pattern_N5(enemyCount));
+                if (position.y < screenBottom || position.x < screenLeft || position.x > screenRight) return true;
+                break;
+            case "N_6":
+                if (position.y < screenBottom || position.x < screenLeft || position.x > screenRight) return true;
+                break;
+            case "N_7":
+                if (position.y < screenBottom || position.x < screenLeft || position.x > screenRight) return true;
                 break;
         }
-    }
 
-    string GetRandomPattern(params string[] patterns) { // 4,5웨이브 랜덤 패턴
-        int index = Random.Range(0, patterns.Length);
-        return patterns[index];
-    }
-
-    IEnumerator Pattern_N0(int enemyCount) // 랜덤 위치에서 한마리씩 내려오게
-    {
-        for (int i = 0; i < enemyCount; i++)
-        {
-            Vector3 spawnPosition = new Vector3(Random.Range(-2f, 2f), 5.5f, 0); // Y 좌표 유지
-            GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
-
-            StartCoroutine(MoveDownAndDestroy(enemy));
-
-            yield return new WaitForSeconds(0.7f); // 스폰 간격
-        }
-
-        while (GameObject.FindGameObjectsWithTag("Enemy").Length > 0)
-        {
-            yield return null;
-        }
-    }
-
-    IEnumerator Pattern_N1(int enemyCount) // 좌에서 우로
-    {
-        for (int i = 0; i < enemyCount; i++)
-        {
-            Vector3 spawnPosition = new Vector3(-3f, 3.8f, 0); // X=-3에서 생성
-            GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
-
-            StartCoroutine(MoveLeftRight(enemy)); // 생성 후 즉시 이동
-
-            yield return new WaitForSeconds(0.3f); // 스폰 간격
-        }
-
-        while (GameObject.FindGameObjectsWithTag("Enemy").Length > 0)
-        {
-            yield return null;
-        }
-    }
-
-    IEnumerator Pattern_N2(int enemyCount) // 우에서 좌로
-    {
-        for (int i = 0; i < enemyCount; i++)
-        {
-            Vector3 spawnPosition = new Vector3(3f, 3.8f, 0); // X=3에서 생성
-            GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
-
-            StartCoroutine(MoveRightLeft(enemy)); // 생성 후 즉시 이동
-
-            yield return new WaitForSeconds(0.3f); // 스폰 간격
-        }
-
-        while (GameObject.FindGameObjectsWithTag("Enemy").Length > 0)
-        {
-            yield return null;
-        }
-    }
-
-    IEnumerator Pattern_N98(int enemyCount) // 시계 방향 회전
-    {
-        float rotationSpeed = 72f; // 기본 회전 속도 (초당 90도)
-
-        for (int i = 0; i < enemyCount; i++)
-        {
-            Vector3 spawnPosition = new Vector3(0, 5.5f, 0); // X=0, Y=5.5에서 생성
-            GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
-
-            StartCoroutine(MoveInEllipseWithSpeed(enemy, false, rotationSpeed)); // 생성 후 이동 시작
-
-            yield return new WaitForSeconds(0.5f); // 스폰 간격
-        }
-
-        while (GameObject.FindGameObjectsWithTag("Enemy").Length > 0)
-        {
-            yield return null;
-        }
+        return false;
     }
 
 
-    IEnumerator Pattern_N99(int enemyCount) // 반시계 방향
-    {
-        float rotationSpeed = 72f; // 기본 회전 속도 (초당 90도)
-
-        for (int i = 0; i < enemyCount; i++)
-        {
-            Vector3 spawnPosition = new Vector3(0, 5.5f, 0); // X=0, Y=5.5에서 생성
-            GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
-
-            StartCoroutine(MoveInEllipseWithSpeed(enemy, true, rotationSpeed)); // 생성 후 이동 시작
-
-            yield return new WaitForSeconds(0.5f); // 스폰 간격
-        }
-
-        while (GameObject.FindGameObjectsWithTag("Enemy").Length > 0)
-        {
-            yield return null;
-        }
-    }
-
-    IEnumerator Pattern_N5(int enemyCount) { // 이 다음부터는 패턴 추가 예정 오류 나서 N_4로 대체
-        float rotationSpeed = 72f; // 기본 회전 속도 (초당 90도)
-
-        for (int i = 0; i < enemyCount; i++)
-        {
-            Vector3 spawnPosition = new Vector3(0, 5.5f, 0); // X=0, Y=5.5에서 생성
-            GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
-
-            StartCoroutine(MoveInEllipseWithSpeed(enemy, true, rotationSpeed)); // 생성 후 이동 시작
-
-            yield return new WaitForSeconds(0.5f); // 스폰 간격
-        }
-
-        while (GameObject.FindGameObjectsWithTag("Enemy").Length > 0)
-        {
-            yield return null;
-        }
-    }
-
-
-    IEnumerator MoveDownAndDestroy(GameObject enemy) // N_0에서 사용
-    {
-        while (enemy != null && enemy.transform.position.y > -7f)
-        {
-            enemy.transform.position += Vector3.down * 2f * Time.deltaTime; // 속도
-            yield return null; // 반환 값 없음 걍 -7 되면 while문 빠져나오기
-        }
-
-        if (enemy != null) Destroy(enemy); // -7 이하로 나오면 이거 실행 몹 없애기
-    }
-
-    IEnumerator MoveInEllipseWithSpeed(GameObject enemy, bool clockwise, float rotationSpeed) { // N_98, N_99에서 사용
-        float angle = 0f;
-
-        while (enemy != null)
-        {
-            angle += clockwise ? rotationSpeed * Time.deltaTime : -rotationSpeed * Time.deltaTime;
-
-            float x = 2f * Mathf.Cos(angle * Mathf.Deg2Rad); // 타원의 X 좌표
-            float y = 2.5f * Mathf.Sin(angle * Mathf.Deg2Rad) + 2.5f; // 타원의 Y 좌표
-            // 감이 안와서 gpt 사용 이 새끼 존나 똑똑함 sin, cos 사용
-            enemy.transform.position = new Vector3(x, y, 0);
-
-            yield return null;
-        }
-    }
-
-
-    IEnumerator MoveLeftRight(GameObject enemy) { // N_1에서 사용
-        float speed = 2f; // 이동 속도
-        float direction = 1f; // 오른쪽 이동 시작
-        float leftLimit = -3f; // 좌측 끝
-        float rightLimit = 3f; // 우측 끝
-
-        while (enemy != null) // 반복
-        {
-            enemy.transform.position += new Vector3(direction * speed * Time.deltaTime, 0, 0);
-
-            // 오른쪽 끝에 도달하면 방향 전환
-            if (enemy.transform.position.x >= rightLimit)
-            {
-                direction = -1f; // 왼쪽으로 이동
-            }
-
-            // 왼쪽 끝에 도달하면 방향 전환
-            if (enemy.transform.position.x <= leftLimit)
-            {
-                direction = 1f; // 오른쪽으로 이동
-            }
-
-            yield return null;
-        }
-    }
-
-    IEnumerator MoveRightLeft(GameObject enemy) { // N_2에서 사용
-        float speed = 2f; // 이동 속도
-        float direction = -1f; // 왼쪽 이동 시작
-        float leftLimit = -3f; // 좌측 끝
-        float rightLimit = 3f; // 우측 끝
-
-        while (enemy != null)
-        {
-            enemy.transform.position += new Vector3(direction * speed * Time.deltaTime, 0, 0);
-
-            // 왼쪽 끝에 도달하면 방향 전환
-            if (enemy.transform.position.x <= leftLimit)
-            {
-                direction = 1f; // 오른쪽으로 이동
-            }
-
-            // 오른쪽 끝에 도달하면 방향 전환
-            if (enemy.transform.position.x >= rightLimit)
-            {
-                direction = -1f; // 왼쪽으로 이동
-            }
-
-            yield return null;
-        }
-    }
 }

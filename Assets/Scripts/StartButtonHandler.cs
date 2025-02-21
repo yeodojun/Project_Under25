@@ -10,6 +10,8 @@ public class StartButtonHandler : MonoBehaviour
             string selectedCharacter = GameManager.Instance.GetSelectedCharacter();
             int selectedGame = GameManager.Instance.GetSelectedGame();
 
+            Debug.Log($"Start 버튼 클릭됨 | 선택된 캐릭터: {selectedCharacter}, 선택된 게임: {selectedGame}");
+
             if (string.IsNullOrEmpty(selectedCharacter))
             {
                 Debug.LogWarning("!!!! 캐릭터를 선택해야 합니다 !!!!");
@@ -19,7 +21,7 @@ public class StartButtonHandler : MonoBehaviour
             if (selectedGame == 1)
             {
                 Debug.Log($"{selectedCharacter} 선택됨! Game1Scene으로 이동!");
-                SceneManager.LoadScene("Game1Scene");
+                SceneManager.LoadScene("ShootingScene");
             }
             else if (selectedGame == 2)
             {

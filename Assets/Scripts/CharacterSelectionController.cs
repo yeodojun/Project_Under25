@@ -27,20 +27,20 @@ public class CharacterSelectionController : MonoBehaviour
 
     public void SelectCharacter(GameObject character, GameObject glowEffect, Sprite characterSprite, string description)
     {
-        // 🔹 이전 선택된 캐릭터의 GlowEffect 끄기
+        // 이전 선택된 캐릭터의 GlowEffect 끄기
         if (selectedGlowEffect != null)
         {
             selectedGlowEffect.SetActive(false);
         }
 
-        // 🔹 새로운 캐릭터 선택
+        // 새로운 캐릭터 선택
         selectedCharacter = character;
         selectedGlowEffect = glowEffect;
 
-        // 🔹 GlowEffect 활성화
+        // GlowEffect 활성화
         selectedGlowEffect.SetActive(true);
 
-        // 🔹 설명 패널 업데이트
+        // 설명 패널 업데이트
         if (characterExplainPanel != null)
         {
             characterExplainPanel.SetActive(true); // 패널 활성화
@@ -51,7 +51,13 @@ public class CharacterSelectionController : MonoBehaviour
          // GameManager에 선택된 캐릭터 저장
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.SetSelectedCharacter(character.name);
+            // UI `Image.sprite` 저장 (게임 씬에서 SpriteRenderer로 적용 예정)
+            GameManager.Instance.SetSelectedCharacter(character.name, characterSprite);
+            Debug.Log($"GameManager에 캐릭터 저장: {character.name} | 이미지: {characterSprite.name}");
+        }
+        else
+        {
+            Debug.LogError("GameManager가 존재하지 않습니다!");
         }
     }
 }

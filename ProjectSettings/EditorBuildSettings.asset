@@ -12,13 +12,13 @@ EditorBuildSettings:
     path: Assets/Scenes/MainScene.unity
     guid: c5218b62bca94e547a96958c2d60a112
   - enabled: 1
-    path: Assets/Scenes/GameMainScene.unity
+    path: Assets/Scenes/GameSelectScene.unity
     guid: 49ef32eef36521b42a18f49864ede3fc
   - enabled: 1
-    path: Assets/Scenes/CharacterScene.unity
+    path: Assets/Scenes/CharacterSelectScene.unity
     guid: 8b0893f6c0467714eb6af106b34bca97
   - enabled: 1
-    path: Assets/Scenes/Game1Scene.unity
+    path: Assets/Scenes/ShootingScene.unity
     guid: 0261f0c5f669e8348a9c90c508b456eb
   - enabled: 1
     path: Assets/Scenes/Game2Scene.unity

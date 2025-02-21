@@ -28,7 +28,12 @@ public class Player : MonoBehaviour
     private SpriteRenderer spriteRenderer; // 플레이어의 스프라이트 렌더러 (플래시 효과용)
 
     private Vector3 targetPosition; // 목표 위치
+
+    private bool isTouching = false; // 터치 중인지 확인
+    private Vector3 moveDirection = Vector3.zero; // 현재 이동 방향
     public float moveSpeed = 5f; // 이동 속도
+
+    public GameObject gameOverPanel; // 게임 오버 패널
 
     void Start()
     {
@@ -42,21 +47,23 @@ public class Player : MonoBehaviour
         Shoot(); // 총알 및 미사일 발사
     }
 
-    void HandleMovement()
-    {
-        // 클릭한 위치를 목표 위치로 설정
-        if (Input.GetMouseButtonDown(0)) // 마우스 왼쪽 클릭 (터치에서도 동작)
+    void HandleMovement() {
+        if (Input.GetMouseButton(0)) // 손가락이 화면에 닿아있는 동안 (터치 포함)
         {
+            isTouching = true; // 터치 중
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            targetPosition = new Vector3(
-                Mathf.Clamp(mousePos.x, -1.75f, 1.75f), 
-                Mathf.Clamp(mousePos.y, -4.5f, 4.5f), 
-                transform.position.z
-            );
+            mousePos.z = transform.position.z; // Z값 고정
+            targetPosition = mousePos; // 목표 위치 갱신
+        }
+        else {
+            isTouching = false; // 터치가 끝나면 현재 방향 유지
         }
 
-        // 목표 위치로 부드럽게 이동
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+        // 현재 속도에 따라 이동 (손가락을 놓아도 부드럽게 이동 유지)
+        if (Vector3.Distance(transform.position, targetPosition) > 0.05f)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+        }
     }
 
     void Shoot()
@@ -165,12 +172,50 @@ public class Player : MonoBehaviour
         if (health <= 0)
         {
             Debug.Log("플레이어 사망!");
-            // 게임 오버 처리
-            Destroy(gameObject);
+            GameOver();
         }
         else
         {
             StartCoroutine(Invincibility()); // 무적 상태 활성화
+        }
+    }
+
+    private void GameOver()
+    {
+        if (ScoreManager.Instance != null)
+        {
+            ScoreManager.Instance.CheckAndUpdateHighScore(); // 최고 점수 갱신
+        }
+
+        if (gameOverPanel != null)
+        {
+             Invoke("ActivateGameOverPanel", 0.5f);
+        }
+        else
+        {
+            Debug.LogError("GameOverPanel이 연결되지 않았습니다!");
+        }
+
+        gameObject.SetActive(false); // 플레이어 비활성화
+    }
+
+    private void ActivateGameOverPanel()
+    {
+        gameOverPanel.SetActive(true); // 게임 오버 패널 활성화
+        Debug.Log("GameOverPanel 활성화됨");
+
+        Invoke("CheckGameOverPanelStatus", 1f);
+    }
+
+    private void CheckGameOverPanelStatus()
+    {
+        if (gameOverPanel.activeSelf)
+        {
+            Debug.Log("1초 후에도 GameOverPanel이 활성화 상태입니다.");
+        }
+        else
+        {
+            Debug.LogError("🚨 1초 후 GameOverPanel이 비활성화됨! 다른 코드에서 비활성화되었을 가능성이 있음.");
         }
     }
 
