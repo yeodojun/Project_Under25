@@ -360,7 +360,16 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      mana_health_energy_0: -3147762824561718777
+      mana_health_energy_1: 4191038603781563679
+      mana_health_energy_2: 4025196655009575010
+      mana_health_energy_3: 4570356204463421502
+      mana_health_energy_4: -3930516213004267924
+      mana_health_energy_5: 349921890693224715
+      mana_health_energy_6: 4126988060781808884
+      mana_health_energy_7: 5788051381867066658
+      mana_health_energy_8: -6500387419945493156
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

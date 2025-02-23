@@ -44,7 +44,7 @@ public class WaveManager : MonoBehaviour
         {
             2, new List<(Vector3[], string[])>
             {
-                // 웨이브 2: 첫 번째 스폰: (-2,4.5), (-2,3.5), (-2,2.5)에서 각 적이 "N_2" 7회 실행
+                // 웨이브 2: 첫 번째 스폰: (-2,4.5), (-2,3.5), (-2,2.5)에서 각 적이 "N_2" 4회 실행
                 (
                     new Vector3[] {
                         new Vector3(-2, 4.5f, 0),
@@ -52,10 +52,10 @@ public class WaveManager : MonoBehaviour
                         new Vector3(-2, 2.5f, 0)
                     },
                     new string[] {
-                        "N_2", "N_2", "N_2", "N_2", "N_2", "N_2", "N_2"
+                        "N_2", "N_2", "N_2", "N_2"
                     }
                 ),
-                // 웨이브 2: 두 번째 스폰: 5초 후, (2,4.5), (2,3.5), (2,2.5)에서 각 적이 "N_3" 7회 실행
+                // 웨이브 2: 두 번째 스폰: 5초 후, (2,4.5), (2,3.5), (2,2.5)에서 각 적이 "N_3" 4회 실행
                 (
                     new Vector3[] {
                         new Vector3(2, 4.5f, 0),
@@ -63,7 +63,7 @@ public class WaveManager : MonoBehaviour
                         new Vector3(2, 2.5f, 0)
                     },
                     new string[] {
-                        "N_3", "N_3", "N_3", "N_3", "N_3", "N_3", "N_3"
+                        "N_3", "N_3", "N_3", "N_3"
                     }
                 )
             }
