@@ -92,15 +92,15 @@ public class WaveManager : MonoBehaviour
         { 3, new List<(Vector3[], string[][], int)>()
             {
                 // 9마리를 순차적으로 (1초 간격) 스폰, 처음 3마리는 "N_0" 3번 실행, 다음 3마리는 2번 실행, 다음 3마리는 1번 실행, enemyType 0
+                ( new Vector3[]{ new Vector3(-2, 4.6f, 0) }, new string[][] { GetRepeatedPattern("N_0", 4) }, 0 ),
+                ( new Vector3[]{ new Vector3(0, 4.6f, 0) }, new string[][] { GetRepeatedPattern("N_0", 4) }, 0 ),
+                ( new Vector3[]{ new Vector3(2, 4.6f, 0) }, new string[][] { GetRepeatedPattern("N_0", 4) }, 0 ),
                 ( new Vector3[]{ new Vector3(-2, 4.6f, 0) }, new string[][] { GetRepeatedPattern("N_0", 3) }, 0 ),
                 ( new Vector3[]{ new Vector3(0, 4.6f, 0) }, new string[][] { GetRepeatedPattern("N_0", 3) }, 0 ),
                 ( new Vector3[]{ new Vector3(2, 4.6f, 0) }, new string[][] { GetRepeatedPattern("N_0", 3) }, 0 ),
                 ( new Vector3[]{ new Vector3(-2, 4.6f, 0) }, new string[][] { GetRepeatedPattern("N_0", 2) }, 0 ),
                 ( new Vector3[]{ new Vector3(0, 4.6f, 0) }, new string[][] { GetRepeatedPattern("N_0", 2) }, 0 ),
-                ( new Vector3[]{ new Vector3(2, 4.6f, 0) }, new string[][] { GetRepeatedPattern("N_0", 2) }, 0 ),
-                ( new Vector3[]{ new Vector3(-2, 4.6f, 0) }, new string[][] { GetRepeatedPattern("N_0", 1) }, 0 ),
-                ( new Vector3[]{ new Vector3(0, 4.6f, 0) }, new string[][] { GetRepeatedPattern("N_0", 1) }, 0 ),
-                ( new Vector3[]{ new Vector3(2, 4.6f, 0) }, new string[][] { GetRepeatedPattern("N_0", 1) }, 0 )
+                ( new Vector3[]{ new Vector3(2, 4.6f, 0) }, new string[][] { GetRepeatedPattern("N_0", 2) }, 0 )
             }
         },
         // 웨이브 4
@@ -119,8 +119,8 @@ public class WaveManager : MonoBehaviour
                     new string[][] {
                         GetRepeatedPattern("N_0", 12),
                         GetRepeatedPattern("N_0", 12),
-                        GetRepeatedPattern("N_2", 6),
-                        GetRepeatedPattern("N_2", 6)
+                        GetRepeatedPattern("N_2", 4),
+                        GetRepeatedPattern("N_2", 4)
                     },
                     0
                 ),
@@ -137,8 +137,8 @@ public class WaveManager : MonoBehaviour
                     new string[][] {
                         GetRepeatedPattern("N_0", 12),
                         GetRepeatedPattern("N_0", 12),
-                        GetRepeatedPattern("N_3", 6),
-                        GetRepeatedPattern("N_3", 6)
+                        GetRepeatedPattern("N_3", 4),
+                        GetRepeatedPattern("N_3", 4)
                     },
                     0
                 )
@@ -177,10 +177,10 @@ public class WaveManager : MonoBehaviour
                         new Vector3(2, 0.5f, 0)
                     },
                     new string[][] {
-                        GetRepeatedPattern("N_2", 4),
-                        GetRepeatedPattern("N_2", 4),
-                        GetRepeatedPattern("N_3", 4),
-                        GetRepeatedPattern("N_3", 4)
+                        ConcatPatterns(GetRepeatedPattern("N_2", 3), GetRepeatedPattern("N_0", 10)),
+                        ConcatPatterns(GetRepeatedPattern("N_2", 4), GetRepeatedPattern("N_0", 10)),
+                        ConcatPatterns(GetRepeatedPattern("N_3", 3), GetRepeatedPattern("N_0", 10)),
+                        ConcatPatterns(GetRepeatedPattern("N_3", 4), GetRepeatedPattern("N_0", 10))
                     },
                     1
                 )
@@ -199,6 +199,12 @@ public class WaveManager : MonoBehaviour
         return arr;
     }
 
+    private static string[] ConcatPatterns(string[] first, string[] second)
+    {
+        List<string> list = new List<string>(first);
+        list.AddRange(second);
+        return list.ToArray();
+    }
     void Start()
     {
         StartCoroutine(ManageWaves());
