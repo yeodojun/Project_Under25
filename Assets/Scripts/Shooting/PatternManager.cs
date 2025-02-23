@@ -238,23 +238,4 @@ public class PatternManager : MonoBehaviour
         return (position.x <= screenLeft && direction.x < 0) || (position.x >= screenRight && direction.x > 0) ||
                (position.y >= screenTop && direction.y > 0) || (position.y <= screenBottom && direction.y < 0);
     }
-
-    private IEnumerator ApplyPattern(GameObject enemy, string pattern)
-    {
-        if (enemy == null) yield break;
-
-        Debug.Log($"적 {enemy.name} - {pattern} 패턴 적용 중");
-
-        switch (pattern)
-        {
-            case "N_0":
-                while (enemy != null)
-                {
-                    enemy.transform.position += Vector3.down * 2f * Time.deltaTime;
-                    DestroyIfOutOfScreen(enemy);
-                    yield return null;
-                }
-                break;
-        }
-    }
 }
