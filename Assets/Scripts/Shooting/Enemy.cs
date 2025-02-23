@@ -5,7 +5,7 @@ public class Enemy : MonoBehaviour
     // 새 적(Enemy_1) 여부를 결정하는 플래그
     // 이 값이 true이면 체력을 20으로 설정하고, 총 발사 기능(EnemyAttack)을 비활성화합니다.
     public bool isEnemy1 = false;
-
+    public bool isFlipped = false; // Enemy_1이면 true로 설정
     public int health = 5; // 기본 적 체력
     public float dropChance = 0.1f; // 업그레이드 아이템 드롭 확률
     public GameObject upgradeItemPrefab; // 업그레이드 아이템 프리팹

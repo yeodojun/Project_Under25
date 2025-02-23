@@ -185,6 +185,64 @@ public class WaveManager : MonoBehaviour
                     1
                 )
             }
+        },
+        { 6, new List<(Vector3[], string[][], int)>()
+            {
+                // Group A: Enemy_0 3마리 동시에, 위치 (-2,4.6), (0,4.6), (2,4.6), 각 "N_0" 4회
+                (
+                    new Vector3[] {
+                        new Vector3(-2, 4.6f, 0),
+                        new Vector3(0, 4.6f, 0),
+                        new Vector3(2, 4.6f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("N_0", 4),
+                        GetRepeatedPattern("N_0", 4),
+                        GetRepeatedPattern("N_0", 4)
+                    },
+                    0
+                ),
+                // Group B: Enemy_0 3마리 동시에, 같은 위치, 각 "N_0" 3회
+                (
+                    new Vector3[] {
+                        new Vector3(-2, 4.6f, 0),
+                        new Vector3(0, 4.6f, 0),
+                        new Vector3(2, 4.6f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("N_0", 3),
+                        GetRepeatedPattern("N_0", 3),
+                        GetRepeatedPattern("N_0", 3)
+                    },
+                    0
+                ),
+                // Group C: Enemy_0 3마리 동시에, 같은 위치, 각 "N_0" 2회
+                (
+                    new Vector3[] {
+                        new Vector3(-2, 4.6f, 0),
+                        new Vector3(0, 4.6f, 0),
+                        new Vector3(2, 4.6f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("N_0", 2),
+                        GetRepeatedPattern("N_0", 2),
+                        GetRepeatedPattern("N_0", 2)
+                    },
+                    0
+                ),
+                // Group D: 5초 후, Enemy_1 2마리 동시에, 위치 (-1,-4.6)와 (1,4.6), 각 "N_1" 10회
+                (
+                    new Vector3[] {
+                        new Vector3(-1, -4.6f, 0),
+                        new Vector3(1, -4.6f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("N_1", 10),
+                        GetRepeatedPattern("N_1", 10)
+                    },
+                    1
+                )
+            }
         }
     };
 
@@ -205,6 +263,7 @@ public class WaveManager : MonoBehaviour
         list.AddRange(second);
         return list.ToArray();
     }
+
     void Start()
     {
         StartCoroutine(ManageWaves());
@@ -222,7 +281,7 @@ public class WaveManager : MonoBehaviour
                 if (waveData.ContainsKey(currentWave))
                 {
                     var waveSteps = waveData[currentWave];
-                    // 웨이브 3는 각 적을 1초 간격으로 스폰
+
                     if (currentWave == 3)
                     {
                         foreach (var step in waveSteps)
@@ -231,13 +290,25 @@ public class WaveManager : MonoBehaviour
                             yield return new WaitForSeconds(1f);
                         }
                     }
+                    else if (currentWave == 6)
+                    {
+                        // Wave 6: custom delays
+                        for (int i = 0; i < waveSteps.Count; i++)
+                        {
+                            yield return StartCoroutine(SpawnEnemies(waveSteps[i].positions, waveSteps[i].patterns, waveSteps[i].enemyType));
+                            // Group A -> B: 1초, B -> C: 1초, C -> D: 5초
+                            if (i == 0 || i == 1)
+                                yield return new WaitForSeconds(1f);
+                            else if (i == 2)
+                                yield return new WaitForSeconds(5f);
+                        }
+                    }
                     else
                     {
                         for (int i = 0; i < waveSteps.Count; i++)
                         {
-                            var step = waveSteps[i];
                             if (i > 0) yield return new WaitForSeconds(5f);
-                            yield return StartCoroutine(SpawnEnemies(step.positions, step.patterns, step.enemyType));
+                            yield return StartCoroutine(SpawnEnemies(waveSteps[i].positions, waveSteps[i].patterns, waveSteps[i].enemyType));
                         }
                     }
                 }
@@ -259,7 +330,6 @@ public class WaveManager : MonoBehaviour
 
     IEnumerator SpawnEnemies(Vector3[] positions, string[][] patterns, int enemyType)
     {
-        // enemyType에 따라 사용할 프리팹을 선택합니다.
         GameObject prefabToUse = enemyType == 0 ? enemyPrefab : enemyPrefab1;
         for (int i = 0; i < positions.Length; i++)
         {
@@ -269,10 +339,24 @@ public class WaveManager : MonoBehaviour
                 Debug.LogError("적 생성 실패! prefab이 올바르게 설정되어 있는지 확인하세요.");
                 continue;
             }
+            // 웨이브 5의 두 번째 스폰 이벤트에서 enemyType이 1인 경우,
+            // 180도 회전 대신 localScale.x를 음수로 설정하고 isFlipped 플래그를 true로 합니다.
+            if (currentWave == 6 && enemyType == 1)
+            {
+                Vector3 scale = enemy.transform.localScale;
+                enemy.transform.localScale = new Vector3(scale.x, -Mathf.Abs(scale.y), scale.z);
+                Enemy enemyComponent = enemy.GetComponent<Enemy>();
+                if (enemyComponent != null)
+                {
+                    enemyComponent.isFlipped = true;
+                    enemyComponent.isEnemy1 = true; // Enemy_1임을 표시 (Enemy.cs에 새 필드 추가)
+                }
+            }
             StartCoroutine(ExecutePattern(enemy, patterns[i]));
         }
         yield return null;
     }
+
 
     IEnumerator ExecutePattern(GameObject enemy, string[] patterns)
     {
