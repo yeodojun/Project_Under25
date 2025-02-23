@@ -23,8 +23,7 @@ public class WaveManager : MonoBehaviour
                         new Vector3(2, 4.6f, 0)
                     },
                     new string[] {
-                        "N_0", "N_0", "N_0", "N_0", "N_0", "N_0",
-                        "N_0", "N_0", "N_0", "N_0", "N_0", "N_0"
+                        "N_0", "N_0", "N_0", "N_0"
                     }
                 ),
                 // 웨이브 1: 두 번째 스폰 - 5개 좌표, 각 적이 "N_0" 패턴을 12회 실행
@@ -37,8 +36,7 @@ public class WaveManager : MonoBehaviour
                         new Vector3(2, 4.6f, 0)
                     },
                     new string[] {
-                        "N_0", "N_0", "N_0", "N_0", "N_0", "N_0",
-                        "N_0", "N_0", "N_0", "N_0", "N_0", "N_0"
+                        "N_0", "N_0", "N_0"
                     }
                 )
             }
