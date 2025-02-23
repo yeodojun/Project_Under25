@@ -15,7 +15,7 @@ public class WaveManager : MonoBehaviour
         {
             1, new List<(Vector3[], string[])>
             {
-                // 웨이브 1: 첫 번째 스폰 - 3개 좌표, 각 적이 "N_0" 패턴을 12회 실행
+                // 웨이브 1: 첫 번째 스폰 - 3개 좌표, 각 적이 "N_0" 패턴을 4회 실행
                 (
                     new Vector3[] {
                         new Vector3(-2, 4.6f, 0),
@@ -26,7 +26,7 @@ public class WaveManager : MonoBehaviour
                         "N_0", "N_0", "N_0", "N_0"
                     }
                 ),
-                // 웨이브 1: 두 번째 스폰 - 5개 좌표, 각 적이 "N_0" 패턴을 12회 실행
+                // 웨이브 1: 두 번째 스폰 - 5개 좌표, 각 적이 "N_0" 패턴을 4회 실행
                 (
                     new Vector3[] {
                         new Vector3(-2, 4.6f, 0),
