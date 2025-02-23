@@ -63,7 +63,7 @@ public class ScoreManager : MonoBehaviour
     {
         if (scoreText != null)
         {
-            scoreText.text = "점수: " + score;
+            scoreText.text = "" + score;
         }
     }
 
@@ -75,6 +75,6 @@ public class ScoreManager : MonoBehaviour
 
     private void LoadHighScore()
     {
-        highScore = PlayerPrefs.GetInt("HighScore", 0);
+        highScore = PlayerPrefs.GetInt("HighScore", 1);
     }
 }

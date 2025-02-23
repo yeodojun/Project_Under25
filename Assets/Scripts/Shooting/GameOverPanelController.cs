@@ -7,7 +7,9 @@ public class GameOverPanelController : MonoBehaviour
 
     public static GameOverPanelController Instance; // 싱글턴 적용
     public GameObject gameOverPanel; // 패널
+    [SerializeField]
     public TextMeshProUGUI scoreText; // 현재 점수 표시
+    [SerializeField]
     public TextMeshProUGUI highScoreText; // 최고 점수 표시
 
     private void Start()
