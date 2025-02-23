@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
 public class PatternManager : MonoBehaviour
 {
     public static PatternManager Instance;
@@ -22,12 +20,12 @@ public class PatternManager : MonoBehaviour
         { "N_5", new Vector2[] { new Vector2(-1, -1) } }, // 대각선 왼쪽 아래
         { "N_6", new Vector2[] { new Vector2(1, 1) } }, // 대각선 오른쪽 위
         { "N_7", new Vector2[] { new Vector2(-1, 1) } }, // 대각선 왼쪽 위
-        { "N_8", null},
-        { "N_9", null},
-        { "N_10", null },
-        { "N_11", null },
-        { "N_12", null },
-        { "N_13", null }
+        { "N_8", null}, // 시계 방향 원 이동
+        { "N_9", null}, // 반시계 방향 원 이동
+        { "N_10", null }, // 물결 좌→우 이동
+        { "N_11", null }, // 물결 우→좌 이동
+        { "N_12", null }, // 물결 위→아래 이동
+        { "N_13", null }  // 물결 아래→위 이동
     };
 
     private void Awake()
@@ -57,20 +55,21 @@ public class PatternManager : MonoBehaviour
         }
     }
 
-    public IEnumerator ExecutePattern(GameObject enemy, string[] patterns)
+    // ExecutePattern은 전달된 문자열 배열의 순서대로 패턴을 실행합니다.
+    // 예를 들어 "N_0"가 6번 들어있다면, 적은 "N_0"을 6회 수행합니다.
+    public IEnumerator ExecutePattern(GameObject enemy, string[] patternSequence)
     {
-        if (enemy == null) yield break;
-
-        for (int i = 0; i < patterns.Length; i++)
+        if (enemy == null)
         {
-            if (enemy == null)
-            {
-                Debug.LogError("ExecutePattern() 실행 중 enemy가 null입니다!");
-                yield break;
-            }
-            Debug.Log($"적 {enemy.name} - 패턴 실행 전 위치: {enemy.transform.position}");
+            Debug.LogError("ExecutePattern() 실행 중 enemy가 null입니다!");
+            yield break;
+        }
 
-            string pattern = patterns[i];
+        Debug.Log($"적 {enemy.name} - 패턴 시작: {string.Join(", ", patternSequence)}");
+
+        foreach (string pattern in patternSequence)
+        {
+            if (enemy == null) yield break;
 
             if (!this.patterns.ContainsKey(pattern))
             {
@@ -78,18 +77,21 @@ public class PatternManager : MonoBehaviour
                 continue;
             }
 
+            // 원형 이동 패턴 처리
             if (pattern == "N_8" || pattern == "N_9")
             {
                 bool clockwise = pattern == "N_8";
                 yield return StartCoroutine(MoveInCircle(enemy, clockwise, 2f, 72f));
             }
+            // 물결 이동 패턴 처리
             else if (pattern == "N_10" || pattern == "N_11" || pattern == "N_12" || pattern == "N_13")
             {
                 yield return StartCoroutine(MoveInWave(enemy, pattern));
             }
-            else
+            else // 일반 패턴, 예: "N_0"
             {
                 Vector2[] movementSteps = this.patterns[pattern];
+
                 foreach (Vector2 step in movementSteps)
                 {
                     if (enemy == null) yield break;
@@ -116,6 +118,8 @@ public class PatternManager : MonoBehaviour
                 }
             }
         }
+
+        Debug.Log($"적 {enemy.name} - 모든 패턴 완료 후 다음 행동 대기");
     }
 
     private IEnumerator MoveInCircle(GameObject enemy, bool clockwise, float radius, float rotationSpeed)
@@ -129,7 +133,7 @@ public class PatternManager : MonoBehaviour
         {
             angle += (clockwise ? rotationSpeed : -rotationSpeed) * Time.deltaTime;
 
-            if (enemy == null) yield break; // 적이 삭제되었는지 확인 후 종료
+            if (enemy == null) yield break;
 
             float x = radius * Mathf.Cos(angle * Mathf.Deg2Rad);
             float y = radius * Mathf.Sin(angle * Mathf.Deg2Rad);
@@ -149,18 +153,18 @@ public class PatternManager : MonoBehaviour
     {
         if (enemy == null) yield break;
 
-        float waveSpeed = 2f; // 이동 속도 (n속도)
-        float waveAmplitude = 1f; // 파동의 높이 (a)
-        float waveFrequency = 2f; // 파동의 주기 (b)
+        float waveSpeed = 2f; // 이동 속도
+        float waveAmplitude = 1f; // 파동의 높이
+        float waveFrequency = 2f; // 파동의 주기
 
-        float directionX = 1f; // 기본 x 이동 방향
-        float directionY = 1f; // 기본 y 이동 방향
+        float directionX = 1f;
+        float directionY = 1f;
 
         // 패턴별 초기 이동 방향 설정
-        if (pattern == "N_10") { directionX = 1f; directionY = 0f; } // 좌 → 우
-        if (pattern == "N_11") { directionX = -1f; directionY = 0f; } // 우 → 좌
-        if (pattern == "N_12") { directionX = 0f; directionY = -1f; } // 상 → 하
-        if (pattern == "N_13") { directionX = 0f; directionY = 1f; } // 하 → 상
+        if (pattern == "N_10") { directionX = 1f; directionY = 0f; }
+        if (pattern == "N_11") { directionX = -1f; directionY = 0f; }
+        if (pattern == "N_12") { directionX = 0f; directionY = -1f; }
+        if (pattern == "N_13") { directionX = 0f; directionY = 1f; }
 
         float initialX = enemy.transform.position.x;
         float initialY = enemy.transform.position.y;
@@ -184,28 +188,28 @@ public class PatternManager : MonoBehaviour
                 newX = initialX + waveAmplitude * Mathf.Sin(waveFrequency * newY);
             }
 
-            // 예외 처리 (경계 충돌 감지)
-            if (newY >= 5.5f || newY <= -5.5f) // 화면 상하 경계 충돌
+            // 경계 충돌 처리
+            if (newY >= 5.5f || newY <= -5.5f)
             {
-                waveAmplitude = -waveAmplitude; // 출렁이는 방향 반전
+                waveAmplitude = -waveAmplitude;
             }
 
-            if (newX >= 2.3f) // 화면 오른쪽 경계 충돌
+            if (newX >= 2.3f)
             {
-                directionX = -Mathf.Abs(directionX); // 왼쪽으로 이동
+                directionX = -Mathf.Abs(directionX);
             }
-            if (newX <= -2.3f) // 화면 왼쪽 경계 충돌
+            if (newX <= -2.3f)
             {
-                directionX = Mathf.Abs(directionX); // 오른쪽으로 이동
+                directionX = Mathf.Abs(directionX);
             }
 
-            if (newY >= 5.5f) // 화면 위쪽 경계 충돌
+            if (newY >= 5.5f)
             {
-                directionY = -Mathf.Abs(directionY); // 아래로 이동
+                directionY = -Mathf.Abs(directionY);
             }
-            if (newY <= -5.5f) // 화면 아래쪽 경계 충돌
+            if (newY <= -5.5f)
             {
-                directionY = Mathf.Abs(directionY); // 위로 이동
+                directionY = Mathf.Abs(directionY);
             }
 
             enemy.transform.position = new Vector3(newX, newY, 0);
@@ -229,11 +233,28 @@ public class PatternManager : MonoBehaviour
         }
     }
 
-
-
     public bool HasHitScreenBoundary(Vector3 position, Vector2 direction)
     {
         return (position.x <= screenLeft && direction.x < 0) || (position.x >= screenRight && direction.x > 0) ||
                (position.y >= screenTop && direction.y > 0) || (position.y <= screenBottom && direction.y < 0);
+    }
+
+    private IEnumerator ApplyPattern(GameObject enemy, string pattern)
+    {
+        if (enemy == null) yield break;
+
+        Debug.Log($"적 {enemy.name} - {pattern} 패턴 적용 중");
+
+        switch (pattern)
+        {
+            case "N_0":
+                while (enemy != null)
+                {
+                    enemy.transform.position += Vector3.down * 2f * Time.deltaTime;
+                    DestroyIfOutOfScreen(enemy);
+                    yield return null;
+                }
+                break;
+        }
     }
 }
