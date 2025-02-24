@@ -118,8 +118,8 @@ public class WaveManager : MonoBehaviour
                         new Vector3(-2, 0.5f, 0)
                     },
                     new string[][] {
-                        GetRepeatedPattern("P_0", 12),
-                        GetRepeatedPattern("P_0", 12),
+                        GetRepeatedPattern("P_0", 20),
+                        GetRepeatedPattern("P_0", 20),
                         GetRepeatedPattern("P_2", 4),
                         GetRepeatedPattern("P_2", 4)
                     },
@@ -136,8 +136,8 @@ public class WaveManager : MonoBehaviour
                         new Vector3(2, 0.5f, 0)
                     },
                     new string[][] {
-                        GetRepeatedPattern("P_0", 12),
-                        GetRepeatedPattern("P_0", 12),
+                        GetRepeatedPattern("P_0", 20),
+                        GetRepeatedPattern("P_0", 20),
                         GetRepeatedPattern("P_3", 4),
                         GetRepeatedPattern("P_3", 4)
                     },
@@ -380,31 +380,31 @@ public class WaveManager : MonoBehaviour
                 // 스폰 이벤트 1
                 (
                     new Vector3[] { new Vector3(0f, 4.6f, 0) },
-                    new string[][] { ConcatPatterns(GetRepeatedPattern("P_0", 2), GetRepeatedPattern("P_8", 15)) },
+                    new string[][] { ConcatPatterns(GetRepeatedPattern("P_0", 4), GetRepeatedPattern("P_8", 15)) },
                     0
                 ),
                 // 스폰 이벤트 2
                 (
                     new Vector3[] { new Vector3(0f, 4.6f, 0) },
-                    new string[][] { ConcatPatterns(GetRepeatedPattern("P_0", 2), GetRepeatedPattern("P_8", 15)) },
+                    new string[][] { ConcatPatterns(GetRepeatedPattern("P_0", 4), GetRepeatedPattern("P_8", 15)) },
                     0
                 ),
                 // 스폰 이벤트 3
                 (
                     new Vector3[] { new Vector3(0f, 4.6f, 0) },
-                    new string[][] { ConcatPatterns(GetRepeatedPattern("P_0", 2), GetRepeatedPattern("P_8", 15)) },
+                    new string[][] { ConcatPatterns(GetRepeatedPattern("P_0", 4), GetRepeatedPattern("P_8", 15)) },
                     0
                 ),
                 // 스폰 이벤트 4
                 (
                     new Vector3[] { new Vector3(0f, 4.6f, 0) },
-                    new string[][] { ConcatPatterns(GetRepeatedPattern("P_0", 2), GetRepeatedPattern("P_8", 15)) },
+                    new string[][] { ConcatPatterns(GetRepeatedPattern("P_0", 4), GetRepeatedPattern("P_8", 15)) },
                     0
                 ),
                 // 스폰 이벤트 5
                 (
                     new Vector3[] { new Vector3(0f, 4.6f, 0) },
-                    new string[][] { ConcatPatterns(GetRepeatedPattern("P_0", 2), GetRepeatedPattern("P_8", 15)) },
+                    new string[][] { ConcatPatterns(GetRepeatedPattern("P_0", 4), GetRepeatedPattern("P_8", 15)) },
                     0
                 )
             }
@@ -673,6 +673,9 @@ public class WaveManager : MonoBehaviour
         }
         Debug.Log($"적 {enemy.name} - 패턴 실행 시작: {string.Join(", ", patterns)}");
         yield return StartCoroutine(PatternManager.Instance.ExecutePattern(enemy, patterns));
-        Debug.Log($"적 {enemy.name} - 패턴 실행 완료");
+        if (enemy != null)
+        {
+            Debug.Log($"적 {enemy.name} - 패턴 실행 완료");
+        }
     }
 }
