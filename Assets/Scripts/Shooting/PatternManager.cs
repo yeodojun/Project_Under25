@@ -10,23 +10,27 @@ public class PatternManager : MonoBehaviour
     private float screenBottom = -6f;
     private float screenLeft = -3f;
     private float screenRight = 3f;
-    // 기존 패턴들은 이동 벡터 등으로 정의되어 있음. (N_8 ~ N_13는 별도 코루틴에서 처리)
+    // 기존 패턴들은 이동 벡터 등으로 정의되어 있음. (P_8 ~ P_13는 별도 코루틴에서 처리)
     private Dictionary<string, Vector2[]> patterns = new Dictionary<string, Vector2[]> {
-        { "N_0", new Vector2[] { new Vector2(0, -1) } }, // 아래로 이동
-        { "N_1", new Vector2[] { new Vector2(0, 1) } },  // 위로 이동
-        { "N_2", new Vector2[] { new Vector2(1, 0) } },  // 오른쪽 이동
-        { "N_3", new Vector2[] { new Vector2(-1, 0) } }, // 왼쪽 이동
-        { "N_4", new Vector2[] { new Vector2(1, -1) } }, // 대각선 오른쪽 아래
-        { "N_5", new Vector2[] { new Vector2(-1, -1) } }, // 대각선 왼쪽 아래
-        { "N_6", new Vector2[] { new Vector2(1, 1) } }, // 대각선 오른쪽 위
-        { "N_7", new Vector2[] { new Vector2(-1, 1) } }, // 대각선 왼쪽 위
-        { "N_8", null }, // 시계 방향 원 이동
-        { "N_9", null }, // 반시계 방향 원 이동
-        { "N_10", null }, // 물결 좌→우 이동
-        { "N_11", null }, // 물결 우→좌 이동
-        { "N_12", null }, // 물결 위→아래 이동
-        { "N_13", null }  // 물결 아래→위 이동
-        // "N_14"는 아래 TeleportPattern(), ExecutePattern()에서 별도로 처리
+        { "P_0", new Vector2[] { new Vector2(0, -1) } }, // 아래로 이동
+        { "P_1", new Vector2[] { new Vector2(0, 1) } },  // 위로 이동
+        { "P_2", new Vector2[] { new Vector2(1, 0) } },  // 오른쪽 이동
+        { "P_3", new Vector2[] { new Vector2(-1, 0) } }, // 왼쪽 이동
+        { "P_4", new Vector2[] { new Vector2(1, -1) } }, // 대각선 오른쪽 아래
+        { "P_5", new Vector2[] { new Vector2(-1, -1) } }, // 대각선 왼쪽 아래
+        { "P_6", new Vector2[] { new Vector2(1, 1) } }, // 대각선 오른쪽 위
+        { "P_7", new Vector2[] { new Vector2(-1, 1) } }, // 대각선 왼쪽 위
+        { "P_8", null }, // 시계 방향 원 이동
+        { "P_9", null }, // 반시계 방향 원 이동
+        { "P_10", null }, // 물결 좌→우 이동
+        { "P_11", null }, // 물결 우→좌 이동
+        { "P_12", null }, // 물결 위→아래 이동
+        { "P_13", null }  // 물결 아래→위 이동
+        // "P_14"는 아래 TeleportPattern(), ExecutePattern()에서 별도로 처리
+        // "P_15"도 아래 ZigzagMovement(), " 별도로 처리
+        // "P_16" 미구현
+        // "P_17" 미구현
+        // "P_18"도 아래 별도로 처리
     };
 
     private void Awake()
@@ -71,19 +75,29 @@ public class PatternManager : MonoBehaviour
         {
             if (enemy == null) yield break;
 
-            if (pattern == "N_8" || pattern == "N_9")
+            if (pattern == "P_8" || pattern == "P_9")
             {
-                bool clockwise = pattern == "N_8";
+                bool clockwise = pattern == "P_8";
                 yield return StartCoroutine(MoveInCircle(enemy, clockwise, 2f, 72f));
             }
-            else if (pattern == "N_10" || pattern == "N_11" || pattern == "N_12" || pattern == "N_13")
+            else if (pattern == "P_10" || pattern == "P_11" || pattern == "P_12" || pattern == "P_13")
             {
                 yield return StartCoroutine(MoveInWave(enemy, pattern));
             }
-            else if (pattern == "N_14")
+            else if (pattern == "P_14")
             {
                 // 새로운 순간 이동 패턴
                 yield return StartCoroutine(TeleportPattern(enemy));
+            }
+            else if (pattern == "P_15")
+            {
+                // 새로운 지그재그 이동 패턴
+                yield return StartCoroutine(ZigzagMovement(enemy));
+            }
+            else if (pattern == "P_18")
+            {
+                // 새로운 마름모 이동 패턴
+                yield return StartCoroutine(DiamondMovement(enemy));
             }
             else // 기본 패턴 처리 (예: "N_0", "N_1", "N_2", "N_3", 등)
             {
@@ -101,7 +115,7 @@ public class PatternManager : MonoBehaviour
                     // 만약 적이 flipped 상태이고, 패턴이 "N_1" (원래 위로 이동)라면 이동 벡터의 방향을 반전합니다.
                     Vector2 appliedStep = step;
                     Enemy enemyComponent = enemy.GetComponent<Enemy>();
-                    if (enemyComponent != null && enemyComponent.isFlipped && pattern == "N_1" && !enemyComponent.isEnemy1)
+                    if (enemyComponent != null && enemyComponent.isFlipped && pattern == "P_1" && !enemyComponent.isEnemy1)
                     {
                         appliedStep = -step;
                     }
@@ -169,10 +183,10 @@ public class PatternManager : MonoBehaviour
         float directionY = 1f;
 
         // 패턴에 따른 초기 이동 방향 설정
-        if (pattern == "N_10") { directionX = 1f; directionY = 0f; }
-        if (pattern == "N_11") { directionX = -1f; directionY = 0f; }
-        if (pattern == "N_12") { directionX = 0f; directionY = -1f; }
-        if (pattern == "N_13") { directionX = 0f; directionY = 1f; }
+        if (pattern == "P_10") { directionX = 1f; directionY = 0f; }
+        if (pattern == "P_11") { directionX = -1f; directionY = 0f; }
+        if (pattern == "P_12") { directionX = 0f; directionY = -1f; }
+        if (pattern == "P_13") { directionX = 0f; directionY = 1f; }
 
         float initialX = enemy.transform.position.x;
         float initialY = enemy.transform.position.y;
@@ -185,12 +199,12 @@ public class PatternManager : MonoBehaviour
             float newX = enemy.transform.position.x;
             float newY = enemy.transform.position.y;
 
-            if (pattern == "N_10" || pattern == "N_11")
+            if (pattern == "P_10" || pattern == "P_11")
             {
                 newX += waveSpeed * directionX * Time.deltaTime;
                 newY = initialY + waveAmplitude * Mathf.Sin(waveFrequency * newX);
             }
-            else if (pattern == "N_12" || pattern == "N_13")
+            else if (pattern == "P_12" || pattern == "P_13")
             {
                 newY += waveSpeed * directionY * Time.deltaTime;
                 newX = initialX + waveAmplitude * Mathf.Sin(waveFrequency * newY);
@@ -227,8 +241,8 @@ public class PatternManager : MonoBehaviour
     {
         if (enemy == null) return;
 
-        float destroyBoundaryX = 3.2f;
-        float destroyBoundaryY = 6.2f;
+        float destroyBoundaryX = 10f;
+        float destroyBoundaryY = 10f;
 
         if (enemy.transform.position.y > destroyBoundaryY || enemy.transform.position.y < -destroyBoundaryY ||
             enemy.transform.position.x < -destroyBoundaryX || enemy.transform.position.x > destroyBoundaryX)
@@ -254,7 +268,7 @@ public class PatternManager : MonoBehaviour
 
         switch (pattern)
         {
-            case "N_0":
+            case "P_0":
                 while (enemy != null)
                 {
                     enemy.transform.position += Vector3.down * 2f * Time.deltaTime;
@@ -265,7 +279,7 @@ public class PatternManager : MonoBehaviour
         }
     }
 
-    // 새로운 패턴 N_14: 순간 이동 패턴
+    // 새로운 패턴 P_14: 순간 이동 패턴
     // 3초마다 지정된 좌표 범위 내에서 랜덤하게 순간 이동
     // 플레이어 피격 범위와 적 간 겹침을 피하며, 유효한 좌표가 없으면 최대 10회 시도 후 마지막 후보 사용
     private IEnumerator TeleportPattern(GameObject enemy)
@@ -322,6 +336,160 @@ public class PatternManager : MonoBehaviour
             }
 
             enemy.transform.position = candidate;
+        }
+    }
+
+    // 새로운 패턴 P_15: 지그재그 이동
+    // 1초마다 현재 위치에서 좌우 중 50% 확률로 1단위 이동.
+    // 이동하려는 위치가 x:[-2,2], y:[-4.5,4.5] 범위를 벗어나거나, 
+    // 이동하려는 위치에 이미 적 또는 플레이어가 있으면 이동하지 않습니다.
+    private IEnumerator ZigzagMovement(GameObject enemy)
+    {
+        float step = 1f; // 이동 거리
+        float patternMinX = -2f, patternMaxX = 2f;
+        float patternMinY = -4.5f, patternMaxY = 4.5f;
+
+        while (enemy != null)
+        {
+            yield return new WaitForSeconds(1f);
+            Vector3 currentPos = enemy.transform.position;
+            int direction = Random.Range(0, 2) == 0 ? -1 : 1; // -1: 좌, +1: 우
+            Vector3 targetPos = currentPos + new Vector3(direction * step, 0, 0);
+
+            // 이동하려는 좌표가 지정된 범위를 벗어나면 이동하지 않음
+            if (targetPos.x < patternMinX || targetPos.x > patternMaxX)
+                continue;
+
+            // 이동하려는 위치에 플레이어가 있으면 이동 X
+            Collider2D playerCol = Physics2D.OverlapCircle(targetPos, 0.3f);
+            if (playerCol != null && playerCol.CompareTag("Player"))
+                continue;
+
+            // 이동하려는 위치에 이미 다른 적이 있는지 체크 (자기 자신 제외)
+            Collider2D[] cols = Physics2D.OverlapCircleAll(targetPos, 0.3f);
+            bool occupied = false;
+            foreach (Collider2D col in cols)
+            {
+                if (col.gameObject != enemy && col.CompareTag("Enemy"))
+                {
+                    occupied = true;
+                    break;
+                }
+            }
+            if (occupied)
+                continue;
+
+            // 유효한 이동이면 enemy를 targetPos로 이동
+            enemy.transform.position = targetPos;
+
+            // 혹시 이동 후 위치가 범위를 벗어난다면 적 파괴
+            if (enemy.transform.position.x < patternMinX || enemy.transform.position.x > patternMaxX ||
+                enemy.transform.position.y < patternMinY || enemy.transform.position.y > patternMaxY)
+            {
+                Destroy(enemy);
+                yield break;
+            }
+        }
+    }
+
+    private IEnumerator DiamondMovement(GameObject enemy)
+    {
+        // 단계 각도 (도 단위)
+        float[] angles = { 210f, 300f, 30f, 150f };
+        int index = 0;
+        while (enemy != null)
+        {
+            float angleDeg = angles[index];
+            float angleRad = angleDeg * Mathf.Deg2Rad;
+            Vector2 direction = new Vector2(Mathf.Cos(angleRad), Mathf.Sin(angleRad)).normalized;
+            Vector3 currentPos = enemy.transform.position;
+            float tMin = Mathf.Infinity;
+            Vector3 targetPos = currentPos;
+
+            // 사각형 경계: x in [-2, 2], y in [-4.5, 4.5]
+            // 왼쪽 경계
+            if (direction.x < 0)
+            {
+                float t = (-2 - currentPos.x) / direction.x;
+                if (t > 0 && t < tMin)
+                {
+                    Vector3 candidate = currentPos + (Vector3)(direction * t);
+                    if (candidate.y >= -4.5f && candidate.y <= 4.5f)
+                    {
+                        tMin = t;
+                        targetPos = candidate;
+                    }
+                }
+            }
+            // 오른쪽 경계
+            if (direction.x > 0)
+            {
+                float t = (2 - currentPos.x) / direction.x;
+                if (t > 0 && t < tMin)
+                {
+                    Vector3 candidate = currentPos + (Vector3)(direction * t);
+                    if (candidate.y >= -4.5f && candidate.y <= 4.5f)
+                    {
+                        tMin = t;
+                        targetPos = candidate;
+                    }
+                }
+            }
+            // 하단 경계
+            if (direction.y < 0)
+            {
+                float t = (-4.5f - currentPos.y) / direction.y;
+                if (t > 0 && t < tMin)
+                {
+                    Vector3 candidate = currentPos + (Vector3)(direction * t);
+                    if (candidate.x >= -2f && candidate.x <= 2f)
+                    {
+                        tMin = t;
+                        targetPos = candidate;
+                    }
+                }
+            }
+            // 상단 경계
+            if (direction.y > 0)
+            {
+                float t = (4.5f - currentPos.y) / direction.y;
+                if (t > 0 && t < tMin)
+                {
+                    Vector3 candidate = currentPos + (Vector3)(direction * t);
+                    if (candidate.x >= -2f && candidate.x <= 2f)
+                    {
+                        tMin = t;
+                        targetPos = candidate;
+                    }
+                }
+            }
+
+            // 만약 유효한 이동 거리를 찾지 못하면 현재 위치 유지
+            if (tMin == Mathf.Infinity)
+                targetPos = currentPos;
+
+            // 1초 동안 선형 이동
+            float moveTime = 1f;
+            float elapsed = 0f;
+            Vector3 startPos = currentPos;
+            while (elapsed < moveTime && enemy != null)
+            {
+                enemy.transform.position = Vector3.Lerp(startPos, targetPos, elapsed / moveTime);
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+            if (enemy != null)
+                enemy.transform.position = targetPos;
+
+            // 만약 이동 후 위치가 경계 밖이면 파괴
+            if (enemy.transform.position.x < -2f || enemy.transform.position.x > 2f ||
+                enemy.transform.position.y < -4.5f || enemy.transform.position.y > 4.5f)
+            {
+                Destroy(enemy);
+                yield break;
+            }
+
+            index = (index + 1) % angles.Length;
         }
     }
 }

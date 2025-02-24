@@ -3286,6 +3286,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 2336088905530037732, guid: 62bb36d9019b35149a0878a13584f338, type: 3}
   enemyPrefab1: {fileID: 2336088905530037732, guid: 155b16a9fbbf24f4f81fa0e5ca9e79d2, type: 3}
+  enemyPrefab2: {fileID: 2336088905530037732, guid: 220db0a82fce5a141a8701cdfdbf26d3, type: 3}
   waveDelay: 1
 --- !u!4 &1964446570
 Transform:

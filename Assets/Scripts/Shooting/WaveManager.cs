@@ -6,6 +6,7 @@ public class WaveManager : MonoBehaviour
 {
     public GameObject enemyPrefab;    // Enemy_0 (기본 적) 프리팹
     public GameObject enemyPrefab1;   // Enemy_1 (새 적, 체력 20, 총 미발사) 프리팹
+    public GameObject enemyPrefab2;   // Enemy_2 (새 적, 체력 50, 총 발사) 프리팹
     public float waveDelay = 5f;      // 웨이브 간 딜레이
     private int currentWave = 1;      // 현재 웨이브 번호
     private bool waveInProgress = false; // 웨이브 진행 여부
@@ -29,9 +30,9 @@ public class WaveManager : MonoBehaviour
                         new Vector3(2, 4.6f, 0)
                     },
                     new string[][] {
-                        GetRepeatedPattern("N_0", 4),
-                        GetRepeatedPattern("N_0", 4),
-                        GetRepeatedPattern("N_0", 4)
+                        GetRepeatedPattern("P_0", 4),
+                        GetRepeatedPattern("P_0", 4),
+                        GetRepeatedPattern("P_0", 4)
                     },
                     0
                 ),
@@ -45,11 +46,11 @@ public class WaveManager : MonoBehaviour
                         new Vector3(2, 4.6f, 0)
                     },
                     new string[][] {
-                        GetRepeatedPattern("N_0", 3),
-                        GetRepeatedPattern("N_0", 3),
-                        GetRepeatedPattern("N_0", 3),
-                        GetRepeatedPattern("N_0", 3),
-                        GetRepeatedPattern("N_0", 3)
+                        GetRepeatedPattern("P_0", 3),
+                        GetRepeatedPattern("P_0", 3),
+                        GetRepeatedPattern("P_0", 3),
+                        GetRepeatedPattern("P_0", 3),
+                        GetRepeatedPattern("P_0", 3)
                     },
                     0
                 )
@@ -66,9 +67,9 @@ public class WaveManager : MonoBehaviour
                         new Vector3(-2, 2.5f, 0)
                     },
                     new string[][] {
-                        GetRepeatedPattern("N_2", 4),
-                        GetRepeatedPattern("N_2", 4),
-                        GetRepeatedPattern("N_2", 4)
+                        GetRepeatedPattern("P_2", 4),
+                        GetRepeatedPattern("P_2", 4),
+                        GetRepeatedPattern("P_2", 4)
                     },
                     0
                 ),
@@ -80,9 +81,9 @@ public class WaveManager : MonoBehaviour
                         new Vector3(2, 2.5f, 0)
                     },
                     new string[][] {
-                        GetRepeatedPattern("N_3", 4),
-                        GetRepeatedPattern("N_3", 4),
-                        GetRepeatedPattern("N_3", 4)
+                        GetRepeatedPattern("P_3", 4),
+                        GetRepeatedPattern("P_3", 4),
+                        GetRepeatedPattern("P_3", 4)
                     },
                     0
                 )
@@ -92,15 +93,15 @@ public class WaveManager : MonoBehaviour
         { 3, new List<(Vector3[], string[][], int)>()
             {
                 // 9마리를 순차적으로 (1초 간격) 스폰, 처음 3마리는 "N_0" 3번 실행, 다음 3마리는 2번 실행, 다음 3마리는 1번 실행, enemyType 0
-                ( new Vector3[]{ new Vector3(-2, 4.6f, 0) }, new string[][] { GetRepeatedPattern("N_0", 4) }, 0 ),
-                ( new Vector3[]{ new Vector3(0, 4.6f, 0) }, new string[][] { GetRepeatedPattern("N_0", 4) }, 0 ),
-                ( new Vector3[]{ new Vector3(2, 4.6f, 0) }, new string[][] { GetRepeatedPattern("N_0", 4) }, 0 ),
-                ( new Vector3[]{ new Vector3(-2, 4.6f, 0) }, new string[][] { GetRepeatedPattern("N_0", 3) }, 0 ),
-                ( new Vector3[]{ new Vector3(0, 4.6f, 0) }, new string[][] { GetRepeatedPattern("N_0", 3) }, 0 ),
-                ( new Vector3[]{ new Vector3(2, 4.6f, 0) }, new string[][] { GetRepeatedPattern("N_0", 3) }, 0 ),
-                ( new Vector3[]{ new Vector3(-2, 4.6f, 0) }, new string[][] { GetRepeatedPattern("N_0", 2) }, 0 ),
-                ( new Vector3[]{ new Vector3(0, 4.6f, 0) }, new string[][] { GetRepeatedPattern("N_0", 2) }, 0 ),
-                ( new Vector3[]{ new Vector3(2, 4.6f, 0) }, new string[][] { GetRepeatedPattern("N_0", 2) }, 0 )
+                ( new Vector3[]{ new Vector3(-2, 4.6f, 0) }, new string[][] { GetRepeatedPattern("P_0", 4) }, 0 ),
+                ( new Vector3[]{ new Vector3(0, 4.6f, 0) }, new string[][] { GetRepeatedPattern("P_0", 4) }, 0 ),
+                ( new Vector3[]{ new Vector3(2, 4.6f, 0) }, new string[][] { GetRepeatedPattern("P_0", 4) }, 0 ),
+                ( new Vector3[]{ new Vector3(-2, 4.6f, 0) }, new string[][] { GetRepeatedPattern("P_0", 3) }, 0 ),
+                ( new Vector3[]{ new Vector3(0, 4.6f, 0) }, new string[][] { GetRepeatedPattern("P_0", 3) }, 0 ),
+                ( new Vector3[]{ new Vector3(2, 4.6f, 0) }, new string[][] { GetRepeatedPattern("P_0", 3) }, 0 ),
+                ( new Vector3[]{ new Vector3(-2, 4.6f, 0) }, new string[][] { GetRepeatedPattern("P_0", 2) }, 0 ),
+                ( new Vector3[]{ new Vector3(0, 4.6f, 0) }, new string[][] { GetRepeatedPattern("P_0", 2) }, 0 ),
+                ( new Vector3[]{ new Vector3(2, 4.6f, 0) }, new string[][] { GetRepeatedPattern("P_0", 2) }, 0 )
             }
         },
         // 웨이브 4
@@ -117,10 +118,10 @@ public class WaveManager : MonoBehaviour
                         new Vector3(-2, 0.5f, 0)
                     },
                     new string[][] {
-                        GetRepeatedPattern("N_0", 12),
-                        GetRepeatedPattern("N_0", 12),
-                        GetRepeatedPattern("N_2", 4),
-                        GetRepeatedPattern("N_2", 4)
+                        GetRepeatedPattern("P_0", 12),
+                        GetRepeatedPattern("P_0", 12),
+                        GetRepeatedPattern("P_2", 4),
+                        GetRepeatedPattern("P_2", 4)
                     },
                     0
                 ),
@@ -135,10 +136,10 @@ public class WaveManager : MonoBehaviour
                         new Vector3(2, 0.5f, 0)
                     },
                     new string[][] {
-                        GetRepeatedPattern("N_0", 12),
-                        GetRepeatedPattern("N_0", 12),
-                        GetRepeatedPattern("N_3", 4),
-                        GetRepeatedPattern("N_3", 4)
+                        GetRepeatedPattern("P_0", 12),
+                        GetRepeatedPattern("P_0", 12),
+                        GetRepeatedPattern("P_3", 4),
+                        GetRepeatedPattern("P_3", 4)
                     },
                     0
                 )
@@ -158,11 +159,11 @@ public class WaveManager : MonoBehaviour
                         new Vector3(2, 4.6f, 0)
                     },
                     new string[][] {
-                        GetRepeatedPattern("N_0", 12),
-                        GetRepeatedPattern("N_0", 12),
-                        GetRepeatedPattern("N_0", 12),
-                        GetRepeatedPattern("N_0", 12),
-                        GetRepeatedPattern("N_0", 12)
+                        GetRepeatedPattern("P_0", 12),
+                        GetRepeatedPattern("P_0", 12),
+                        GetRepeatedPattern("P_0", 12),
+                        GetRepeatedPattern("P_0", 12),
+                        GetRepeatedPattern("P_0", 12)
                     },
                     0
                 ),
@@ -177,10 +178,10 @@ public class WaveManager : MonoBehaviour
                         new Vector3(2, 0.5f, 0)
                     },
                     new string[][] {
-                        ConcatPatterns(GetRepeatedPattern("N_2", 3), GetRepeatedPattern("N_0", 10)),
-                        ConcatPatterns(GetRepeatedPattern("N_2", 4), GetRepeatedPattern("N_0", 10)),
-                        ConcatPatterns(GetRepeatedPattern("N_3", 3), GetRepeatedPattern("N_0", 10)),
-                        ConcatPatterns(GetRepeatedPattern("N_3", 4), GetRepeatedPattern("N_0", 10))
+                        ConcatPatterns(GetRepeatedPattern("P_2", 3), GetRepeatedPattern("P_0", 10)),
+                        ConcatPatterns(GetRepeatedPattern("P_2", 4), GetRepeatedPattern("P_0", 10)),
+                        ConcatPatterns(GetRepeatedPattern("P_3", 3), GetRepeatedPattern("P_0", 10)),
+                        ConcatPatterns(GetRepeatedPattern("P_3", 4), GetRepeatedPattern("P_0", 10))
                     },
                     1
                 )
@@ -196,9 +197,9 @@ public class WaveManager : MonoBehaviour
                         new Vector3(2, 4.6f, 0)
                     },
                     new string[][] {
-                        GetRepeatedPattern("N_0", 4),
-                        GetRepeatedPattern("N_0", 4),
-                        GetRepeatedPattern("N_0", 4)
+                        GetRepeatedPattern("P_0", 4),
+                        GetRepeatedPattern("P_0", 4),
+                        GetRepeatedPattern("P_0", 4)
                     },
                     0
                 ),
@@ -210,9 +211,9 @@ public class WaveManager : MonoBehaviour
                         new Vector3(2, 4.6f, 0)
                     },
                     new string[][] {
-                        GetRepeatedPattern("N_0", 3),
-                        GetRepeatedPattern("N_0", 3),
-                        GetRepeatedPattern("N_0", 3)
+                        GetRepeatedPattern("P_0", 3),
+                        GetRepeatedPattern("P_0", 3),
+                        GetRepeatedPattern("P_0", 3)
                     },
                     0
                 ),
@@ -224,9 +225,9 @@ public class WaveManager : MonoBehaviour
                         new Vector3(2, 4.6f, 0)
                     },
                     new string[][] {
-                        GetRepeatedPattern("N_0", 2),
-                        GetRepeatedPattern("N_0", 2),
-                        GetRepeatedPattern("N_0", 2)
+                        GetRepeatedPattern("P_0", 2),
+                        GetRepeatedPattern("P_0", 2),
+                        GetRepeatedPattern("P_0", 2)
                     },
                     0
                 ),
@@ -237,13 +238,251 @@ public class WaveManager : MonoBehaviour
                         new Vector3(1, -4.6f, 0)
                     },
                     new string[][] {
-                        GetRepeatedPattern("N_1", 10),
-                        GetRepeatedPattern("N_1", 10)
+                        GetRepeatedPattern("P_1", 12),
+                        GetRepeatedPattern("P_1", 12)
                     },
                     1
                 )
             }
+        },
+        { 7, new List<(Vector3[], string[][], int)>()
+        {
+            // Group A 이벤트 1
+            (
+                new Vector3[] {
+                    new Vector3(-2f, 4.5f, 0),
+                    new Vector3(-1f, 4.5f, 0),
+                    new Vector3(0f, 4.5f, 0),
+                    new Vector3(-2f, 0.5f, 0),
+                    new Vector3(-1f, 0.5f, 0),
+                    new Vector3(0f, 0.5f, 0)
+                },
+                new string[][] {
+                    GetRepeatedPattern("P_4", 7),
+                    GetRepeatedPattern("P_4", 7),
+                    GetRepeatedPattern("P_4", 7),
+                    GetRepeatedPattern("P_4", 7),
+                    GetRepeatedPattern("P_4", 7),
+                    GetRepeatedPattern("P_4", 7)
+                },
+                0
+            ),
+            // Group A 이벤트 2 (2초 후)
+            (
+                new Vector3[] {
+                    new Vector3(-2f, 4.5f, 0),
+                    new Vector3(-1f, 4.5f, 0),
+                    new Vector3(0f, 4.5f, 0),
+                    new Vector3(-2f, 0.5f, 0),
+                    new Vector3(-1f, 0.5f, 0),
+                    new Vector3(0f, 0.5f, 0)
+                },
+                new string[][] {
+                    GetRepeatedPattern("P_4", 7),
+                    GetRepeatedPattern("P_4", 7),
+                    GetRepeatedPattern("P_4", 7),
+                    GetRepeatedPattern("P_4", 7),
+                    GetRepeatedPattern("P_4", 7),
+                    GetRepeatedPattern("P_4", 7)
+                },
+                0
+            ),
+            // Group B 이벤트 1 (그룹 A 완료 후 5초 대기)
+            (
+                new Vector3[] {
+                    new Vector3(0f, 4.5f, 0),
+                    new Vector3(1f, 4.5f, 0),
+                    new Vector3(2f, 4.5f, 0),
+                    new Vector3(0f, 0.5f, 0),
+                    new Vector3(1f, 0.5f, 0),
+                    new Vector3(2f, 0.5f, 0)
+                },
+                new string[][] {
+                    GetRepeatedPattern("P_5", 7),
+                    GetRepeatedPattern("P_5", 7),
+                    GetRepeatedPattern("P_5", 7),
+                    GetRepeatedPattern("P_5", 7),
+                    GetRepeatedPattern("P_5", 7),
+                    GetRepeatedPattern("P_5", 7)
+                },
+                0
+            ),
+            // Group B 이벤트 2 (2초 후)
+            (
+                new Vector3[] {
+                    new Vector3(0f, 4.5f, 0),
+                    new Vector3(1f, 4.5f, 0),
+                    new Vector3(2f, 4.5f, 0),
+                    new Vector3(0f, 0.5f, 0),
+                    new Vector3(1f, 0.5f, 0),
+                    new Vector3(2f, 0.5f, 0)
+                },
+                new string[][] {
+                    GetRepeatedPattern("P_5", 7),
+                    GetRepeatedPattern("P_5", 7),
+                    GetRepeatedPattern("P_5", 7),
+                    GetRepeatedPattern("P_5", 7),
+                    GetRepeatedPattern("P_5", 7),
+                    GetRepeatedPattern("P_5", 7)
+                },
+                0
+            )
         }
+        },
+        { 8, new List<(Vector3[], string[][], int)>()
+            {
+                // 이벤트 1: Enemy_2 1마리, 위치 (-2, 4.5)
+                (
+                    new Vector3[] {
+                        new Vector3(-2f, 4.5f, 0)
+                    },
+                    new string[][] {
+                        // 패턴: N_4 4회 → N_1 4회 → N_5 4회 → N_1 4회
+                        ConcatPatterns(
+                            ConcatPatterns( GetRepeatedPattern("P_4", 4), GetRepeatedPattern("P_1", 4) ),
+                            ConcatPatterns( GetRepeatedPattern("P_5", 4), GetRepeatedPattern("P_1", 4) )
+                        )
+                    },
+                    2
+                ),
+                // 이벤트 2: 게임 시작 5초 후 Enemy_0 3마리, 위치 (3,1.5), (4,1.5), (5,1.5)
+                (
+                    new Vector3[] {
+                        new Vector3(3f, 1.5f, 0),
+                        new Vector3(4f, 1.5f, 0),
+                        new Vector3(5f, 1.5f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_7", 3),
+                        GetRepeatedPattern("P_7", 3),
+                        GetRepeatedPattern("P_7", 3)
+                    },
+                    0
+                ),
+                // 이벤트 3: 바로 이어서(5초 후) Enemy_1 3마리, 위치 (3,-2.5), (4,-2.5), (5,-2.5)
+                (
+                    new Vector3[] {
+                        new Vector3(3f, -2.5f, 0),
+                        new Vector3(4f, -2.5f, 0),
+                        new Vector3(5f, -2.5f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_3", 3),
+                        GetRepeatedPattern("P_3", 3),
+                        GetRepeatedPattern("P_3", 3)
+                    },
+                    1
+                )
+            }
+        },
+        { 9, new List<(Vector3[] positions, string[][] patterns, int enemyType)>()
+            {
+                // 스폰 이벤트 1
+                (
+                    new Vector3[] { new Vector3(0f, 4.6f, 0) },
+                    new string[][] { ConcatPatterns(GetRepeatedPattern("P_0", 2), GetRepeatedPattern("P_8", 15)) },
+                    0
+                ),
+                // 스폰 이벤트 2
+                (
+                    new Vector3[] { new Vector3(0f, 4.6f, 0) },
+                    new string[][] { ConcatPatterns(GetRepeatedPattern("P_0", 2), GetRepeatedPattern("P_8", 15)) },
+                    0
+                ),
+                // 스폰 이벤트 3
+                (
+                    new Vector3[] { new Vector3(0f, 4.6f, 0) },
+                    new string[][] { ConcatPatterns(GetRepeatedPattern("P_0", 2), GetRepeatedPattern("P_8", 15)) },
+                    0
+                ),
+                // 스폰 이벤트 4
+                (
+                    new Vector3[] { new Vector3(0f, 4.6f, 0) },
+                    new string[][] { ConcatPatterns(GetRepeatedPattern("P_0", 2), GetRepeatedPattern("P_8", 15)) },
+                    0
+                ),
+                // 스폰 이벤트 5
+                (
+                    new Vector3[] { new Vector3(0f, 4.6f, 0) },
+                    new string[][] { ConcatPatterns(GetRepeatedPattern("P_0", 2), GetRepeatedPattern("P_8", 15)) },
+                    0
+                )
+            }
+        },
+        { 10, new List<(Vector3[] positions, string[][] patterns, int enemyType)>()
+            {
+        // 그룹 A: 5번 반복, 매 번 2마리 스폰
+                (
+                    new Vector3[] {
+                        new Vector3(-1f, 4.6f, 0),
+                        new Vector3(1f, 4.6f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_0", 3), GetRepeatedPattern("P_8", 20)),
+                        ConcatPatterns(GetRepeatedPattern("P_0", 3), GetRepeatedPattern("P_9", 20))
+                    },
+                    0
+                ),
+                (
+                    new Vector3[] {
+                        new Vector3(-1f, 4.6f, 0),
+                        new Vector3(1f, 4.6f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_0", 3), GetRepeatedPattern("P_8", 20)),
+                        ConcatPatterns(GetRepeatedPattern("P_0", 3), GetRepeatedPattern("P_9", 20))
+                    },
+                    0
+                ),
+                (
+                    new Vector3[] {
+                        new Vector3(-1f, 4.6f, 0),
+                        new Vector3(1f, 4.6f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_0", 3), GetRepeatedPattern("P_8", 20)),
+                        ConcatPatterns(GetRepeatedPattern("P_0", 3), GetRepeatedPattern("P_9", 20))
+                    },
+                    0
+                ),
+                (
+                    new Vector3[] {
+                        new Vector3(-1f, 4.6f, 0),
+                        new Vector3(1f, 4.6f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_0", 3), GetRepeatedPattern("P_8", 20)),
+                        ConcatPatterns(GetRepeatedPattern("P_0", 3), GetRepeatedPattern("P_9", 20))
+                    },
+                    0
+                ),
+                (
+                    new Vector3[] {
+                        new Vector3(-1f, 4.6f, 0),
+                        new Vector3(1f, 4.6f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_0", 3), GetRepeatedPattern("P_8", 20)),
+                        ConcatPatterns(GetRepeatedPattern("P_0", 3), GetRepeatedPattern("P_9", 20))
+                    },
+                    0
+                ),
+                // 그룹 B: 5초 후에 3마리 동시에 스폰
+                (
+                    new Vector3[] {
+                        new Vector3(-3f, 4.5f, 0),
+                        new Vector3(0f, 5.5f, 0),
+                        new Vector3(3f, 5.5f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_2", 1),
+                        GetRepeatedPattern("P_0", 1),
+                        GetRepeatedPattern("P_3", 1)
+                    },
+                    0
+                )
+            }
+        },
     };
 
     // 헬퍼 메서드: 지정한 패턴을 count번 반복하는 배열을 생성합니다.
@@ -276,7 +515,15 @@ public class WaveManager : MonoBehaviour
             if (!waveInProgress)
             {
                 waveInProgress = true;
-                Debug.Log($"Starting Wave {currentWave}");
+                if (currentWave > 5)
+                {
+                    Debug.Log($"Starting Wave {currentWave - 5}");
+                }
+                else if (currentWave > 10)
+                {
+                    Debug.Log($"Starting Wave {currentWave - 10}");
+                }
+                else Debug.Log($"Starting Wave {currentWave}");
 
                 if (waveData.ContainsKey(currentWave))
                 {
@@ -303,6 +550,48 @@ public class WaveManager : MonoBehaviour
                                 yield return new WaitForSeconds(5f);
                         }
                     }
+                    else if (currentWave == 7)
+                    {
+                        for (int i = 0; i < waveSteps.Count; i++)
+                        {
+                            yield return StartCoroutine(SpawnEnemies(waveSteps[i].positions, waveSteps[i].patterns, waveSteps[i].enemyType));
+                            // Group A 이벤트 1 후 2초, 그룹 A 이벤트 2 후 5초, 그룹 B 이벤트 1 후 2초
+                            if (i == 0) yield return new WaitForSeconds(2f);
+                            else if (i == 1) yield return new WaitForSeconds(5f);
+                            else if (i == 2) yield return new WaitForSeconds(2f);
+                        }
+                    }
+                    else if (currentWave == 8)
+                    {
+                        // Wave 8: 이벤트 1 바로 스폰, 이후 5초 대기, 그리고 이벤트 2와 3 스폰 (연달아)
+                        yield return StartCoroutine(SpawnEnemies(waveSteps[0].positions, waveSteps[0].patterns, waveSteps[0].enemyType));
+                        yield return new WaitForSeconds(5f);
+                        yield return StartCoroutine(SpawnEnemies(waveSteps[1].positions, waveSteps[1].patterns, waveSteps[1].enemyType));
+                        yield return StartCoroutine(SpawnEnemies(waveSteps[2].positions, waveSteps[2].patterns, waveSteps[2].enemyType));
+                    }
+                    else if (currentWave == 9)
+                    {
+                        // Wave 9: 각 스폰 이벤트 후 1초 간격으로 진행
+                        foreach (var step in waveSteps)
+                        {
+                            yield return StartCoroutine(SpawnEnemies(step.positions, step.patterns, step.enemyType));
+                            yield return new WaitForSeconds(1f);
+                        }
+                    }
+                    else if (currentWave == 10)
+                    {
+                        waveSteps = waveData[currentWave];
+                        // 그룹 A: 5번의 스폰 이벤트, 각 이벤트 후 1초 대기
+                        for (int i = 0; i < 5; i++)
+                        {
+                            yield return StartCoroutine(SpawnEnemies(waveSteps[i].positions, waveSteps[i].patterns, waveSteps[i].enemyType));
+                            yield return new WaitForSeconds(1f);
+                        }
+                        // 그룹 B: 그 후 1초 대기하여 총 5초 후에 스폰 (혹은 바로 1초 대기 후 스폰)
+                        yield return new WaitForSeconds(1f);
+                        yield return StartCoroutine(SpawnEnemies(waveSteps[5].positions, waveSteps[5].patterns, waveSteps[5].enemyType));
+                    }
+
                     else
                     {
                         for (int i = 0; i < waveSteps.Count; i++)
@@ -319,7 +608,15 @@ public class WaveManager : MonoBehaviour
                     yield return null;
                 }
 
-                Debug.Log($"Wave {currentWave} complete. Waiting {waveDelay} seconds before next wave...");
+                if (currentWave > 5)
+                {
+                    Debug.Log($"Wave {currentWave - 5} complete. Waiting {waveDelay} seconds before next wave...");
+                }
+                else if (currentWave > 10)
+                {
+                    Debug.Log($"Wave {currentWave - 10} complete. Waiting {waveDelay} seconds before next wave...");
+                }
+                else Debug.Log($"Wave {currentWave} complete. Waiting {waveDelay} seconds before next wave...");
                 yield return new WaitForSeconds(waveDelay);
                 currentWave++;
                 waveInProgress = false;
@@ -330,7 +627,16 @@ public class WaveManager : MonoBehaviour
 
     IEnumerator SpawnEnemies(Vector3[] positions, string[][] patterns, int enemyType)
     {
-        GameObject prefabToUse = enemyType == 0 ? enemyPrefab : enemyPrefab1;
+        GameObject prefabToUse = null;
+        if (enemyType == 0)
+            prefabToUse = enemyPrefab;
+        else if (enemyType == 1)
+            prefabToUse = enemyPrefab1;
+        else if (enemyType == 2)
+            prefabToUse = enemyPrefab2;
+        else
+            prefabToUse = enemyPrefab; // fallback
+
         for (int i = 0; i < positions.Length; i++)
         {
             GameObject enemy = Instantiate(prefabToUse, positions[i], Quaternion.identity);
