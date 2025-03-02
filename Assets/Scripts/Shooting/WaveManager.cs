@@ -20,7 +20,7 @@ public class WaveManager : MonoBehaviour
         new Dictionary<int, List<(Vector3[], string[][], int)>>()
     {
         // 웨이브 1
-        /*{ 1, new List<(Vector3[], string[][], int)>()
+        { 1, new List<(Vector3[], string[][], int)>()
             {
                 // 첫 번째 스폰: 좌표 {(-2,4.6), (0,4.6), (2,4.6)} – 각 "N_0" 4회 실행, enemyType 0
                 (
@@ -1027,7 +1027,7 @@ public class WaveManager : MonoBehaviour
                     0
                 )
             }
-        },*/
+        },
         
         // 웨이브 20
         { 20, new List<(Vector3[] positions, string[][] patterns, int enemyType)>()
