@@ -16,21 +16,30 @@ public class PatternManager : MonoBehaviour
         { "P_1", new Vector2[] { new Vector2(0, 1) } },  // 위로 이동
         { "P_2", new Vector2[] { new Vector2(1, 0) } },  // 오른쪽 이동
         { "P_3", new Vector2[] { new Vector2(-1, 0) } }, // 왼쪽 이동
-        { "P_4", new Vector2[] { new Vector2(1, -1) } }, // 대각선 오른쪽 아래
-        { "P_5", new Vector2[] { new Vector2(-1, -1) } }, // 대각선 왼쪽 아래
-        { "P_6", new Vector2[] { new Vector2(1, 1) } }, // 대각선 오른쪽 위
-        { "P_7", new Vector2[] { new Vector2(-1, 1) } }, // 대각선 왼쪽 위
-        { "P_8", null }, // 시계 방향 원 이동
-        { "P_9", null }, // 반시계 방향 원 이동
-        { "P_10", null }, // 물결 좌→우 이동
-        { "P_11", null }, // 물결 우→좌 이동
-        { "P_12", null }, // 물결 위→아래 이동
-        { "P_13", null }  // 물결 아래→위 이동
-        // "P_14"는 아래 TeleportPattern(), ExecutePattern()에서 별도로 처리
-        // "P_15"도 아래 ZigzagMovement(), " 별도로 처리
-        // "P_16" 미구현
-        // "P_17" 미구현
-        // "P_18"도 아래 별도로 처리
+        { "P_4", new Vector2[] { new Vector2(1, -0.5f) } }, // 대각선 오른쪽 아래 30도
+        { "P_5", new Vector2[] { new Vector2(-1, -0.5f) } }, // 대각선 왼쪽 아래 30도
+        { "P_6", new Vector2[] { new Vector2(1, 0.5f) } }, // 대각선 오른쪽 위 30도
+        { "P_7", new Vector2[] { new Vector2(-1, 0.5f) } }, // 대각선 왼쪽 위 30도
+        { "P_8", new Vector2[] { new Vector2(1, -1) } }, // 대각선 오른쪽 아래 45도
+        { "P_9", new Vector2[] { new Vector2(-1, -1) } }, // 대각선 왼쪽 아래 45도
+        { "P_10", new Vector2[] { new Vector2(1, 1) } }, // 대각선 오른쪽 위 45도
+        { "P_11", new Vector2[] { new Vector2(-1, 1) } }, // 대각선 왼쪽 위 45도
+        { "P_12", new Vector2[] { new Vector2(0.5f, -1) } }, // 대각선 오른쪽 아래 60도
+        { "P_13", new Vector2[] { new Vector2(-0.5f, -1) } }, // 대각선 왼쪽 아래 60도
+        { "P_14", new Vector2[] { new Vector2(0.5f, 1) } }, // 대각선 오른쪽 위 60도
+        { "P_15", new Vector2[] { new Vector2(-0.5f, 1) } }, // 대각선 왼쪽 위 60도
+        { "P_16", null }, // 시계 방향 원 이동
+        { "P_17", null }, // 반시계 방향 원 이동
+        { "P_18", null }, // 물결 좌→우 이동
+        { "P_19", null }, // 물결 우→좌 이동
+        { "P_20", null }, // 물결 위→아래 이동
+        { "P_21", null }  // 물결 아래→위 이동
+        // "P_22"는 아래 TeleportPattern(), ExecutePattern()에서 별도로 처리
+        // "P_23"도 아래 ZigzagMovement(), " 별도로 처리
+        // "P_24" 미구현
+        // "P_25"도 아래 KamikazeMovement(), " 별도로 처리
+        // "P_25R"도 아래 별도로 처리
+        // "P_26"도 아래 별도로 처리
     };
 
     private void Awake()
@@ -75,26 +84,36 @@ public class PatternManager : MonoBehaviour
         {
             if (enemy == null) yield break;
 
-            if (pattern == "P_8" || pattern == "P_9")
+            if (pattern == "P_16" || pattern == "P_17")
             {
-                bool clockwise = pattern == "P_8";
+                bool clockwise = pattern == "P_16";
                 yield return StartCoroutine(MoveInCircle(enemy, clockwise, 2f, 72f));
             }
-            else if (pattern == "P_10" || pattern == "P_11" || pattern == "P_12" || pattern == "P_13")
+            else if (pattern == "P_18" || pattern == "P_19" || pattern == "P_20" || pattern == "P_21")
             {
                 yield return StartCoroutine(MoveInWave(enemy, pattern));
             }
-            else if (pattern == "P_14")
+            else if (pattern == "P_22")
             {
                 // 새로운 순간 이동 패턴
                 yield return StartCoroutine(TeleportPattern(enemy));
             }
-            else if (pattern == "P_15")
+            else if (pattern == "P_23")
             {
                 // 새로운 지그재그 이동 패턴
                 yield return StartCoroutine(ZigzagMovement(enemy));
             }
-            else if (pattern == "P_18")
+            else if (pattern == "P_25")  // 새 카미카제 패턴
+            {
+                yield return StartCoroutine(KamikazeMovement(enemy));
+            }
+            else if (pattern == "P_25R")
+            {
+                // 카미카제 복귀 패턴: enemy의 스폰 위치(현재 위치를 스폰 위치로 간주)를 기준으로 수행
+                Vector3 spawnPos = enemy.transform.position;
+                yield return StartCoroutine(KamikazeReturnMovement(enemy, spawnPos));
+            }
+            else if (pattern == "P_26")
             {
                 // 새로운 마름모 이동 패턴
                 yield return StartCoroutine(DiamondMovement(enemy));
@@ -183,10 +202,10 @@ public class PatternManager : MonoBehaviour
         float directionY = 1f;
 
         // 패턴에 따른 초기 이동 방향 설정
-        if (pattern == "P_10") { directionX = 1f; directionY = 0f; }
-        if (pattern == "P_11") { directionX = -1f; directionY = 0f; }
-        if (pattern == "P_12") { directionX = 0f; directionY = -1f; }
-        if (pattern == "P_13") { directionX = 0f; directionY = 1f; }
+        if (pattern == "P_18") { directionX = 1f; directionY = 0f; }
+        if (pattern == "P_19") { directionX = -1f; directionY = 0f; }
+        if (pattern == "P_20") { directionX = 0f; directionY = -1f; }
+        if (pattern == "P_21") { directionX = 0f; directionY = 1f; }
 
         float initialX = enemy.transform.position.x;
         float initialY = enemy.transform.position.y;
@@ -199,12 +218,12 @@ public class PatternManager : MonoBehaviour
             float newX = enemy.transform.position.x;
             float newY = enemy.transform.position.y;
 
-            if (pattern == "P_10" || pattern == "P_11")
+            if (pattern == "P_18" || pattern == "P_19")
             {
                 newX += waveSpeed * directionX * Time.deltaTime;
                 newY = initialY + waveAmplitude * Mathf.Sin(waveFrequency * newX);
             }
-            else if (pattern == "P_12" || pattern == "P_13")
+            else if (pattern == "P_20" || pattern == "P_21")
             {
                 newY += waveSpeed * directionY * Time.deltaTime;
                 newX = initialX + waveAmplitude * Mathf.Sin(waveFrequency * newY);
@@ -279,7 +298,7 @@ public class PatternManager : MonoBehaviour
         }
     }
 
-    // 새로운 패턴 P_14: 순간 이동 패턴
+    // 새로운 패턴 P_22: 순간 이동 패턴
     // 3초마다 지정된 좌표 범위 내에서 랜덤하게 순간 이동
     // 플레이어 피격 범위와 적 간 겹침을 피하며, 유효한 좌표가 없으면 최대 10회 시도 후 마지막 후보 사용
     private IEnumerator TeleportPattern(GameObject enemy)
@@ -339,7 +358,7 @@ public class PatternManager : MonoBehaviour
         }
     }
 
-    // 새로운 패턴 P_15: 지그재그 이동
+    // 새로운 패턴 P_23: 지그재그 이동
     // 1초마다 현재 위치에서 좌우 중 50% 확률로 1단위 이동.
     // 이동하려는 위치가 x:[-2,2], y:[-4.5,4.5] 범위를 벗어나거나, 
     // 이동하려는 위치에 이미 적 또는 플레이어가 있으면 이동하지 않습니다.
@@ -392,6 +411,96 @@ public class PatternManager : MonoBehaviour
         }
     }
 
+    // 새로운 패턴 P_25
+    private IEnumerator KamikazeMovement(GameObject enemy)
+    {
+        // 허용 범위 (필요하면 사용)
+        float minX = -2f, maxX = 2f;
+        float minY = -4.5f, maxY = 4.5f;
+
+        // 플레이어의 현재 위치를 목표로 설정
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        Vector3 targetPos;
+        if (player != null)
+        {
+            targetPos = player.transform.position;
+        }
+        else
+        {
+            // 만약 플레이어가 없다면, 현재 위치 유지
+            targetPos = enemy.transform.position;
+        }
+
+        float speed = 5f;
+        Vector3 startPos = enemy.transform.position;
+        float distance = Vector3.Distance(startPos, targetPos);
+        float moveTime = distance / speed;
+        float elapsed = 0f;
+        while (elapsed < moveTime && enemy != null)
+        {
+            enemy.transform.position = Vector3.Lerp(startPos, targetPos, elapsed / moveTime);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        if (enemy != null)
+        {
+            enemy.transform.position = targetPos;
+            // 화면 범위 체크 (필요 시)
+            if (targetPos.x < minX || targetPos.x > maxX || targetPos.y < minY || targetPos.y > maxY)
+            {
+                Destroy(enemy);
+                yield break;
+            }
+        }
+        yield return null;
+    }
+    private IEnumerator KamikazeReturnMovement(GameObject enemy, Vector3 spawnPos)
+    {
+        int cycles = 5;
+        float minX = -2f, maxX = 2f;
+        float minY = -4.5f, maxY = 4.5f;
+        for (int i = 0; i < cycles; i++)
+        {
+            // 플레이어 위치를 목표로
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            Vector3 target;
+            if (player != null)
+                target = player.transform.position;
+            else
+                target = spawnPos; // 플레이어가 없으면 스폰 위치로
+
+            // 플레이어 좌표로 돌진 (1초 동안 이동)
+            float moveTime = 1f;
+            float elapsed = 0f;
+            Vector3 startPos = enemy.transform.position;
+            while (elapsed < moveTime && enemy != null)
+            {
+                enemy.transform.position = Vector3.Lerp(startPos, target, elapsed / moveTime);
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+            if (enemy != null)
+                enemy.transform.position = target;
+            yield return new WaitForSeconds(1f);
+
+            // spawn 위치로 복귀 (1초 동안 이동)
+            moveTime = 1f;
+            elapsed = 0f;
+            startPos = enemy.transform.position;
+            while (elapsed < moveTime && enemy != null)
+            {
+                enemy.transform.position = Vector3.Lerp(startPos, spawnPos, elapsed / moveTime);
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+            if (enemy != null)
+                enemy.transform.position = spawnPos;
+            yield return new WaitForSeconds(1f);
+        }
+        yield return null;
+    }
+
+    // 새로운 패턴 P_26 
     private IEnumerator DiamondMovement(GameObject enemy)
     {
         // 단계 각도 (도 단위)

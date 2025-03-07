@@ -4,6 +4,7 @@ public class EnemyBullet : MonoBehaviour
 {
     public float speed = 4f; // 총알 속도
     public int damage = 1; // 총알 데미지
+    internal bool isEnemy4Bullet;
 
     void Update()
     {
@@ -24,8 +25,17 @@ public class EnemyBullet : MonoBehaviour
             Player player = other.GetComponent<Player>();
             if (player != null)
             {
-                player.TakeDamage(damage); // 플레이어에게 데미지 전달
-                Destroy(gameObject); // 총알 제거
+                if (isEnemy4Bullet)
+                {
+                    // Enemy_4 총알: 플레이어에게 데미지를 주지 않고, 이동 속도를 30% 감소시키는 효과 적용.
+                    player.ApplySpeedReduction(0.3f); // 이 메서드는 Player 스크립트에서 구현해야 합니다.
+                }
+                else
+                {
+                    // 일반 적 총알: 데미지 적용
+                    player.TakeDamage(damage);
+                }
+                Destroy(gameObject); // 충돌 후 총알 제거
             }
         }
     }

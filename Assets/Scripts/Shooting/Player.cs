@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
     private bool isTouching = false; // 터치 중인지 확인
     private Vector3 moveDirection = Vector3.zero; // 현재 이동 방향
     public float moveSpeed = 5f; // 이동 속도
+    private float originalMoveSpeed; // 원래 이동 속도 저장
 
     public GameObject gameOverPanel; // 게임 오버 패널
 
@@ -39,6 +40,7 @@ public class Player : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>(); // 스프라이트 렌더러 가져오기
         targetPosition = transform.position; // 초기 목표 위치는 현재 위치
+        originalMoveSpeed = moveSpeed; // 원래 속도 저장
     }
 
     void Update()
@@ -47,7 +49,8 @@ public class Player : MonoBehaviour
         Shoot(); // 총알 및 미사일 발사
     }
 
-    void HandleMovement() {
+    void HandleMovement()
+    {
         if (Input.GetMouseButton(0)) // 손가락이 화면에 닿아있는 동안 (터치 포함)
         {
             isTouching = true; // 터치 중
@@ -55,7 +58,8 @@ public class Player : MonoBehaviour
             mousePos.z = transform.position.z; // Z값 고정
             targetPosition = mousePos; // 목표 위치 갱신
         }
-        else {
+        else
+        {
             isTouching = false; // 터치가 끝나면 현재 방향 유지
         }
 
@@ -189,7 +193,7 @@ public class Player : MonoBehaviour
 
         if (gameOverPanel != null)
         {
-             Invoke("ActivateGameOverPanel", 0.5f);
+            Invoke("ActivateGameOverPanel", 0.5f);
         }
         else
         {
@@ -215,8 +219,21 @@ public class Player : MonoBehaviour
         }
         else
         {
-            Debug.LogError("🚨 1초 후 GameOverPanel이 비활성화됨! 다른 코드에서 비활성화되었을 가능성이 있음.");
+            Debug.LogError("1초 후 GameOverPanel이 비활성화됨! 다른 코드에서 비활성화되었을 가능성이 있음.");
         }
+    }
+
+    public void ApplySpeedReduction(float reductionPercent, float duration = 3f)
+    {
+        // 만약 여러 효과가 중첩되지 않도록 현재 효과를 취소할 수 있음 (여기서는 간단하게 처리)
+        StopCoroutine("RestoreSpeed");
+        moveSpeed = originalMoveSpeed * (1 - reductionPercent);
+        StartCoroutine(RestoreSpeed(duration));
+    }
+    private IEnumerator RestoreSpeed(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        moveSpeed = originalMoveSpeed;
     }
 
     private IEnumerator Invincibility()
@@ -239,7 +256,12 @@ public class Player : MonoBehaviour
     {
         if (other.CompareTag("Enemy")) // 적과 충돌
         {
-            TakeDamage(1); // 체력 1 감소
+            Enemy enemy = other.GetComponent<Enemy>();
+            // enemy가 있고 enemyType이 4가 아니라면 데미지 처리
+            if (enemy != null && enemy.enemyType != 4)
+            {
+                TakeDamage(1);
+            }
         }
     }
 }
