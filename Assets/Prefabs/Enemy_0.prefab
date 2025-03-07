@@ -208,10 +208,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9592910b40fbf7b47a8feb84defefb66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyType: 0
+  isEnemy1: 0
+  isFlipped: 0
   health: 10
-  dropChance: 0.1
+  dropChance: 0.05
   upgradeItemPrefab: {fileID: 2000207073148731593, guid: 8e034da5b64695342bb9fc2aa41b7d38, type: 3}
   scoreValue: 10
+  enemyBulletPrefab: {fileID: 0}
+  firePoint: {fileID: 0}
 --- !u!114 &2096236676618687891
 MonoBehaviour:
   m_ObjectHideFlags: 0

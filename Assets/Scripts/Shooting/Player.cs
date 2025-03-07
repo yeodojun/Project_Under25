@@ -89,12 +89,11 @@ public class Player : MonoBehaviour
 
     void FireGun()
     {
-        float[] gunPositions = GetGunPositions();
+        Vector3[] gunPositions = GetGunPositions();
 
-        foreach (float xOffset in gunPositions)
+        foreach (Vector3 xOffset in gunPositions)
         {
-            Vector3 spawnPosition = shootTransform.position + new Vector3(xOffset, 0, 0);
-            Instantiate(gunProjectile, spawnPosition, Quaternion.Euler(0, 0, 0)); // 위로 발사
+            Instantiate(gunProjectile, shootTransform.position + xOffset, Quaternion.Euler(0, 0, 0)); // 위로 발사
         }
     }
 
@@ -108,16 +107,16 @@ public class Player : MonoBehaviour
         }
     }
 
-    float[] GetGunPositions()
+    Vector3[] GetGunPositions()
     {
         switch (gunLevel)
         {
-            case 1: return new float[] { 0 };
-            case 2: return new float[] { -0.2f, 0.2f };
-            case 3: return new float[] { -0.4f, 0, 0.4f };
-            case 4: return new float[] { -0.6f, -0.2f, 0.2f, 0.6f };
-            case 5: return new float[] { -0.8f, -0.4f, 0, 0.4f, 0.8f };
-            default: return new float[] { 0 };
+            case 1: return new Vector3[] { new Vector3(0, 0, 0) };
+            case 2: return new Vector3[] { new Vector3(-0.2f, -0.1f, 0), new Vector3(0.2f, -0.1f, 0) };
+            case 3: return new Vector3[] { new Vector3(-0.4f, -0.3f, 0), new Vector3(0, 0, 0), new Vector3(0.4f, -0.3f, 0) };
+            case 4: return new Vector3[] { new Vector3(-0.6f, -0.4f, 0), new Vector3(-0.2f, -0.1f, 0), new Vector3(0.2f, -0.1f, 0), new Vector3(0.6f, -0.4f, 0) };
+            case 5: return new Vector3[] { new Vector3(-0.8f, -0.5f, 0), new Vector3(-0.4f, -0.3f, 0), new Vector3(0, 0, 0), new Vector3(0.4f, -0.3f, 0), new Vector3(0.8f, -0.5f, 0) };
+            default: return new Vector3[] { };
         }
     }
 
