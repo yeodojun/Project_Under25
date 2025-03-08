@@ -78,7 +78,7 @@ public class PatternManager : MonoBehaviour
             yield break;
         }
 
-        Debug.Log($"적 {enemy.name} - 패턴 시작: {string.Join(", ", patternSequence)}");
+        //Debug.Log($"적 {enemy.name} - 패턴 시작: {string.Join(", ", patternSequence)}");
 
         foreach (string pattern in patternSequence)
         {
@@ -457,8 +457,6 @@ public class PatternManager : MonoBehaviour
     private IEnumerator KamikazeReturnMovement(GameObject enemy, Vector3 spawnPos)
     {
         int cycles = 5;
-        float minX = -2f, maxX = 2f;
-        float minY = -4.5f, maxY = 4.5f;
         for (int i = 0; i < cycles; i++)
         {
             // 플레이어 위치를 목표로

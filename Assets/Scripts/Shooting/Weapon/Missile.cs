@@ -2,21 +2,44 @@ using UnityEngine;
 
 public class Missile : MonoBehaviour
 {
-    public float speed = 3f; // 미사일 속도
-    public int damage = 3; // 미사일 데미지
-    private bool hasHit = false; // 이미 충돌했는지 여부
+    public float speed = 3f;   // 미사일의 초기 속도
+    public int damage = 3;     // 미사일 데미지
+    private bool hasHit = false;
+
+    private Rigidbody2D rb;
 
     void Start()
     {
-        gameObject.tag = "Missile"; // 태그 추가
+        gameObject.tag = "Missile";
+
+        rb = GetComponent<Rigidbody2D>();
+        if (rb == null)
+        {
+            rb = gameObject.AddComponent<Rigidbody2D>();
+        }
+        // 중력 효과 없이 날아가도록 설정
+        rb.gravityScale = 0f;
+
+        // 미사일의 스폰 위치에 따라 발사 각도 결정
+        float launchAngleDeg = 90f; // 기본값: 세로(90도)
+        if (transform.position.x > 0)
+        {
+            launchAngleDeg = 60f; // 오른쪽 스폰: 60도
+        }
+        else if (transform.position.x < 0)
+        {
+            launchAngleDeg = 30f; // 왼쪽 스폰: 30도
+        }
+        float launchAngleRad = launchAngleDeg * Mathf.Deg2Rad;
+        Vector2 initialVelocity = new Vector2(speed * Mathf.Cos(launchAngleRad), speed * Mathf.Sin(launchAngleRad));
+        rb.linearVelocity = initialVelocity;
     }
 
     void Update()
     {
-        transform.position += Vector3.up * speed * Time.deltaTime;
-
-        // 화면 밖으로 나가면 제거
-        if (transform.position.y >= 5.5f)
+        // 미사일이 직선으로 날아가므로, 화면 경계를 벗어나면 제거합니다.
+        if (transform.position.y >= 5.5f || transform.position.y <= -5.5f ||
+            transform.position.x <= -3.2f || transform.position.x >= 3.2f)
         {
             Destroy(gameObject);
         }
@@ -24,16 +47,15 @@ public class Missile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (hasHit) return; // 이미 충돌했으면 무시
-
-        if (other.CompareTag("Enemy")) // 적과 충돌
+        if (hasHit) return;
+        if (other.CompareTag("Enemy"))
         {
             Enemy enemy = other.GetComponent<Enemy>();
             if (enemy != null)
             {
-                enemy.TakeDamage(damage); // 적에게 데미지 전달
-                hasHit = true; // 충돌 처리 완료
-                Destroy(gameObject); // 미사일 제거
+                enemy.TakeDamage(damage);
+                hasHit = true;
+                Destroy(gameObject);
             }
         }
     }

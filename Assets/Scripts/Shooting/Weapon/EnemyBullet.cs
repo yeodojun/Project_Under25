@@ -28,7 +28,7 @@ public class EnemyBullet : MonoBehaviour
                 if (isEnemy4Bullet)
                 {
                     // Enemy_4 총알: 플레이어에게 데미지를 주지 않고, 이동 속도를 30% 감소시키는 효과 적용.
-                    player.ApplySpeedReduction(0.3f); // 이 메서드는 Player 스크립트에서 구현해야 합니다.
+                    player.ApplySpeedReduction(0.3f); // 이거 Player 스크립트에서 사용
                 }
                 else
                 {

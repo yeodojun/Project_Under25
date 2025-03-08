@@ -1465,15 +1465,7 @@ public class WaveManager : MonoBehaviour
             if (!waveInProgress)
             {
                 waveInProgress = true;
-                if (currentWave > 5)
-                {
-                    Debug.Log($"Starting Wave {currentWave - 5}");
-                }
-                else if (currentWave > 10)
-                {
-                    Debug.Log($"Starting Wave {currentWave - 10}");
-                }
-                else Debug.Log($"Starting Wave {currentWave}");
+                Debug.Log($"Starting Wave {currentWave}");
 
                 if (waveData.ContainsKey(currentWave))
                 {
@@ -1789,15 +1781,12 @@ public class WaveManager : MonoBehaviour
                     yield return null;
                 }
 
-                if (currentWave > 5)
+                Debug.Log($"Wave {currentWave} complete. Waiting {waveDelay} seconds before next wave...");
+                if (currentWave < 25 && BossGaugeManager.Instance != null)
                 {
-                    Debug.Log($"Wave {currentWave - 5} complete. Waiting {waveDelay} seconds before next wave...");
+                    float increment = BossGaugeManager.Instance.maxGauge / 24f;
+                    BossGaugeManager.Instance.AddGauge(increment);
                 }
-                else if (currentWave > 10)
-                {
-                    Debug.Log($"Wave {currentWave - 10} complete. Waiting {waveDelay} seconds before next wave...");
-                }
-                else Debug.Log($"Wave {currentWave} complete. Waiting {waveDelay} seconds before next wave...");
                 yield return new WaitForSeconds(waveDelay);
                 currentWave++;
                 waveInProgress = false;
@@ -1852,11 +1841,11 @@ public class WaveManager : MonoBehaviour
             Debug.LogError("ExecutePattern() 실행 중 enemy가 null입니다!");
             yield break;
         }
-        Debug.Log($"적 {enemy.name} - 패턴 실행 시작: {string.Join(", ", patterns)}");
+        //Debug.Log($"적 {enemy.name} - 패턴 실행 시작: {string.Join(", ", patterns)}");
         yield return StartCoroutine(PatternManager.Instance.ExecutePattern(enemy, patterns));
         if (enemy != null)
         {
-            Debug.Log($"적 {enemy.name} - 패턴 실행 완료");
+            //Debug.Log($"적 {enemy.name} - 패턴 실행 완료");
         }
     }
     IEnumerator SpawnEnemyIndividual(Vector3 position, string[] pattern, int enemyType)

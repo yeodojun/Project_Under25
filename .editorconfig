@@ -1,0 +1,8 @@
+[*.cs]
+
+# Default severity for all analyzer diagnostics
+dotnet_analyzer_diagnostic.severity = suggestion
+[*.cs]
+
+# IDE0052: 읽지 않은 private 멤버 제거
+dotnet_diagnostic.IDE0052.severity = none

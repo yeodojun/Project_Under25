@@ -18,8 +18,8 @@ public class Enemy : MonoBehaviour
     private bool isDead = false; // 적이 이미 죽었는지 확인
 
     // 공용 필드: 적 총알 발사 관련 (Enemy_2,3,4용)
-    public GameObject enemyBulletPrefab; // 총알 프리팹 (Inspector에서 할당)
-    public Transform firePoint;          // 총알 발사 위치 (Inspector에서 할당)
+    public GameObject enemyBulletPrefab; // 총알 프리팹
+    public Transform firePoint;          // 총알 발사 위치
 
     void Awake()
     {
