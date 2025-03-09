@@ -1784,6 +1784,11 @@ public class WaveManager : MonoBehaviour
                 }
 
                 Debug.Log($"Wave {currentWave} complete. Waiting {waveDelay} seconds before next wave...");
+
+                if (currentWave == 1 && BossGaugeManager.Instance != null) // 웨이브 1 끝나면 게이지 보이기
+                {
+                    BossGaugeManager.Instance.ShowGauge();
+                }
                 if (currentWave < 25 && BossGaugeManager.Instance != null)
                 {
                     float increment = BossGaugeManager.Instance.maxGauge / 24f;

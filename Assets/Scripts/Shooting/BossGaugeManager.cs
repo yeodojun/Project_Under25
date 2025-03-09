@@ -28,13 +28,25 @@ public class BossGaugeManager : MonoBehaviour
     {
         if (gaugeSlider != null)
         {
+            // 처음에는 게이지를 숨겨둠
+            gaugeSlider.gameObject.SetActive(false);
+
+            gaugeSlider.minValue = 0;
             gaugeSlider.maxValue = maxGauge;
             gaugeSlider.value = currentGauge;
+            gaugeSlider.value = 0;      // 시작 시 0으로 설정
             Image fillImage = gaugeSlider.fillRect.GetComponent<Image>();
             if (fillImage != null)
             {
                 fillImage.color = Color.red;
             }
+        }
+    }
+    public void ShowGauge()
+    {
+        if (gaugeSlider != null)
+        {
+            gaugeSlider.gameObject.SetActive(true);
         }
     }
 
