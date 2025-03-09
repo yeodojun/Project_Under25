@@ -1762,6 +1762,8 @@ public class WaveManager : MonoBehaviour
                             yield return StartCoroutine(SpawnEnemies(waveSteps[i].positions, waveSteps[i].patterns, waveSteps[i].enemyType));
                             yield return new WaitForSeconds(1f);
                         }
+                        AudioManager.Instance.UpdateWave(currentWave); // BGM3번으로 전환
+
                     }
 
 

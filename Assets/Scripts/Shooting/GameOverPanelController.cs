@@ -47,18 +47,24 @@ public class GameOverPanelController : MonoBehaviour
 
         if (ScoreManager.Instance != null)
         {
+            ScoreManager.Instance.CheckAndUpdateHighScore(); // 최고 점수 갱신
             int currentScore = ScoreManager.Instance.GetScore();
             int highScore = ScoreManager.Instance.GetHighScore();
-            
+
             scoreText.text = $"{currentScore}";
-            highScoreText.text = $"최고 점수: {highScore}";
+            highScoreText.text = $"{highScore}";
 
             Debug.Log($"현재 점수: {currentScore}, 최고 점수: {highScore}");
+        }
+        else
+        {
+            Debug.LogError("ScoreManager.Instance가 null입니다!");
         }
 
         gameOverPanel.SetActive(true);
         Debug.Log("GameOverPanel 활성화됨");
     }
+
 
     public void RestartGame()
     {

@@ -257,26 +257,11 @@ public class Player : MonoBehaviour
     {
         if (ScoreManager.Instance != null)
             ScoreManager.Instance.CheckAndUpdateHighScore();
-        if (gameOverPanel != null)
-            Invoke("ActivateGameOverPanel", 0.5f);
-        else
-            Debug.LogError("GameOverPanel이 연결되지 않았습니다!");
+
+        if (GameOverPanelController.Instance != null)
+            GameOverPanelController.Instance.ShowGameOverPanel();
+
         gameObject.SetActive(false);
-    }
-
-    private void ActivateGameOverPanel()
-    {
-        gameOverPanel.SetActive(true);
-        Debug.Log("GameOverPanel 활성화됨");
-        Invoke("CheckGameOverPanelStatus", 1f);
-    }
-
-    private void CheckGameOverPanelStatus()
-    {
-        if (gameOverPanel.activeSelf)
-            Debug.Log("1초 후에도 GameOverPanel이 활성화 상태입니다.");
-        else
-            Debug.LogError("1초 후 GameOverPanel이 비활성화됨!");
     }
 
     private IEnumerator Invincibility()
