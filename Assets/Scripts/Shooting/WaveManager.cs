@@ -635,7 +635,7 @@ public class WaveManager : MonoBehaviour
                     0
                 ),
             }
-        },
+        }, 
         // 웨이브 13 추가
         { 13, new List<(Vector3[], string[][], int)>()
             {
