@@ -9,7 +9,6 @@ public class ExplainPanelController : MonoBehaviour
 
     private static List<ExplainPanelController> allPanels = new List<ExplainPanelController>();
     private static ExplainPanelController selectedPanel = null; // 현재 선택된 패널
-    private bool isSelected = false; // 현재 패널이 선택되었는지 여부
 
     private void Start()
     {
@@ -38,7 +37,7 @@ public class ExplainPanelController : MonoBehaviour
     {
         if (selectedPanel == this)
         {
-            // 🔹 같은 패널을 두 번 클릭하면 다음 씬으로 이동
+            // 같은 패널을 두 번 클릭하면 다음 씬으로 이동
             if (GameManager.Instance == null)
             {
                 GameManager.Instance = FindObjectOfType<GameManager>();
@@ -56,23 +55,20 @@ public class ExplainPanelController : MonoBehaviour
             return;
         }
 
-        // 🔹 기존 선택된 패널의 GlowEffect 끄기
+        // 기존 선택된 패널의 GlowEffect 끄기
         if (selectedPanel != null && selectedPanel.glowEffect != null)
         {
             selectedPanel.glowEffect.SetActive(false);
-            selectedPanel.isSelected = false;
         }
 
-        // 🔹 현재 패널 선택
+        // 현재 패널 선택
         glowEffect.SetActive(true);
-        isSelected = true;
         selectedPanel = this; // 현재 패널을 선택된 패널로 설정
     }
 
     private void OnEnable()
     {
-        // 🔹 씬이 다시 로드될 때 GlowEffect를 끄고 선택 상태 초기화
-        isSelected = false;
+        // 씬이 다시 로드될 때 GlowEffect를 끄고 선택 상태 초기화
         if (glowEffect != null)
         {
             glowEffect.SetActive(false);

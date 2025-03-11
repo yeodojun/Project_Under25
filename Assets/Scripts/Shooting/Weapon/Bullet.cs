@@ -36,5 +36,13 @@ public class Bullet : MonoBehaviour
                 Destroy(gameObject); // 총알 제거
             }
         }
+        Boss boss = other.GetComponent<Boss>();
+        if (boss != null)
+        {
+            boss.TakeDamage(damage);
+            hasHit = true;
+            Destroy(gameObject);
+            return;
+        }
     }
 }

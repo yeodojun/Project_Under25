@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float gunShootInterval = 0.2f; // 총 발사 속도
     private float lastGunShootTime;
+    public bool canShoot = true;  // true일 때만 총알/미사일 발사
+
     [SerializeField]
     private float missileShootInterval = 2.0f; // 미사일 발사 속도
     private float lastMissileShootTime;
@@ -51,7 +53,14 @@ public class Player : MonoBehaviour
     void Update()
     {
         HandleMovement();
-        Shoot();
+        if (canShoot)
+        {
+            Shoot();
+        }
+        if (isTouching)
+        {
+            Debug.Log("Touch");
+        }
     }
 
     void HandleMovement()
@@ -286,4 +295,16 @@ public class Player : MonoBehaviour
                 TakeDamage(1);
         }
     }
+    public void SetBulletScale(float factor)
+    {
+        if (gunProjectile != null)
+        {
+            gunProjectile.transform.localScale = new Vector3(factor, factor, 1f);
+        }
+        if (missileProjectile != null)
+        {
+            missileProjectile.transform.localScale = new Vector3(factor, factor, 1f);
+        }
+    }
+
 }
