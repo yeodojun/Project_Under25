@@ -57,10 +57,6 @@ public class Player : MonoBehaviour
         {
             Shoot();
         }
-        if (isTouching)
-        {
-            Debug.Log("Touch");
-        }
     }
 
     void HandleMovement()

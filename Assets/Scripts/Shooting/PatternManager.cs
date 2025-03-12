@@ -594,7 +594,7 @@ public class PatternManager : MonoBehaviour
         }
         yield return null;
     }
-    // 카미카제 리턴 한번만
+    // 카미카제 리턴 한번만 보스전용용
     private IEnumerator KamikazeReturnMovementOnce(GameObject enemy, Vector3 spawnPos)
     {
         // 플레이어 위치로 돌진 (1초 동안 이동)
