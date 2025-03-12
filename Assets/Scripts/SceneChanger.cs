@@ -9,6 +9,12 @@ public class SceneChanger : MonoBehaviour {
     }
 
     public void GameMainSceneChange() {
-        SceneManager.LoadScene("GameSelectScene");
+        StartCoroutine(LoadSceneWithDelay());
     }
+
+    private IEnumerator LoadSceneWithDelay()
+{
+    yield return new WaitForSeconds(3f);
+    SceneManager.LoadScene("GameSelectScene");
+}
 }

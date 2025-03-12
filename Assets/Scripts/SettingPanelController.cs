@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,7 +15,7 @@ public class SettingPanelController : MonoBehaviour
         {
             settingButton.onClick.AddListener(ShowSettingPanel);
         }
-        
+
         if (closeButton != null)
         {
             closeButton.onClick.AddListener(HideSettingPanel);
@@ -27,16 +28,22 @@ public class SettingPanelController : MonoBehaviour
         }
         else
         {
-            Debug.LogError("🚨 [SettingPanelController] SettingPanel이 할당되지 않았습니다!");
+            Debug.LogError("[SettingPanelController] SettingPanel이 할당되지 않았습니다!");
         }
     }
 
     public void ShowSettingPanel()
     {
+        StartCoroutine(ShowSettingPanelWithDelay());
+    }
+    private IEnumerator ShowSettingPanelWithDelay()
+    {
+        yield return new WaitForSeconds(3f);
+
         if (settingPanel != null)
         {
             settingPanel.SetActive(true);
-            Debug.Log("✅ SettingPanel 활성화됨");
+            Debug.Log("SettingPanel 활성화됨");
         }
     }
 
@@ -45,7 +52,7 @@ public class SettingPanelController : MonoBehaviour
         if (settingPanel != null)
         {
             settingPanel.SetActive(false);
-            Debug.Log("✅ SettingPanel 비활성화됨");
+            Debug.Log("SettingPanel 비활성화됨");
         }
     }
 }

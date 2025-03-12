@@ -1,0 +1,403 @@
+fileFormatVersion: 2
+guid: 29529b4fb49dfce44bc9184cbbb4a139
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 7460708469542864476
+    second: StartScene_Character_01_0
+  - first:
+      213: 8005338051425973283
+    second: StartScene_Character_01_1
+  - first:
+      213: 301375374294641233
+    second: StartScene_Character_01_2
+  - first:
+      213: 6604829834444760234
+    second: StartScene_Character_01_3
+  - first:
+      213: 8972174908926002212
+    second: StartScene_Character_01_4
+  - first:
+      213: 5403550802577519149
+    second: StartScene_Character_01_5
+  - first:
+      213: -8615096267685921613
+    second: StartScene_Character_01_6
+  - first:
+      213: 2596385191276061210
+    second: StartScene_Character_01_7
+  - first:
+      213: -1527760276275139536
+    second: StartScene_Character_01_8
+  - first:
+      213: -8418292659067677652
+    second: StartScene_Character_01_9
+  - first:
+      213: 5760062473997581064
+    second: StartScene_Character_01_10
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: StartScene_Character_01_0
+      rect:
+        serializedVersion: 2
+        x: 425
+        y: 1592
+        width: 17
+        height: 52
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c56c9d313d2c98760800000000000000
+      internalID: 7460708469542864476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartScene_Character_01_1
+      rect:
+        serializedVersion: 2
+        x: 459
+        y: 1598
+        width: 49
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 324b92e2b8ca81f60800000000000000
+      internalID: 8005338051425973283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartScene_Character_01_2
+      rect:
+        serializedVersion: 2
+        x: 513
+        y: 1622
+        width: 61
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15ae1e06e43be2400800000000000000
+      internalID: 301375374294641233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartScene_Character_01_3
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 1037
+        width: 127
+        height: 563
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa46bf39db119ab50800000000000000
+      internalID: 6604829834444760234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartScene_Character_01_4
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 1599
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42405350b81938c70800000000000000
+      internalID: 8972174908926002212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartScene_Character_01_5
+      rect:
+        serializedVersion: 2
+        x: 496
+        y: 1534
+        width: 65
+        height: 69
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d22f86163d44dfa40800000000000000
+      internalID: 5403550802577519149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartScene_Character_01_6
+      rect:
+        serializedVersion: 2
+        x: 530
+        y: 1551
+        width: 69
+        height: 57
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3bc79cad697017880800000000000000
+      internalID: -8615096267685921613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartScene_Character_01_7
+      rect:
+        serializedVersion: 2
+        x: 461
+        y: 1534
+        width: 42
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1228124396380420800000000000000
+      internalID: 2596385191276061210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartScene_Character_01_8
+      rect:
+        serializedVersion: 2
+        x: 477
+        y: 1590
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03ceaa68f1e4ccae0800000000000000
+      internalID: -1527760276275139536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartScene_Character_01_9
+      rect:
+        serializedVersion: 2
+        x: 599
+        y: 1466
+        width: 36
+        height: 130
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c241ef8bd673c2b80800000000000000
+      internalID: -8418292659067677652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StartScene_Character_01_10
+      rect:
+        serializedVersion: 2
+        x: 290
+        y: 459
+        width: 763
+        height: 1198
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80bfeae4d4adfef40800000000000000
+      internalID: 5760062473997581064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: ec904e5f6432d5b438cb4527a7752767
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      StartScene_Character_01_0: 7460708469542864476
+      StartScene_Character_01_1: 8005338051425973283
+      StartScene_Character_01_10: 5760062473997581064
+      StartScene_Character_01_2: 301375374294641233
+      StartScene_Character_01_3: 6604829834444760234
+      StartScene_Character_01_4: 8972174908926002212
+      StartScene_Character_01_5: 5403550802577519149
+      StartScene_Character_01_6: -8615096267685921613
+      StartScene_Character_01_7: 2596385191276061210
+      StartScene_Character_01_8: -1527760276275139536
+      StartScene_Character_01_9: -8418292659067677652
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
