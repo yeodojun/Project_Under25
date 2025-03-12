@@ -307,6 +307,6 @@ MonoBehaviour:
   bgmAudioSource: {fileID: 8449243598105418915}
   sfxAudioSource: {fileID: 1281428293569372743}
   bgm1: {fileID: 8300000, guid: 45ac07b8c5e71154e8237066e6469c09, type: 3}
-  bgm2: {fileID: 0}
-  bgm3: {fileID: 0}
-  bgm4: {fileID: 0}
+  bgm2: {fileID: 8300000, guid: 45ac07b8c5e71154e8237066e6469c09, type: 3}
+  bgm3: {fileID: 8300000, guid: 45ac07b8c5e71154e8237066e6469c09, type: 3}
+  bgm4: {fileID: 8300000, guid: 45ac07b8c5e71154e8237066e6469c09, type: 3}

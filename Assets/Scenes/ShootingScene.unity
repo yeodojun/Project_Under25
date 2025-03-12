@@ -1392,7 +1392,7 @@ GameObject:
   - component: {fileID: 558984163}
   m_Layer: 0
   m_Name: BackGround1
-  m_TagString: Untagged
+  m_TagString: BackGround
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1479,6 +1479,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9347eac030990d34dae9f1faeb44a85d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 3
+  isScrolling: 1
 --- !u!1 &735763599
 GameObject:
   m_ObjectHideFlags: 0
@@ -2276,6 +2278,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1170527923}
   m_CullTransparentMesh: 1
+--- !u!1001 &1201309762
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4384887059765304262, guid: ce1dab2d00811e74099f8ffe74e14f99, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 256.75867
+      objectReference: {fileID: 0}
+    - target: {fileID: 4384887059765304262, guid: ce1dab2d00811e74099f8ffe74e14f99, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1269.4434
+      objectReference: {fileID: 0}
+    - target: {fileID: 4384887059765304262, guid: ce1dab2d00811e74099f8ffe74e14f99, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -8.658644
+      objectReference: {fileID: 0}
+    - target: {fileID: 4384887059765304262, guid: ce1dab2d00811e74099f8ffe74e14f99, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4384887059765304262, guid: ce1dab2d00811e74099f8ffe74e14f99, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4384887059765304262, guid: ce1dab2d00811e74099f8ffe74e14f99, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4384887059765304262, guid: ce1dab2d00811e74099f8ffe74e14f99, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4384887059765304262, guid: ce1dab2d00811e74099f8ffe74e14f99, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4384887059765304262, guid: ce1dab2d00811e74099f8ffe74e14f99, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4384887059765304262, guid: ce1dab2d00811e74099f8ffe74e14f99, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8876521824087290832, guid: ce1dab2d00811e74099f8ffe74e14f99, type: 3}
+      propertyPath: m_Name
+      value: AudioManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 9169718420749318489, guid: ce1dab2d00811e74099f8ffe74e14f99, type: 3}
+      propertyPath: bgm3
+      value: 
+      objectReference: {fileID: 8300000, guid: 4383d4433f2abfd4d9f230b1efb3d9db, type: 3}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ce1dab2d00811e74099f8ffe74e14f99, type: 3}
 --- !u!1 &1224094156
 GameObject:
   m_ObjectHideFlags: 0
@@ -2480,7 +2543,7 @@ GameObject:
   - component: {fileID: 1511035948}
   m_Layer: 0
   m_Name: BackGround2
-  m_TagString: Untagged
+  m_TagString: BackGround
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2567,6 +2630,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9347eac030990d34dae9f1faeb44a85d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 3
+  isScrolling: 1
 --- !u!1 &1520531693
 GameObject:
   m_ObjectHideFlags: 0
@@ -2676,6 +2741,7 @@ MonoBehaviour:
   missileProjectile: {fileID: 8117281591808672609, guid: 88652dcc4f8751847972c6571f6db8a1, type: 3}
   shootTransform: {fileID: 1649759036}
   gunShootInterval: 0.15
+  canShoot: 1
   missileShootInterval: 1
   health: 3
   invincibilityDuration: 0.5
@@ -3841,7 +3907,9 @@ MonoBehaviour:
   enemyPrefab: {fileID: 2336088905530037732, guid: 62bb36d9019b35149a0878a13584f338, type: 3}
   enemyPrefab1: {fileID: 2336088905530037732, guid: 155b16a9fbbf24f4f81fa0e5ca9e79d2, type: 3}
   enemyPrefab2: {fileID: 2336088905530037732, guid: 220db0a82fce5a141a8701cdfdbf26d3, type: 3}
+  bossPrefab: {fileID: 2336088905530037732, guid: bd08156759f1bb34280fb8a33293380c, type: 3}
   waveDelay: 1
+  redWarningPanel: {fileID: 0}
 --- !u!4 &1964446570
 Transform:
   m_ObjectHideFlags: 0
@@ -4012,3 +4080,4 @@ SceneRoots:
   - {fileID: 1060730421}
   - {fileID: 1758628884}
   - {fileID: 1016390977}
+  - {fileID: 1201309762}

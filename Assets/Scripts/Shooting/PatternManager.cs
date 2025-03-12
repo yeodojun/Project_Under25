@@ -72,6 +72,7 @@ public class PatternManager : MonoBehaviour
     // patternSequence 배열에 있는 패턴들을 순차적으로 실행합니다.
     public IEnumerator ExecutePattern(GameObject enemy, string[] patternSequence)
     {
+        Boss boss = enemy.GetComponent<Boss>();
         if (enemy == null)
         {
             Debug.LogError("ExecutePattern() 실행 중 enemy가 null입니다!");
@@ -82,6 +83,10 @@ public class PatternManager : MonoBehaviour
 
         foreach (string pattern in patternSequence)
         {
+            if (boss != null && boss.forceStopPattern)
+            {
+                yield break; // 즉시 종료
+            }
             if (enemy == null) yield break;
 
             if (pattern == "P_16" || pattern == "P_17")
@@ -103,6 +108,10 @@ public class PatternManager : MonoBehaviour
                 // 새로운 지그재그 이동 패턴
                 yield return StartCoroutine(ZigzagMovement(enemy));
             }
+            else if (pattern == "P_23B") // 새 지그제그 보스에서만 사용
+            {
+                yield return StartCoroutine(ZigzagMovementBoss(enemy));
+            }
             else if (pattern == "P_25")  // 새 카미카제 패턴
             {
                 yield return StartCoroutine(KamikazeMovement(enemy));
@@ -113,6 +122,13 @@ public class PatternManager : MonoBehaviour
                 Vector3 spawnPos = enemy.transform.position;
                 yield return StartCoroutine(KamikazeReturnMovement(enemy, spawnPos));
             }
+            else if (pattern == "P_25R_boss")
+            {
+                // 보스 전용: 단 한번 수행하는 카미카제 복귀 패턴
+                Vector3 spawnPos = enemy.transform.position;
+                yield return StartCoroutine(KamikazeReturnMovementOnce(enemy, spawnPos));
+            }
+
             else if (pattern == "P_26")
             {
                 // 새로운 마름모 이동 패턴
@@ -161,7 +177,10 @@ public class PatternManager : MonoBehaviour
 
         }
 
-        Debug.Log($"적 {enemy.name} - 모든 패턴 완료 후 다음 행동 대기");
+        if (enemy != null)
+        {
+            Debug.Log($"적 {enemy.name} - 모든 패턴 완료 후 다음 행동 대기");
+        }
     }
 
     private IEnumerator MoveInCircle(GameObject enemy, bool clockwise, float radius, float rotationSpeed)
@@ -192,6 +211,7 @@ public class PatternManager : MonoBehaviour
 
     private IEnumerator MoveInWave(GameObject enemy, string pattern)
     {
+        Boss boss = enemy.GetComponent<Boss>();
         if (enemy == null) yield break;
 
         float waveSpeed = 2f;      // 이동 속도
@@ -218,6 +238,8 @@ public class PatternManager : MonoBehaviour
             float newX = enemy.transform.position.x;
             float newY = enemy.transform.position.y;
 
+            if (boss != null && boss.forceStopPattern)
+                yield break;
             if (pattern == "P_18" || pattern == "P_19")
             {
                 newX += waveSpeed * directionX * Time.deltaTime;
@@ -320,6 +342,7 @@ public class PatternManager : MonoBehaviour
                 attempts++;
                 float candidateX = Random.Range(minX, maxX);
                 float candidateY = Random.Range(minY, maxY);
+                if (enemy == null) yield break; // 또는 return;
                 candidate = new Vector3(candidateX, candidateY, enemy.transform.position.z);
 
                 // 플레이어 피격 범위 체크
@@ -364,13 +387,21 @@ public class PatternManager : MonoBehaviour
     // 이동하려는 위치에 이미 적 또는 플레이어가 있으면 이동하지 않습니다.
     private IEnumerator ZigzagMovement(GameObject enemy)
     {
+        Boss boss = enemy.GetComponent<Boss>();
         float step = 1f; // 이동 거리
         float patternMinX = -2f, patternMaxX = 2f;
         float patternMinY = -4.5f, patternMaxY = 4.5f;
 
         while (enemy != null)
         {
+            if (boss != null && boss.forceStopPattern)
+                yield break;
             yield return new WaitForSeconds(1f);
+            if (enemy == null) yield break;
+
+            if (boss != null && boss.forceStopPattern)
+                yield break;
+
             Vector3 currentPos = enemy.transform.position;
             int direction = Random.Range(0, 2) == 0 ? -1 : 1; // -1: 좌, +1: 우
             Vector3 targetPos = currentPos + new Vector3(direction * step, 0, 0);
@@ -410,6 +441,71 @@ public class PatternManager : MonoBehaviour
             }
         }
     }
+    // 패턴 P_23B
+    // 이 패턴은 보스에서만 사용
+    private IEnumerator ZigzagMovementBoss(GameObject enemy)
+    {
+        Boss boss = enemy.GetComponent<Boss>();
+        float step = 1f; // 이동 거리
+        float patternMinX = -2f, patternMaxX = 2f;
+        float patternMinY = -4.5f, patternMaxY = 4.5f;
+
+        while (enemy != null)
+        {
+            // 보스 체력이 9000 이하이면 즉시 종료
+            if (boss != null && boss.CurrentHP <= 9000f)
+                yield break;
+            if (boss != null && boss.forceStopPattern)
+                yield break;
+
+            yield return new WaitForSeconds(1f);
+
+            if (enemy == null) yield break;
+            if (boss != null && boss.CurrentHP <= 9000f)
+                yield break;
+            if (boss != null && boss.forceStopPattern)
+                yield break;
+
+            Vector3 currentPos = enemy.transform.position;
+            int direction = Random.Range(0, 2) == 0 ? -1 : 1; // -1: 좌, +1: 우
+            Vector3 targetPos = currentPos + new Vector3(direction * step, 0, 0);
+
+            // 이동하려는 좌표가 지정된 범위를 벗어나면 패스
+            if (targetPos.x < patternMinX || targetPos.x > patternMaxX)
+                continue;
+
+            // 이동하려는 위치에 플레이어가 있으면 패스
+            Collider2D playerCol = Physics2D.OverlapCircle(targetPos, 0.3f);
+            if (playerCol != null && playerCol.CompareTag("Player"))
+                continue;
+
+            // 이동하려는 위치에 이미 다른 적이 있는지 체크 (자기 자신 제외)
+            Collider2D[] cols = Physics2D.OverlapCircleAll(targetPos, 0.3f);
+            bool occupied = false;
+            foreach (Collider2D col in cols)
+            {
+                if (col.gameObject != enemy && col.CompareTag("Enemy"))
+                {
+                    occupied = true;
+                    break;
+                }
+            }
+            if (occupied)
+                continue;
+
+            // 유효한 이동이면 enemy를 targetPos로 이동
+            enemy.transform.position = targetPos;
+
+            // 이동 후 위치가 범위를 벗어나면 파괴 후 종료
+            if (enemy.transform.position.x < patternMinX || enemy.transform.position.x > patternMaxX ||
+                enemy.transform.position.y < patternMinY || enemy.transform.position.y > patternMaxY)
+            {
+                Destroy(enemy);
+                yield break;
+            }
+        }
+    }
+
 
     // 새로운 패턴 P_25
     private IEnumerator KamikazeMovement(GameObject enemy)
@@ -484,6 +580,7 @@ public class PatternManager : MonoBehaviour
             // spawn 위치로 복귀 (1초 동안 이동)
             moveTime = 1f;
             elapsed = 0f;
+            if (enemy == null) yield break;
             startPos = enemy.transform.position;
             while (elapsed < moveTime && enemy != null)
             {
@@ -496,6 +593,40 @@ public class PatternManager : MonoBehaviour
             yield return new WaitForSeconds(1f);
         }
         yield return null;
+    }
+    // 카미카제 리턴 한번만
+    private IEnumerator KamikazeReturnMovementOnce(GameObject enemy, Vector3 spawnPos)
+    {
+        // 플레이어 위치로 돌진 (1초 동안 이동)
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        Vector3 target = (player != null) ? player.transform.position : spawnPos;
+        float moveTime = 1f;
+        float elapsed = 0f;
+        Vector3 startPos = enemy.transform.position;
+        while (elapsed < moveTime && enemy != null)
+        {
+            enemy.transform.position = Vector3.Lerp(startPos, target, elapsed / moveTime);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        if (enemy != null)
+            enemy.transform.position = target;
+        yield return new WaitForSeconds(1f);
+
+        // spawn 위치로 복귀 (1초 동안 이동)
+        moveTime = 1f;
+        elapsed = 0f;
+        if (enemy == null) yield break;
+        startPos = enemy.transform.position;
+        while (elapsed < moveTime && enemy != null)
+        {
+            enemy.transform.position = Vector3.Lerp(startPos, spawnPos, elapsed / moveTime);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        if (enemy != null)
+            enemy.transform.position = spawnPos;
+        yield return new WaitForSeconds(1f);
     }
 
     // 새로운 패턴 P_26 

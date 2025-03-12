@@ -7,9 +7,12 @@ public class WaveManager : MonoBehaviour
     public GameObject enemyPrefab;    // Enemy_0 (기본 적) 프리팹
     public GameObject enemyPrefab1;   // Enemy_1 (새 적, 체력 20, 총 미발사) 프리팹
     public GameObject enemyPrefab2;   // Enemy_2 (새 적, 체력 50, 총 발사) 프리팹
+    public GameObject bossPrefab;
     public float waveDelay = 5f;      // 웨이브 간 딜레이
     private int currentWave = 1;      // 현재 웨이브 번호
     private bool waveInProgress = false; // 웨이브 진행 여부
+    [Header("UI References")]
+    public GameObject redWarningPanel;
 
     // waveData: 각 웨이브의 스폰 이벤트 목록.
     // 각 스폰 이벤트는 (positions, patterns, enemyType) 튜플로 구성합니다.
@@ -18,7 +21,7 @@ public class WaveManager : MonoBehaviour
     // enemyType: 0이면 기본 적(Enemy_0), 1이면 새 적(Enemy_1)
     private Dictionary<int, List<(Vector3[] positions, string[][] patterns, int enemyType)>> waveData =
         new Dictionary<int, List<(Vector3[], string[][], int)>>()
-    {
+    {/*
         // 웨이브 1
         { 1, new List<(Vector3[], string[][], int)>()
             {
@@ -1387,7 +1390,7 @@ public class WaveManager : MonoBehaviour
                     0
                 )
             }
-        },
+        },*/
         // 웨이브 24
         { 24, new List<(Vector3[] positions, string[][] patterns, int enemyType)>()
             {
@@ -1497,7 +1500,18 @@ public class WaveManager : MonoBehaviour
                 )
             }
         },
-
+        { 25, new List<(Vector3[] positions, string[][] patterns, int enemyType)>()
+            {
+                ( // 일단 버그 땜에 하나 추가
+                // 스폰 좌표: (0,4.6)
+                new Vector3[] { new Vector3(0f, 4.6f, 0f) },
+                // 패턴: "P_0" 한 번
+                new string[][] { new string[] { "P_0" } },
+                // enemyType: 0 (Enemy_0)
+                0
+            ),
+            }
+        }
 
     };
 
@@ -1868,7 +1882,42 @@ public class WaveManager : MonoBehaviour
                         AudioManager.Instance.UpdateWave(currentWave); // BGM3번으로 전환
 
                     }
+                    // 웨이브 25 보스
+                    else if (currentWave == 25)
+                    {
+                        Debug.Log("=== Wave 25: 보스 등장 ===");
 
+                        // 1) 배경 멈추기
+                        BackGround[] backgrounds = Object.FindObjectsByType<BackGround>(FindObjectsSortMode.None);
+                        foreach (var bg in backgrounds)
+                        {
+                            bg.StopScrolling();
+                        }
+
+                        // 2) 3초간 빨간 경고 UI 표시 (ShowRedWarning 등)
+                        yield return StartCoroutine(ShowRedWarning(3f));
+
+                        // 3) 보스 소환 & 전투
+                        GameObject bossObj = Instantiate(bossPrefab, new Vector3(0f, 2.5f, 0f), Quaternion.identity);
+                        Debug.Log("보스 프리팹 생성 완료");
+                        // 보스가 죽을 때까지 대기
+                        while (Object.FindAnyObjectByType<Boss>() != null)
+                        {
+                            yield return null;
+                        }
+
+
+                        // 4) 배경 재개 (보스 전투 후에 다시 움직이려면)
+                        foreach (var bg in backgrounds)
+                        {
+                            bg.ResumeScrolling();
+                        }
+
+                        // 웨이브 진행 로직
+                        currentWave++;
+                        waveInProgress = false;
+                        yield break;
+                    }
 
                     else
                     {
@@ -1970,5 +2019,15 @@ public class WaveManager : MonoBehaviour
         StartCoroutine(ExecutePattern(enemy, pattern));
         yield return null;
     }
+    private IEnumerator ShowRedWarning(float duration)
+    {
+        if (redWarningPanel != null)
+        {
+            redWarningPanel.SetActive(true);
+            yield return new WaitForSeconds(duration);
+            redWarningPanel.SetActive(false);
+        }
+    }
+
 
 }

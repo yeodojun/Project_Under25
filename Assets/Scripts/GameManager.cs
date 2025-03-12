@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
         Debug.Log($"씬 로드됨: {scene.name}");
     }
 
-    // 🎮 선택한 게임 설정
+    // 선택한 게임 설정
     public void SetSelectedGame(int gameIndex)
     {
         SelectedGame = gameIndex;
