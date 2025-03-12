@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +14,7 @@ public class SettingPanelController : MonoBehaviour
         {
             settingButton.onClick.AddListener(ShowSettingPanel);
         }
-
+        
         if (closeButton != null)
         {
             closeButton.onClick.AddListener(HideSettingPanel);
@@ -34,18 +33,13 @@ public class SettingPanelController : MonoBehaviour
 
     public void ShowSettingPanel()
     {
-        StartCoroutine(ShowSettingPanelWithDelay());
-    }
-    private IEnumerator ShowSettingPanelWithDelay()
-    {
-        yield return new WaitForSeconds(3f);
-
         if (settingPanel != null)
         {
             settingPanel.SetActive(true);
             Debug.Log("SettingPanel 활성화됨");
         }
     }
+    
 
     public void HideSettingPanel()
     {

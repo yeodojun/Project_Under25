@@ -197,7 +197,7 @@ public class Boss : MonoBehaviour
 
         // (0, 2.5)로 1초 이동
         yield return StartCoroutine(MoveToPosition(new Vector3(0f, 2.5f, transform.position.z), 1f));
-
+        
         // 필요한 경우 무적 해제 처리
         isInvincible = false;
         Debug.Log("보스 Phase3 완료");
