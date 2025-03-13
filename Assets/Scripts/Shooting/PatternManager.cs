@@ -36,10 +36,13 @@ public class PatternManager : MonoBehaviour
         { "P_21", null }  // 물결 아래→위 이동
         // "P_22"는 아래 TeleportPattern(), ExecutePattern()에서 별도로 처리
         // "P_23"도 아래 ZigzagMovement(), " 별도로 처리
+        // "P_23B"도 아래 별도로 처리 '보스 전용'
         // "P_24" 미구현
         // "P_25"도 아래 KamikazeMovement(), " 별도로 처리
         // "P_25R"도 아래 별도로 처리
+        // "P_25B"도 아래 별도로 처리 '보스 전용'
         // "P_26"도 아래 별도로 처리
+        // "P_27"도 아래 별도로 처리
     };
 
     private void Awake()
@@ -100,12 +103,12 @@ public class PatternManager : MonoBehaviour
             }
             else if (pattern == "P_22")
             {
-                // 새로운 순간 이동 패턴
+                // 순간 이동 패턴
                 yield return StartCoroutine(TeleportPattern(enemy));
             }
             else if (pattern == "P_23")
             {
-                // 새로운 지그재그 이동 패턴
+                // 지그재그 이동 패턴
                 yield return StartCoroutine(ZigzagMovement(enemy));
             }
             else if (pattern == "P_23B") // 새 지그제그 보스에서만 사용
@@ -128,11 +131,14 @@ public class PatternManager : MonoBehaviour
                 Vector3 spawnPos = enemy.transform.position;
                 yield return StartCoroutine(KamikazeReturnMovementOnce(enemy, spawnPos));
             }
-
             else if (pattern == "P_26")
             {
                 // 새로운 마름모 이동 패턴
                 yield return StartCoroutine(DiamondMovement(enemy));
+            }
+            else if (pattern == "P_27")
+            {
+                yield return StartCoroutine(MirrorMovement(enemy));
             }
             else // 기본 패턴 처리 (예: "N_0", "N_1", "N_2", "N_3", 등)
             {
@@ -594,7 +600,7 @@ public class PatternManager : MonoBehaviour
         }
         yield return null;
     }
-    // 카미카제 리턴 한번만 보스전용용
+    // 카미카제 리턴 한번만 보스전용
     private IEnumerator KamikazeReturnMovementOnce(GameObject enemy, Vector3 spawnPos)
     {
         // 플레이어 위치로 돌진 (1초 동안 이동)
@@ -629,7 +635,7 @@ public class PatternManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
     }
 
-    // 새로운 패턴 P_26 
+    // 패턴 P_26 
     private IEnumerator DiamondMovement(GameObject enemy)
     {
         // 단계 각도 (도 단위)
@@ -730,4 +736,49 @@ public class PatternManager : MonoBehaviour
             index = (index + 1) % angles.Length;
         }
     }
+    // 패턴 P_27
+    private IEnumerator MirrorMovement(GameObject enemy)
+    {
+        float minX = -2f, maxX = 2f;
+        float minY = -4.5f, maxY = 4.5f;
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        float interval = 3f;       // 몇 초마다 이동할지
+        float moveDuration = 0.3f; // 이동에 걸리는 시간
+
+        while (enemy != null)
+        {
+            yield return new WaitForSeconds(interval);
+
+            if (player != null && enemy != null)
+            {
+                float targetX = player.transform.position.x;
+                Vector3 startPos = enemy.transform.position;
+                Vector3 endPos = new Vector3(targetX, startPos.y, startPos.z);
+
+                float elapsed = 0f;
+
+                while (elapsed < moveDuration)
+                {
+                    if (enemy == null) yield break; // 안전 체크
+
+                    float t = elapsed / moveDuration;
+                    enemy.transform.position = Vector3.Lerp(startPos, endPos, t);
+                    elapsed += Time.deltaTime;
+                    yield return null;
+                }
+
+                // 보정
+                if (enemy != null)
+                    enemy.transform.position = endPos;
+
+                // 화면 범위 체크
+                if (endPos.x < minX || endPos.x > maxX || endPos.y < minY || endPos.y > maxY)
+                {
+                    Destroy(enemy);
+                    yield break;
+                }
+            }
+        }
+    }
+
 }

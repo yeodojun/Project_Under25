@@ -1515,7 +1515,7 @@ public class WaveManager : MonoBehaviour
 
     };
 
-    // 헬퍼 메서드: 지정한 패턴을 count번 반복하는 배열을 생성합니다.
+    // 헬퍼 메서드: 지정한 패턴을 count만큼 반복하는 배열을 생성
     private static string[] GetRepeatedPattern(string pattern, int count)
     {
         string[] arr = new string[count];
@@ -1532,7 +1532,7 @@ public class WaveManager : MonoBehaviour
         list.AddRange(second);
         return list.ToArray();
     }
-    // 주어진 패턴 배열을 times번 반복한 결과를 반환하는 헬퍼 함수
+    // 주어진 패턴 배열을 times만큼 반복한 결과를 반환하는 헬퍼 함수
     private static string[] RepeatPattern(string[] pattern, int times)
     {
         List<string> list = new List<string>();
