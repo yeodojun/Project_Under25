@@ -4,6 +4,8 @@ using UnityEngine;
 public class Boss : MonoBehaviour
 {
     [Header("Boss Settings")]
+    public GameObject enemy101Prefab;
+    public GameObject enemy102Prefab;
     public float maxHP = 10000f;
     private float currentHP;
 
@@ -20,6 +22,7 @@ public class Boss : MonoBehaviour
     public float endZ = 0f;
     private Vector3 originalScale;
     private Coroutine p23Routine;
+    private Coroutine enemy102SpawnRoutine;
     public bool forceStopPattern = false;
     public float CurrentHP { get { return currentHP; } }
 
@@ -142,6 +145,7 @@ public class Boss : MonoBehaviour
         {
             phase5Started = true;
             StartCoroutine(Phase5_ShrinkMoreAndPattern());
+            enemy102SpawnRoutine = StartCoroutine(SpawnEnemy102Loop());
         }
 
         // Phase6: HP 500 이하
@@ -189,17 +193,30 @@ public class Boss : MonoBehaviour
     // -------------------------
     private IEnumerator Phase3_InvinciblePattern()
     {
-        Debug.Log("보스 Phase3 시작: 무적 & P_25R_boss 단 한 번 수행");
+        Debug.Log("보스 Phase3 시작: 무적 상태 & P_25R_boss 단 한 번 수행 후 Enemy_101 소환");
         isInvincible = true;
 
-        // 보스 전용 P_25R_boss 패턴 1회 수행
+        // 보스 전용 P_25R_boss 패턴을 단 한 번 수행 (이전 방식대로)
         yield return StartCoroutine(PatternManager.Instance.ExecutePattern(gameObject, new string[] { "P_25R_boss" }));
 
-        // (0, 2.5)로 1초 이동
         yield return StartCoroutine(MoveToPosition(new Vector3(0f, 2.5f, transform.position.z), 1f));
-        
-        // 필요한 경우 무적 해제 처리
+        // 보스 패턴 수행 후, Enemy_101 두 마리를 순차적으로 소환
+        GameObject enemy101_1 = SpawnEnemy101(new Vector3(-1f, 1.5f, transform.position.z));
+        yield return new WaitForSeconds(1f);
+        GameObject enemy101_2 = SpawnEnemy101(new Vector3(1f, 1.5f, transform.position.z));
+
+        // 두 Enemy_101이 모두 파괴될 때까지 대기
+        while (enemy101_1 != null || enemy101_2 != null)
+        {
+            yield return null;
+        }
+
+        // 두 적이 모두 파괴되면 보스의 무적 해제
         isInvincible = false;
+        Debug.Log("모든 Enemy_101 파괴됨 - 보스 무적 해제");
+
+
+
         Debug.Log("보스 Phase3 완료");
     }
 
@@ -211,14 +228,13 @@ public class Boss : MonoBehaviour
     {
         Debug.Log("보스 Phase4 시작: 배경 위로 스크롤, 플레이어/보스/총알 1/4 크기로, 패턴 5회");
 
-        // 1) 배경 반대로 스크롤
-        //    예: BackGround 스크립트 찾아서 moveSpeed 음수 → 양수, 혹은 reverseScrolling = true 등
+        // 1) 배경 역주행 적용: reverse mode 활성화
         var bgs = Object.FindObjectsByType<BackGround>(FindObjectsSortMode.None);
         foreach (var bg in bgs)
         {
-            // 예: bg.moveSpeed = -Mathf.Abs(bg.moveSpeed);
-            // 또는 bg.SetReverse(true);
-            bg.moveSpeed = Mathf.Abs(bg.moveSpeed); // (기존이 3f 아래로라면, 3f 위로)
+            bg.isReverseMode = true;
+            bg.reverseDirection = 1;  // 위로 이동 시작
+            bg.moveSpeed = 3f;        // 원하는 속도로 설정 (필요에 따라 조정)
         }
 
         // 2) 플레이어 / 보스 / 총알 크기 1/4
@@ -359,5 +375,64 @@ public class Boss : MonoBehaviour
             yield return null;
         }
         transform.position = targetPos;
+    }
+
+    // -------------------------
+    // (Enemy) 보조 : 엘리트 몬스터 생성1
+    // -------------------------
+    private GameObject SpawnEnemy101(Vector3 spawnPosition)
+    {
+        if (enemy101Prefab != null)
+        {
+            GameObject enemy101 = Instantiate(enemy101Prefab, spawnPosition, Quaternion.identity);
+            Enemy enemyScript = enemy101.GetComponent<Enemy>();
+            if (enemyScript != null)
+            {
+                enemyScript.enemyType = 101;
+            }
+            // 소환된 Enemy_101은 패턴 "P_27" (MirrorMovement) 수행
+            StartCoroutine(PatternManager.Instance.ExecutePattern(enemy101, new string[] { "P_27" }));
+            return enemy101;
+        }
+        else
+        {
+            Debug.LogError("enemy101Prefab이 Boss.cs에 할당되어 있지 않습니다.");
+            return null;
+        }
+    }
+
+    // -------------------------
+    // (Enemy) 보조 : 엘리트 몬스터 생성2
+    // -------------------------
+    private GameObject SpawnEnemy102(Vector3 spawnPosition)
+    {
+        if (enemy102Prefab != null)
+        {
+            GameObject enemy102 = Instantiate(enemy102Prefab, spawnPosition, Quaternion.identity);
+            Enemy enemyScript = enemy102.GetComponent<Enemy>();
+            if (enemyScript != null)
+            {
+                enemyScript.enemyType = 102;
+            }
+            // 소환된 적이 패턴 "P_24R_boss"를 1회 수행하도록 실행
+            StartCoroutine(PatternManager.Instance.ExecutePattern(enemy102, new string[] { "P_25R_boss" }));
+            return enemy102;
+        }
+        else
+        {
+            Debug.LogError("enemy102Prefab이 Boss.cs에 할당되어 있지 않습니다.");
+            return null;
+        }
+    }
+    private IEnumerator SpawnEnemy102Loop()
+    {
+        while (currentHP > 0)
+        {
+            // (-2, 4.5) 위치에서 소환
+            SpawnEnemy102(new Vector3(-2f, 4.5f, transform.position.z));
+            // (2, 4.5) 위치에서 소환
+            SpawnEnemy102(new Vector3(2f, 4.5f, transform.position.z));
+            yield return new WaitForSeconds(2f);
+        }
     }
 }

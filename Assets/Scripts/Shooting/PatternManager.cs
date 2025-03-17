@@ -556,6 +556,7 @@ public class PatternManager : MonoBehaviour
         }
         yield return null;
     }
+    // P_25R 5번
     private IEnumerator KamikazeReturnMovement(GameObject enemy, Vector3 spawnPos)
     {
         int cycles = 5;

@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    // enemyType: 0 = 기본 적, 1 = Enemy_1, 2 = Enemy_2, 3 = Enemy_3, 4 = Enemy_4
+    // enemyType: 0 = 기본 적, 1 = Enemy_1, 2 = Enemy_2, 3 = Enemy_3, 4 = Enemy_4, 101 = Enemy_101
     public int enemyType = 0;
-    
+
     // 기존 Enemy_1 관련 플래그 (enemyType 1일 때 사용)
     public bool isEnemy1 = false;
     public bool isFlipped = false; // Enemy_1이면 true로 설정
@@ -56,6 +56,19 @@ public class Enemy : MonoBehaviour
             // 기본 체력 (기본값 5 또는 Inspector에서 지정한 값) 그대로 사용
             // 단, 플레이어의 공격에 의한 데미지를 무시
             StartCoroutine(Enemy4Attack());
+        }
+        else if (enemyType == 101)
+        {
+            // Enemy_101: 보스전 전용 적
+            health = 500;
+            // 시작 시 4초마다 두 개의 총알을 발사하는 공격 코루틴 실행
+            StartCoroutine(Enemy101Attack());
+        }
+        else if (enemyType == 102)
+        {
+            // Enemy_102: 체력 20, 데미지 1
+            health = 20;
+            StartCoroutine(Enemy102Attack());
         }
     }
 
@@ -155,6 +168,49 @@ public class Enemy : MonoBehaviour
                 EnemyBullet eb = bullet.GetComponent<EnemyBullet>();
                 if (eb != null)
                     eb.isEnemy4Bullet = true;
+            }
+        }
+    }
+
+    // Enemy_101 공격 : 4초마다 공격
+    // 총알 2개씩 발사 데미지 1
+    private IEnumerator Enemy101Attack()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(4f);
+            if (firePoint != null && enemyBulletPrefab != null)
+            {
+                // 두 발의 총알이 겹치지 않도록 좌우로 약간 오프셋을 줍니다.
+                Vector3 offset = new Vector3(0.2f, 0, 0); // 필요에 따라 값 조정
+                GameObject bullet1 = Instantiate(enemyBulletPrefab, firePoint.position - offset, Quaternion.identity);
+                GameObject bullet2 = Instantiate(enemyBulletPrefab, firePoint.position + offset, Quaternion.identity);
+
+                // 각 총알에 공격력 1 할당
+                EnemyBullet eb1 = bullet1.GetComponent<EnemyBullet>();
+                if (eb1 != null)
+                    eb1.damage = 1;
+                EnemyBullet eb2 = bullet2.GetComponent<EnemyBullet>();
+                if (eb2 != null)
+                    eb2.damage = 1;
+            }
+        }
+    }
+
+    // Enemy_102 공격 : 3초마다 공격
+    // 총알 1개씩 발사 데미지 1
+    // 카미카제 리턴 1번
+    private IEnumerator Enemy102Attack()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(3f);
+            if (firePoint != null && enemyBulletPrefab != null)
+            {
+                GameObject bullet = Instantiate(enemyBulletPrefab, firePoint.position, Quaternion.identity);
+                EnemyBullet eb = bullet.GetComponent<EnemyBullet>();
+                if (eb != null)
+                    eb.damage = 1;
             }
         }
     }

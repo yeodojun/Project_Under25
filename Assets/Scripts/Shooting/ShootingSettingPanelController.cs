@@ -1,44 +1,77 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ShootingSettingPanelController : MonoBehaviour
 {
-    // 설정 패널을 인스펙터에서 할당합니다.
-    public GameObject settingsPanel;
+    // 게임 중 일시정지 시 나타나는 패널 (PausePanel)
+    public GameObject pausePanel;
+    // 일시정지 패널 내의 설정 버튼을 누르면 나타나는 설정 패널 (MainScene과 연동된 설정 패널)
+    public GameObject inGameSettingsPanel;
+    // HUD에 표시되는 일시정지 버튼
+    public GameObject pauseButton;
 
     void Start()
     {
-        // 게임 시작 시 패널은 숨깁니다.
-        if (settingsPanel != null)
-            settingsPanel.SetActive(false);
+        // 게임 시작 시 두 패널 모두 숨김
+        if (pausePanel != null)
+            pausePanel.SetActive(false);
+        if (inGameSettingsPanel != null)
+            inGameSettingsPanel.SetActive(false);
+        if (pauseButton != null)
+            pauseButton.SetActive(true);
     }
 
-    // 게임 중 설정 버튼을 누르면 호출됩니다.
-    // 게임을 일시정지시키고 설정 패널을 활성화합니다.
-    public void PauseGame()
+    // 게임 중 HUD의 일시정지 버튼을 누르면 호출
+    public void OnPauseButtonPressed()
     {
-        // 게임 일시정지 (Time.timeScale = 0이면 모든 코루틴 WaitForSeconds는 멈추므로 주의)
         Time.timeScale = 0f;
-        if (settingsPanel != null)
-            settingsPanel.SetActive(true);
+        if (pausePanel != null)
+            pausePanel.SetActive(true);
+        if (pauseButton != null)
+            pauseButton.SetActive(false);
     }
 
-    // 설정 패널 내의 "계속하기" 버튼을 눌렀을 때 호출됩니다.
-    // 패널을 숨기고 3초 후에 게임을 다시 재개합니다.
+    // 일시정지 패널 내의 "계속하기" 버튼을 누르면 호출
     public void OnResumeButtonPressed()
     {
-        // 패널 숨김
-        if (settingsPanel != null)
-            settingsPanel.SetActive(false);
-        // Time.timeScale이 0이어도 WaitForSecondsRealtime는 실제 시간 기준 대기하므로 사용합니다.
+        if (pausePanel != null)
+            pausePanel.SetActive(false);
+        if (pauseButton != null)
+            pauseButton.SetActive(true);
         StartCoroutine(ResumeGameAfterDelay());
+    }
+
+    // 일시정지 패널 내의 "게임 종료" 버튼을 누르면 호출
+    public void OnExitButtonPressed()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("MainScene");
+    }
+
+    // 일시정지 패널 내의 "설정" 버튼을 누르면 호출
+    // 이때 일시정지 패널은 숨기고, 설정 패널(inGameSettingsPanel)을 활성화
+    public void OnInGameSettingsButtonPressed()
+    {
+        if (pausePanel != null)
+            pausePanel.SetActive(false);
+        if (inGameSettingsPanel != null)
+            inGameSettingsPanel.SetActive(true);
+    }
+
+    // 설정 패널 내의 "닫기" 버튼을 누르면 호출
+    // 설정 패널을 숨기고 다시 일시정지 패널 등장
+    public void OnCloseSettingsButtonPressed()
+    {
+        if (inGameSettingsPanel != null)
+            inGameSettingsPanel.SetActive(false);
+        if (pausePanel != null)
+            pausePanel.SetActive(true);
     }
 
     private IEnumerator ResumeGameAfterDelay()
     {
-        // 3초간 실제 시간으로 대기합니다.
         yield return new WaitForSecondsRealtime(3f);
-        // 게임 재개
         Time.timeScale = 1f;
     }
 }
