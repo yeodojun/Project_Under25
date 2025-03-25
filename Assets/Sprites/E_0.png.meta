@@ -1,25 +1,10 @@
 fileFormatVersion: 2
-guid: ef8fb6194a577d74a8033a3fc51563ba
+guid: 4f19fe878f530cc45962d6634a8bb8dc
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7470217015063282736
-    second: fire2_0
-  - first:
-      213: 8445186504645142777
-    second: fire2_1
-  - first:
-      213: 540689667861790925
-    second: fire2_2
-  - first:
-      213: 4794835333742939833
-    second: fire2_3
-  - first:
-      213: -138598500050378642
-    second: fire2_4
-  - first:
-      213: 7247376349041765118
-    second: fire2_5
+      213: -1852276447416449438
+    second: E_0_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -141,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: fire2_0
+      name: E_0_0
       rect:
         serializedVersion: 2
-        x: 52
-        y: 102
-        width: 117
-        height: 80
+        x: 492
+        y: 281
+        width: 206
+        height: 280
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -156,118 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0340de9dbca8ba760800000000000000
-      internalID: 7470217015063282736
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: fire2_1
-      rect:
-        serializedVersion: 2
-        x: 88
-        y: 72
-        width: 48
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 9f8eb47a164533570800000000000000
-      internalID: 8445186504645142777
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: fire2_2
-      rect:
-        serializedVersion: 2
-        x: 208
-        y: 70
-        width: 120
-        height: 109
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: dc040a2636ae08700800000000000000
-      internalID: 540689667861790925
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: fire2_3
-      rect:
-        serializedVersion: 2
-        x: 377
-        y: 63
-        width: 118
-        height: 136
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 9be4d38f45daa8240800000000000000
-      internalID: 4794835333742939833
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: fire2_4
-      rect:
-        serializedVersion: 2
-        x: 551
-        y: 62
-        width: 120
-        height: 130
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e6068160669931ef0800000000000000
-      internalID: -138598500050378642
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: fire2_5
-      rect:
-        serializedVersion: 2
-        x: 724
-        y: 61
-        width: 124
-        height: 138
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: efaa336246ad39460800000000000000
-      internalID: 7247376349041765118
+      spriteID: 2668be582646b46e0800000000000000
+      internalID: -1852276447416449438
       vertices: []
       indices: 
       edges: []
@@ -285,13 +160,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      fire2_0: 7470217015063282736
-      fire2_1: 8445186504645142777
-      fire2_2: 540689667861790925
-      fire2_3: 4794835333742939833
-      fire2_4: -138598500050378642
-      fire2_5: 7247376349041765118
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
