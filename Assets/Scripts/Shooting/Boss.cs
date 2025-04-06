@@ -242,9 +242,6 @@ public class Boss : MonoBehaviour
         {
             // 플레이어 크기
             player.transform.localScale *= 0.25f;
-
-            // 총알, 미사일 프리팹도 축소(Instantiate 시점에 반영)
-            player.SetBulletScale(0.25f);
             // ↑ 예: Player.cs에 public void SetBulletScale(float factor) { gunProjectile.transform.localScale = new Vector3(factor, factor, 1f); missileProjectile.transform.localScale = ... }
         }
         // 보스도 1/4

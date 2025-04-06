@@ -32,7 +32,6 @@ public class UpgradeItem : MonoBehaviour
                 else if (rand < 0.6f)
                 {
                     // 미사일 업그레이드 20%
-                    player.UpgradeMissile();
                     Debug.Log("미사일 업그레이드 획득!");
                 }
                 else if (rand < 0.8f)

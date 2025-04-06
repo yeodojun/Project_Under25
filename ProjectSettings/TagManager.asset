@@ -9,11 +9,12 @@ TagManager:
   - Bullet
   - Missile
   - BackGround
+  - Wall
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Wall
   - Water
   - UI
   - a

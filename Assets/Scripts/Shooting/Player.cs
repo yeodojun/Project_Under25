@@ -5,23 +5,50 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     [SerializeField]
-    private GameObject gunProjectile; // 총알 프리팹
-    [SerializeField]
-    private GameObject missileProjectile; // 미사일 프리팹
-    [SerializeField]
     private Transform shootTransform;
     [SerializeField]
     private float gunShootInterval = 0.2f; // 총 발사 속도
     private float lastGunShootTime;
+
+    private int gunLevel = 1;
+    private float autoUpgradeTimer = 0f;
+    private const float autoUpgradeDelay = 22f;
+    private struct GunFireInfo
+    {
+        public Vector3 offset;
+        public string weaponType; // 예: "Bullet" 또는 "Laser"
+        public GunFireInfo(Vector3 offset, string weaponType)
+        {
+            this.offset = offset;
+            this.weaponType = weaponType;
+        }
+    }
+
+    // 미리 계산된 발사 패턴 (Vector 연산 최소화)
+    private static readonly GunFireInfo[] level1Pattern = new GunFireInfo[]
+    {
+        new GunFireInfo(Vector3.zero, "Bullet")
+    };
+    private static readonly GunFireInfo[] level2Pattern = new GunFireInfo[]
+    {
+        new GunFireInfo(new Vector3(-0.2f, -0.1f, 0f), "Bullet"),
+        new GunFireInfo(new Vector3(0.2f, 0.1f, 0f), "Bullet")
+    };
+    private static readonly GunFireInfo[] level3Pattern = new GunFireInfo[]
+    {
+        new GunFireInfo(new Vector3(-3f, -0.1f, 0f), "Bullet"),
+        new GunFireInfo(Vector3.zero, "Bullet1"), // 가운데는 다른 총알 발사
+        new GunFireInfo(new Vector3(3f, -0.1f, 0f), "Bullet")
+    };
+    private static readonly GunFireInfo[] level4Pattern = new GunFireInfo[]
+    {
+        new GunFireInfo(new Vector3(-5f, -0.2f, 0f), "Bullet"),
+        new GunFireInfo(new Vector3(-3f, -0.1f, 0f), "Bullet1"),
+        new GunFireInfo(Vector3.zero, "Bullet1"),
+        new GunFireInfo(new Vector3(3f, -0.1f, 0f), "Bullet1"),
+        new GunFireInfo(new Vector3(5f, -0.2f, 0f), "Bullet")
+    };
     public bool canShoot = true;  // true일 때만 총알/미사일 발사
-
-    [SerializeField]
-    private float missileShootInterval = 2.0f; // 미사일 발사 속도
-    private float lastMissileShootTime;
-
-    private int gunLevel = 1; // 기본 1단계
-    private int missileLevel = 0; // 미사일 없음
-
     public int health = 3; // 플레이어 체력
     public float invincibilityDuration = 0.5f; // 무적 지속 시간
     private bool isInvincible = false; // 무적 상태 여부
@@ -38,6 +65,13 @@ public class Player : MonoBehaviour
     public GameObject shieldImage;
     private bool isShieldActive = false;
     private Coroutine shieldCoroutine;
+
+    [SerializeField]
+    private float collisionCheckRadius = 0.2f;
+
+    [SerializeField]
+    private LayerMask wallLayer;
+
 
     void Start()
     {
@@ -57,6 +91,21 @@ public class Player : MonoBehaviour
         {
             Shoot();
         }
+
+        // 자동 업그레이드 타이머: gunLevel이 3일 때 22초 경과하면 자동으로 4단계로 업그레이드
+        if (gunLevel == 3)
+        {
+            autoUpgradeTimer += Time.deltaTime;
+            if (autoUpgradeTimer >= autoUpgradeDelay)
+            {
+                UpgradeGun(); // 레벨 3 → 4
+                autoUpgradeTimer = 0f;
+            }
+        }
+        else
+        {
+            autoUpgradeTimer = 0f;
+        }
     }
 
     void HandleMovement()
@@ -74,7 +123,16 @@ public class Player : MonoBehaviour
         }
         if (Vector3.Distance(transform.position, targetPosition) > 0.05f)
         {
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+            Vector3 nextPosition = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+
+            // 다음 위치에 벽 레이어에 해당하는 오브젝트와 충돌하는지 검사
+            Collider2D wallCollision = Physics2D.OverlapCircle(nextPosition, collisionCheckRadius, wallLayer);
+            if (wallCollision != null)
+            {
+                // 벽과 충돌하면 이동하지 않음
+                return;
+            }
+            transform.position = nextPosition;
         }
     }
 
@@ -85,88 +143,63 @@ public class Player : MonoBehaviour
             FireGun();
             lastGunShootTime = Time.time;
         }
-        if (missileLevel > 0 && Time.time - lastMissileShootTime > missileShootInterval)
-        {
-            FireMissile();
-            lastMissileShootTime = Time.time;
-        }
     }
 
     void FireGun()
     {
-        Vector3[] gunPositions = GetGunPositions();
-        foreach (Vector3 xOffset in gunPositions)
+        GunFireInfo[] pattern = GetGunPattern();
+        for (int i = 0; i < pattern.Length; i++)
         {
-            Instantiate(gunProjectile, shootTransform.position + xOffset, Quaternion.identity);
+            GunFireInfo info = pattern[i];
+            Vector3 spawnPos = shootTransform.position + info.offset;
+            // 기본 회전은 identity, 단 gunLevel 4일 때 양옆 총알은 회전 적용
+            Quaternion rotation = Quaternion.identity;
+            if (gunLevel == 4)
+            {
+                if (i == 0)
+                {
+                    rotation = Quaternion.Euler(0f, 0f, -15f);
+                }
+                else if (i == pattern.Length - 1)
+                {
+                    rotation = Quaternion.Euler(0f, 0f, 15f);
+                }
+            }
+            WeaponPool.Instance.SpawnWeapon(info.weaponType, spawnPos, rotation);
         }
     }
 
-    void FireMissile()
+    GunFireInfo[] GetGunPattern()
     {
-        Vector3[] missilePositions = GetMissilePositions();
-        foreach (Vector3 pos in missilePositions)
-        {
-            Instantiate(missileProjectile, shootTransform.position + pos, Quaternion.Euler(0, 0, 90));
-        }
+        if (gunLevel == 1)
+            return level1Pattern;
+        else if (gunLevel == 2)
+            return level2Pattern;
+        else if (gunLevel == 3)
+            return level3Pattern;
+        else
+            return level4Pattern;
     }
-
-    Vector3[] GetGunPositions()
-    {
-        switch (gunLevel)
-        {
-            case 1: return new Vector3[] { new Vector3(0f, 0f, 0) };
-            case 2: return new Vector3[] { new Vector3(-0.2f, -0.1f, 0), new Vector3(0.2f, -0.1f, 0) };
-            case 3: return new Vector3[] { new Vector3(-0.3f, -0.1f, 0), new Vector3(0f, 0f, 0), new Vector3(0.3f, -0.1f, 0) };
-            case 4: return new Vector3[] { new Vector3(-0.5f, -0.2f, 0), new Vector3(-0.2f, 0f, 0), new Vector3(0.2f, 0f, 0), new Vector3(0.5f, -0.2f, 0) };
-            case 5: return new Vector3[] { new Vector3(-0.4f, -0.3f, 0), new Vector3(-0.2f, -0.1f, 0), new Vector3(0f, 0f, 0), new Vector3(0.2f, -0.1f, 0), new Vector3(0.4f, -0.3f, 0) };
-            default: return new Vector3[] { };
-        }
-    }
-
-    Vector3[] GetMissilePositions()
-    {
-        switch (missileLevel)
-        {
-            case 1: return new Vector3[] { new Vector3(0.9f, -0.5f, 0) };
-            case 2: return new Vector3[] { new Vector3(-0.9f, -0.5f, 0), new Vector3(0.9f, -0.5f, 0) };
-            default: return new Vector3[] { };
-        }
-    }
-
-    // 새로운 메서드들
 
     // 총알 업그레이드 (gunLevel 최대 5)
     public void UpgradeGun()
     {
-        if (gunLevel < 5)
+        if (gunLevel < 3)
         {
             gunLevel++;
-            Debug.Log("총 업그레이드! 현재 총알 개수: " + gunLevel);
+            Debug.Log("Gun upgraded via item to level " + gunLevel);
+        }
+        else if (gunLevel == 3)
+        {
+            gunLevel = 4;
+            Debug.Log("Gun auto upgraded to max level " + gunLevel);
         }
         else
         {
-            Debug.Log("총이 최대 레벨입니다!");
+            Debug.Log("Gun is already at maximum level.");
         }
     }
 
-    // 미사일 업그레이드 (missileLevel 최대 2)
-    public void UpgradeMissile()
-    {
-        if (missileLevel == 0)
-        {
-            missileLevel = 1;
-            Debug.Log("미사일 획득!");
-        }
-        else if (missileLevel < 2)
-        {
-            missileLevel++;
-            Debug.Log("미사일 업그레이드! 현재 미사일 개수: " + missileLevel);
-        }
-        else
-        {
-            Debug.Log("미사일이 최대 레벨입니다!");
-        }
-    }
 
     // 체력 회복 (health가 3 미만이면 1 회복)
     public void RecoverHealth()
@@ -290,16 +323,6 @@ public class Player : MonoBehaviour
                 TakeDamage(1);
         }
     }
-    public void SetBulletScale(float factor)
-    {
-        if (gunProjectile != null)
-        {
-            gunProjectile.transform.localScale = new Vector3(factor, factor, 1f);
-        }
-        if (missileProjectile != null)
-        {
-            missileProjectile.transform.localScale = new Vector3(factor, factor, 1f);
-        }
-    }
+
 
 }
