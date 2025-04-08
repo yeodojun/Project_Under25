@@ -4,19 +4,33 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField]
-    private Transform shootTransform;
-    [SerializeField]
-    private float gunShootInterval = 0.2f; // 총 발사 속도
-    private float lastGunShootTime;
+    public enum ActiveWeapon { Gun, Raser }
+    public ActiveWeapon currentWeapon = ActiveWeapon.Gun;
 
-    private int gunLevel = 1;
-    private float autoUpgradeTimer = 0f;
+    [Header("Shoot Transform & Timings")]
+    [SerializeField] private Transform shootTransform;
+    [SerializeField] private float gunShootInterval = 0.2f; // Gun 발사 간격
+    private float lastGunShootTime = 0f;
+
+    [SerializeField] private float raserShootInterval = 1f; // Raser 발사 간격 (raserLevel < 4)
+    private float lastRaserShootTime = 0f;
+
     private const float autoUpgradeDelay = 22f;
+    private float autoUpgradeTimerGun = 0f;
+    private float autoUpgradeTimerRaser = 0f;
+
+    // 각 무기는 수동으로 최대 3단계까지 업그레이드되며, 3단계 상태에서 타이머 경과 시 자동으로 4단계가 됩니다.
+    private int gunLevel = 1;
+    private int raserLevel = 1;
+
+    private GameObject persistentUBeam = null;
+    private GameObject persistentBBeam = null;
+
+    // GunFireInfo 구조체: 발사 시 사용할 오프셋과 무기 타입을 정의
     private struct GunFireInfo
     {
         public Vector3 offset;
-        public string weaponType; // 예: "Bullet" 또는 "Laser"
+        public string weaponType;
         public GunFireInfo(Vector3 offset, string weaponType)
         {
             this.offset = offset;
@@ -24,7 +38,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    // 미리 계산된 발사 패턴 (Vector 연산 최소화)
+    // ── Gun 발사 패턴 ──
     private static readonly GunFireInfo[] level1Pattern = new GunFireInfo[]
     {
         new GunFireInfo(Vector3.zero, "Bullet")
@@ -32,54 +46,73 @@ public class Player : MonoBehaviour
     private static readonly GunFireInfo[] level2Pattern = new GunFireInfo[]
     {
         new GunFireInfo(new Vector3(-0.2f, -0.1f, 0f), "Bullet"),
-        new GunFireInfo(new Vector3(0.2f, 0.1f, 0f), "Bullet")
+        new GunFireInfo(new Vector3(0.2f, -0.1f, 0f), "Bullet")
     };
     private static readonly GunFireInfo[] level3Pattern = new GunFireInfo[]
     {
-        new GunFireInfo(new Vector3(-3f, -0.1f, 0f), "Bullet"),
-        new GunFireInfo(Vector3.zero, "Bullet1"), // 가운데는 다른 총알 발사
-        new GunFireInfo(new Vector3(3f, -0.1f, 0f), "Bullet")
+        new GunFireInfo(new Vector3(-0.3f, -0.1f, 0f), "Bullet"),
+        new GunFireInfo(Vector3.zero, "Bullet1"), // 원래 "Bullet1"이었으나 모두 "Bullet"으로 사용
+        new GunFireInfo(new Vector3(0.3f, -0.1f, 0f), "Bullet")
     };
     private static readonly GunFireInfo[] level4Pattern = new GunFireInfo[]
     {
-        new GunFireInfo(new Vector3(-5f, -0.2f, 0f), "Bullet"),
-        new GunFireInfo(new Vector3(-3f, -0.1f, 0f), "Bullet1"),
+        new GunFireInfo(new Vector3(-0.5f, -0.2f, 0f), "Bullet"),
+        new GunFireInfo(new Vector3(-0.3f, -0.1f, 0f), "Bullet1"),
         new GunFireInfo(Vector3.zero, "Bullet1"),
-        new GunFireInfo(new Vector3(3f, -0.1f, 0f), "Bullet1"),
-        new GunFireInfo(new Vector3(5f, -0.2f, 0f), "Bullet")
+        new GunFireInfo(new Vector3(0.3f, -0.1f, 0f), "Bullet1"),
+        new GunFireInfo(new Vector3(0.5f, -0.2f, 0f), "Bullet")
     };
-    public bool canShoot = true;  // true일 때만 총알/미사일 발사
-    public int health = 3; // 플레이어 체력
-    public float invincibilityDuration = 0.5f; // 무적 지속 시간
-    private bool isInvincible = false; // 무적 상태 여부
-    private SpriteRenderer spriteRenderer; // 플레이어의 스프라이트 렌더러 (플래시 효과용)
 
-    private Vector3 targetPosition; // 목표 위치
-    private bool isTouching = false; // 터치 중인지 확인 
-    public float moveSpeed = 5f; // 이동 속도
-    private float originalMoveSpeed; // 원래 이동 속도 저장
+    // ── Raser(레이저) 발사 패턴 ──
+    // raserLevel 1: Beam 1개
+    private static readonly GunFireInfo[] raserLevel1Pattern = new GunFireInfo[]
+    {
+        new GunFireInfo(new Vector3(0f,5f,0f), "Beam")
+    };
+    // raserLevel 2: Beam 2개 → 좌표 (0.5,5,0)와 (-0.5,5,0)
+    private static readonly GunFireInfo[] raserLevel2Pattern = new GunFireInfo[]
+    {
+        new GunFireInfo(new Vector3(0.5f, 5f, 0f), "Beam"),
+        new GunFireInfo(new Vector3(-0.5f, 5f, 0f), "Beam")
+    };
+    // raserLevel 3: Beam 1 + BBeam 1, 모두 (0,5,0)
+    private static readonly GunFireInfo[] raserLevel3Pattern = new GunFireInfo[]
+    {
+        new GunFireInfo(new Vector3(0f,5f,0f), "Beam"),
+        new GunFireInfo(new Vector3(0f,5f,0f), "BBeam")
+    };
+    // raserLevel 4: UBeam 1 + BBeam 1, 모두 (0,5,0) → 지속 발사 (쿨다운 없이)
+    private static readonly GunFireInfo[] raserLevel4Pattern = new GunFireInfo[]
+    {
+        new GunFireInfo(new Vector3(0f,5f,0f), "UBeam"),
+        new GunFireInfo(new Vector3(0f,5f,0f), "BBeam")
+    };
 
-    public GameObject gameOverPanel; // 게임 오버 패널
+    [Header("Player Movement & Other Settings")]
+    public bool canShoot = true;
+    public int health = 3;
+    public float invincibilityDuration = 0.5f;
+    private bool isInvincible = false;
+    private SpriteRenderer spriteRenderer;
+    private Vector3 targetPosition;
+    private bool isTouching = false;
+    public float moveSpeed = 5f;
+    private float originalMoveSpeed;
+    public GameObject gameOverPanel;
 
-    // 쉴드 관련 필드
+    // 쉴드 관련
     public GameObject shieldImage;
     private bool isShieldActive = false;
     private Coroutine shieldCoroutine;
 
-    [SerializeField]
-    private float collisionCheckRadius = 0.2f;
-
-    [SerializeField]
-    private LayerMask wallLayer;
-
+    [SerializeField] private float collisionCheckRadius = 0.2f;
+    [SerializeField] private LayerMask wallLayer;
 
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         targetPosition = transform.position;
-        originalMoveSpeed = moveSpeed; // 원래 속도 저장
-
-        // 쉴드 이미지가 있다면 비활성화
+        originalMoveSpeed = moveSpeed;
         if (shieldImage != null)
             shieldImage.SetActive(false);
     }
@@ -87,24 +120,50 @@ public class Player : MonoBehaviour
     void Update()
     {
         HandleMovement();
-        if (canShoot)
-        {
-            Shoot();
-        }
 
-        // 자동 업그레이드 타이머: gunLevel이 3일 때 22초 경과하면 자동으로 4단계로 업그레이드
-        if (gunLevel == 3)
+        if (currentWeapon == ActiveWeapon.Gun && canShoot)
         {
-            autoUpgradeTimer += Time.deltaTime;
-            if (autoUpgradeTimer >= autoUpgradeDelay)
+            if (Time.time - lastGunShootTime > gunShootInterval)
             {
-                UpgradeGun(); // 레벨 3 → 4
-                autoUpgradeTimer = 0f;
+                FireGun();
+                lastGunShootTime = Time.time;
             }
+            if (gunLevel == 3)
+            {
+                autoUpgradeTimerGun += Time.deltaTime;
+                if (autoUpgradeTimerGun >= autoUpgradeDelay)
+                {
+                    AutoUpgradeGunToMax();
+                    autoUpgradeTimerGun = 0f;
+                }
+            }
+            else autoUpgradeTimerGun = 0f;
         }
-        else
+        else if (currentWeapon == ActiveWeapon.Raser && canShoot)
         {
-            autoUpgradeTimer = 0f;
+            if (raserLevel < 4)
+            {
+                if (Time.time - lastRaserShootTime > raserShootInterval)
+                {
+                    FireRaser();
+                    lastRaserShootTime = Time.time;
+                }
+            }
+            else
+            {
+                // raserLevel 4: 계속 발사 (쿨다운 없음)
+                FireRaser();
+            }
+            if (raserLevel == 3)
+            {
+                autoUpgradeTimerRaser += Time.deltaTime;
+                if (autoUpgradeTimerRaser >= autoUpgradeDelay)
+                {
+                    AutoUpgradeRaserToMax();
+                    autoUpgradeTimerRaser = 0f;
+                }
+            }
+            else autoUpgradeTimerRaser = 0f;
         }
     }
 
@@ -124,46 +183,30 @@ public class Player : MonoBehaviour
         if (Vector3.Distance(transform.position, targetPosition) > 0.05f)
         {
             Vector3 nextPosition = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
-
-            // 다음 위치에 벽 레이어에 해당하는 오브젝트와 충돌하는지 검사
             Collider2D wallCollision = Physics2D.OverlapCircle(nextPosition, collisionCheckRadius, wallLayer);
             if (wallCollision != null)
-            {
-                // 벽과 충돌하면 이동하지 않음
                 return;
-            }
             transform.position = nextPosition;
         }
     }
 
-    void Shoot()
-    {
-        if (Time.time - lastGunShootTime > gunShootInterval)
-        {
-            FireGun();
-            lastGunShootTime = Time.time;
-        }
-    }
-
+    // ── Gun 발사 ──
     void FireGun()
     {
         GunFireInfo[] pattern = GetGunPattern();
+        Quaternion baseRotation = shootTransform.rotation;
         for (int i = 0; i < pattern.Length; i++)
         {
             GunFireInfo info = pattern[i];
             Vector3 spawnPos = shootTransform.position + info.offset;
-            // 기본 회전은 identity, 단 gunLevel 4일 때 양옆 총알은 회전 적용
-            Quaternion rotation = Quaternion.identity;
+            Quaternion rotation = baseRotation;
             if (gunLevel == 4)
             {
+                // 4단계일 때, 좌측(인덱스 0)는 -15°, 우측(마지막 인덱스)은 +15° 상대 회전 적용
                 if (i == 0)
-                {
-                    rotation = Quaternion.Euler(0f, 0f, -15f);
-                }
+                    rotation = baseRotation * Quaternion.Euler(0f, 0f, 15f);
                 else if (i == pattern.Length - 1)
-                {
-                    rotation = Quaternion.Euler(0f, 0f, 15f);
-                }
+                    rotation = baseRotation * Quaternion.Euler(0f, 0f, -15f);
             }
             WeaponPool.Instance.SpawnWeapon(info.weaponType, spawnPos, rotation);
         }
@@ -181,32 +224,147 @@ public class Player : MonoBehaviour
             return level4Pattern;
     }
 
-    // 총알 업그레이드 (gunLevel 최대 5)
-    public void UpgradeGun()
+    // ── Raser 발사 ──
+    void FireRaser()
     {
-        if (gunLevel < 3)
+        if (raserLevel == 4)
         {
-            gunLevel++;
-            Debug.Log("Gun upgraded via item to level " + gunLevel);
-        }
-        else if (gunLevel == 3)
-        {
-            gunLevel = 4;
-            Debug.Log("Gun auto upgraded to max level " + gunLevel);
+            if (persistentUBeam == null)
+            {
+                persistentUBeam = WeaponPool.Instance.SpawnWeapon("UBeam", shootTransform.position, shootTransform.rotation);
+                Weapon w = persistentUBeam.GetComponent<Weapon>();
+                if (w != null)
+                    w.followPlayer = true;
+            }
+            if (persistentBBeam == null)
+            {
+                persistentBBeam = WeaponPool.Instance.SpawnWeapon("BBeam", shootTransform.position, shootTransform.rotation);
+                Weapon w = persistentBBeam.GetComponent<Weapon>();
+                if (w != null)
+                    w.followPlayer = true;
+            }
         }
         else
         {
-            Debug.Log("Gun is already at maximum level.");
+            GunFireInfo[] pattern = GetRaserPattern();
+            Quaternion baseRotation = shootTransform.rotation;
+            for (int i = 0; i < pattern.Length; i++)
+            {
+                GunFireInfo info = pattern[i];
+                Vector3 spawnPos = shootTransform.position + info.offset;
+                GameObject laserObj = WeaponPool.Instance.SpawnWeapon(info.weaponType, spawnPos, baseRotation);
+                // 모든 레이저(Beam, BBeam 등)를 플레이어 따라다니게 설정
+                Weapon w = laserObj.GetComponent<Weapon>();
+                if (w != null)
+                    w.followPlayer = true;
+            }
         }
     }
 
 
-    // 체력 회복 (health가 3 미만이면 1 회복)
+
+
+    GunFireInfo[] GetRaserPattern()
+    {
+        if (raserLevel == 1)
+            return raserLevel1Pattern;
+        else if (raserLevel == 2)
+            return raserLevel2Pattern;
+        else if (raserLevel == 3)
+            return raserLevel3Pattern;
+        else
+            return raserLevel4Pattern;
+    }
+
+    // ── 수동 업그레이드 (UpgradeItem 호출용): 현재 무기 타입이 요청과 같으면 해당 무기의 레벨을 1~3까지만 올림,
+    // 서로 다른 무기 타입이면 무기를 전환하고 현재 저장된 레벨을 그대로 사용함.
+    public void UpgradeWeapon(ActiveWeapon requestedWeapon)
+    {
+        if (currentWeapon == requestedWeapon)
+        {
+            if (requestedWeapon == ActiveWeapon.Gun)
+            {
+                if (gunLevel < 3)
+                {
+                    gunLevel++;
+                    Debug.Log("Gun upgraded via item to level " + gunLevel);
+                }
+                else
+                {
+                    Debug.Log("Gun is at maximum manual level (3).");
+                }
+            }
+            else // ActiveWeapon.Raser
+            {
+                if (raserLevel < 3)
+                {
+                    raserLevel++;
+                    Debug.Log("Raser upgraded via item to level " + raserLevel);
+                }
+                else
+                {
+                    Debug.Log("Raser is at maximum manual level (3).");
+                }
+            }
+        }
+        else if (currentWeapon != requestedWeapon)
+        {
+            // 전환 시, 현재 Raser persistent 오브젝트가 있다면 반환하고 null로 초기화
+            if (currentWeapon == ActiveWeapon.Raser)
+            {
+                if (persistentUBeam != null)
+                {
+                    WeaponPool.Instance.ReturnWeapon("UBeam", persistentUBeam);
+                    persistentUBeam = null;
+                }
+                if (persistentBBeam != null)
+                {
+                    WeaponPool.Instance.ReturnWeapon("BBeam", persistentBBeam);
+                    persistentBBeam = null;
+                }
+            }
+            currentWeapon = requestedWeapon;
+            Debug.Log("Switched weapon to " + currentWeapon.ToString() + " at level " +
+                      (currentWeapon == ActiveWeapon.Gun ? gunLevel : raserLevel));
+            
+            // 먹은 무기 레벨 업
+            if (requestedWeapon == ActiveWeapon.Gun)
+            {
+                if (gunLevel < 3)
+                    gunLevel++;
+            }
+            else if (requestedWeapon == ActiveWeapon.Raser)
+            {
+                if (raserLevel < 3)
+                    raserLevel++;
+            }
+        }
+    }
+
+
+    // ── 자동 업그레이드 (내부 타이머에 의해 3단계 상태에서 호출되어 4단계로 전환) ──
+    private void AutoUpgradeGunToMax()
+    {
+        if (gunLevel == 3)
+        {
+            gunLevel = 4;
+            Debug.Log("Gun auto upgraded to max level " + gunLevel);
+        }
+    }
+    private void AutoUpgradeRaserToMax()
+    {
+        if (raserLevel == 3)
+        {
+            raserLevel = 4;
+            Debug.Log("Raser auto upgraded to max level " + raserLevel);
+        }
+    }
+
     public void RecoverHealth()
     {
         if (health < 3)
         {
-            health += 1;
+            health++;
             Debug.Log("체력 회복, 현재 체력: " + health);
         }
         else
@@ -215,12 +373,10 @@ public class Player : MonoBehaviour
         }
     }
 
-    // 쉴드 활성화: 30초 동안 유지, 이미 있으면 시간을 30초로 리셋
     public void ActivateShield()
     {
         if (isShieldActive)
         {
-            // 이미 쉴드가 활성화되어 있으면, 기존 코루틴을 중단하고 시간을 리셋
             if (shieldCoroutine != null)
                 StopCoroutine(shieldCoroutine);
             shieldCoroutine = StartCoroutine(ShieldDuration());
@@ -245,12 +401,10 @@ public class Player : MonoBehaviour
         Debug.Log("쉴드 종료");
     }
 
-    // 피격 처리: 쉴드가 활성화되어 있으면 데미지를 받지 않고 쉴드를 제거
     public void TakeDamage(int damage)
     {
         if (isInvincible)
             return;
-        // 쉴드가 활성화되어 있으면 피격 시 쉴드를 제거하고 데미지 무시
         if (isShieldActive)
         {
             isShieldActive = false;
@@ -265,7 +419,7 @@ public class Player : MonoBehaviour
             return;
         }
         health -= damage;
-        Debug.Log($"플레이어 체력: {health}");
+        Debug.Log("플레이어 체력: " + health);
         if (health <= 0)
         {
             Debug.Log("플레이어 사망!");
@@ -276,9 +430,9 @@ public class Player : MonoBehaviour
             StartCoroutine(Invincibility());
         }
     }
+
     public void ApplySpeedReduction(float reductionPercent, float duration = 3f)
     {
-        // 만약 이전에 실행 중인 효과가 있다면 중단
         StopCoroutine("RestoreSpeed");
         moveSpeed = originalMoveSpeed * (1 - reductionPercent);
         StartCoroutine(RestoreSpeed(duration));
@@ -294,10 +448,8 @@ public class Player : MonoBehaviour
     {
         if (ScoreManager.Instance != null)
             ScoreManager.Instance.CheckAndUpdateHighScore();
-
         if (GameOverPanelController.Instance != null)
             GameOverPanelController.Instance.ShowGameOverPanel();
-
         gameObject.SetActive(false);
     }
 
@@ -323,6 +475,4 @@ public class Player : MonoBehaviour
                 TakeDamage(1);
         }
     }
-
-
 }

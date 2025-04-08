@@ -10,6 +10,8 @@ TagManager:
   - Missile
   - BackGround
   - Wall
+  - Beam
+  - Bullet1
   layers:
   - Default
   - TransparentFX
