@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    public enum ActiveWeapon { Gun, Raser }
+    public enum ActiveWeapon { Gun, Raser, Missile }
     public ActiveWeapon currentWeapon = ActiveWeapon.Gun;
 
     [Header("Shoot Transform & Timings")]
@@ -22,6 +22,13 @@ public class Player : MonoBehaviour
     // 각 무기는 수동으로 최대 3단계까지 업그레이드되며, 3단계 상태에서 타이머 경과 시 자동으로 4단계가 됩니다.
     private int gunLevel = 1;
     private int raserLevel = 1;
+    private int missileLevel = 0;           // 0=없음, 1=1단계, 2=2단계
+    // 미사일 관련 추가 필드
+    [SerializeField] private GameObject missileLauncherPrefab; // 미사일 런처 프리팹 (인스펙터 할당)
+    private GameObject missileLauncher1 = null; // Level 1 launcher
+    private GameObject missileLauncher2 = null; // Level 2 launcher (반대편)
+
+
 
     private GameObject persistentUBeam = null;
     private GameObject persistentBBeam = null;
@@ -87,6 +94,9 @@ public class Player : MonoBehaviour
         new GunFireInfo(new Vector3(0f,5f,0f), "UBeam"),
         new GunFireInfo(new Vector3(0f,5f,0f), "BBeam")
     };
+
+    // ㅡ Missile(미사일) 발사 패턴 ㅡ
+
 
     [Header("Player Movement & Other Settings")]
     public bool canShoot = true;
@@ -164,6 +174,29 @@ public class Player : MonoBehaviour
                 }
             }
             else autoUpgradeTimerRaser = 0f;
+        }
+        else if (currentWeapon == ActiveWeapon.Missile && canShoot)
+        {
+            // Level 1: missileLevel 1 이상이면 오른쪽 런처 생성 (없으면)
+            if (missileLevel >= 1 && missileLauncher1 == null)
+            {
+                missileLauncher1 = WeaponPool.Instance.SpawnWeapon("MissileLauncher", shootTransform.position, Quaternion.identity);
+                MissileLauncher launcher = missileLauncher1.GetComponent<MissileLauncher>();
+                if (launcher != null)
+                {
+                    launcher.Initialize(this, 1); // 오른쪽 launcher, side = 1
+                }
+            }
+            // Level 2: missileLevel 2 이상이면 왼쪽 런처 생성 (없으면)
+            if (missileLevel >= 2 && missileLauncher2 == null)
+            {
+                missileLauncher2 = WeaponPool.Instance.SpawnWeapon("MissileLauncher", shootTransform.position, Quaternion.identity);
+                MissileLauncher launcher2 = missileLauncher2.GetComponent<MissileLauncher>();
+                if (launcher2 != null)
+                {
+                    launcher2.Initialize(this, -1); // 왼쪽 launcher, side = -1
+                }
+            }
         }
     }
 
@@ -261,9 +294,6 @@ public class Player : MonoBehaviour
         }
     }
 
-
-
-
     GunFireInfo[] GetRaserPattern()
     {
         if (raserLevel == 1)
@@ -275,6 +305,8 @@ public class Player : MonoBehaviour
         else
             return raserLevel4Pattern;
     }
+
+
 
     // ── 수동 업그레이드 (UpgradeItem 호출용): 현재 무기 타입이 요청과 같으면 해당 무기의 레벨을 1~3까지만 올림,
     // 서로 다른 무기 타입이면 무기를 전환하고 현재 저장된 레벨을 그대로 사용함.
@@ -294,7 +326,7 @@ public class Player : MonoBehaviour
                     Debug.Log("Gun is at maximum manual level (3).");
                 }
             }
-            else // ActiveWeapon.Raser
+            else if (requestedWeapon == ActiveWeapon.Raser) // ActiveWeapon.Raser
             {
                 if (raserLevel < 3)
                 {
@@ -304,6 +336,13 @@ public class Player : MonoBehaviour
                 else
                 {
                     Debug.Log("Raser is at maximum manual level (3).");
+                }
+            }
+            else if (requestedWeapon == ActiveWeapon.Missile)
+            {
+                if (missileLevel < 2)
+                {
+                    missileLevel++;
                 }
             }
         }
@@ -326,7 +365,7 @@ public class Player : MonoBehaviour
             currentWeapon = requestedWeapon;
             Debug.Log("Switched weapon to " + currentWeapon.ToString() + " at level " +
                       (currentWeapon == ActiveWeapon.Gun ? gunLevel : raserLevel));
-            
+
             // 먹은 무기 레벨 업
             if (requestedWeapon == ActiveWeapon.Gun)
             {
@@ -337,6 +376,11 @@ public class Player : MonoBehaviour
             {
                 if (raserLevel < 3)
                     raserLevel++;
+            }
+            else if (requestedWeapon == ActiveWeapon.Missile)
+            {
+                if (missileLevel < 2)
+                    missileLevel++;
             }
         }
     }

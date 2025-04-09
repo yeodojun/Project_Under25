@@ -12,6 +12,9 @@ TagManager:
   - Wall
   - Beam
   - Bullet1
+  - BBeam
+  - UBeam
+  - MissileLauncher
   layers:
   - Default
   - TransparentFX

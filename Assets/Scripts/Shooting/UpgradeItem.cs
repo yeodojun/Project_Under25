@@ -23,18 +23,21 @@ public class UpgradeItem : MonoBehaviour
             {
                 // 0 ~ 1 사이의 랜덤값 생성
                 float rand = Random.value;
-                // 30% 확률로 Gun 업그레이드, 30% 확률로 Raser 업그레이드, 나머지 20%씩은 체력 회복과 쉴드
-                if (rand < 0.3f)
+                /*if (rand < 0.2f)
                 {
                     // 현재 Gun을 업그레이드하거나 Gun 모드로 전환 (수동 업그레이드는 최대 3까지만 작동)
                     player.UpgradeWeapon(Player.ActiveWeapon.Gun);
                     Debug.Log("Gun upgrade item acquired!");
                 }
-                else if (rand < 0.6f)
+                else if (rand < 0.4f)
                 {
                     // 현재 Raser를 업그레이드하거나 Raser 모드로 전환
                     player.UpgradeWeapon(Player.ActiveWeapon.Raser);
                     Debug.Log("Raser upgrade item acquired!");
+                }*/
+                if (rand < 0.6f)
+                {
+                    player.UpgradeWeapon(Player.ActiveWeapon.Missile);
                 }
                 else if (rand < 0.8f)
                 {

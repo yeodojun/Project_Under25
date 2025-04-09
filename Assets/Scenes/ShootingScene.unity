@@ -4220,6 +4220,12 @@ MonoBehaviour:
   - weaponType: UBeam
     prefab: {fileID: 1340188137134270355, guid: 4a63b12fc0df6a743a484e4957132400, type: 3}
     poolSize: 10
+  - weaponType: MissileLauncher
+    prefab: {fileID: 5371893645922609211, guid: ebe5be727990f4f44a17617f9b774b8b, type: 3}
+    poolSize: 3
+  - weaponType: Missile
+    prefab: {fileID: 4093369639878249957, guid: e6bcb16be530ad8429ca1db4f804b133, type: 3}
+    poolSize: 30
 --- !u!4 &1210764176
 Transform:
   m_ObjectHideFlags: 0
@@ -4905,6 +4911,7 @@ MonoBehaviour:
   shootTransform: {fileID: 1649759036}
   gunShootInterval: 0.15
   raserShootInterval: 1
+  missileLauncherPrefab: {fileID: 0}
   canShoot: 1
   health: 3
   invincibilityDuration: 0.5

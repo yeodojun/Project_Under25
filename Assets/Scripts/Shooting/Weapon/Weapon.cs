@@ -49,7 +49,7 @@ public class Weapon : MonoBehaviour
         }
     }
 
-
+    [System.Obsolete]
     void Update()
     {
         if (weaponType == "Bullet")
@@ -92,13 +92,32 @@ public class Weapon : MonoBehaviour
                 transform.position = playerObj.transform.position + new Vector3(0f, 5f, 0f);
             }
         }
+        else if (weaponType == "Missile")
+        {
+            // 미사일 유도 기능: 화면 내 적 중, 미사일의 진행 방향과 60° 이내인 가장 가까운 적을 타겟팅
+            Enemy target = FindTargetEnemy();
+            if (target != null)
+            {
+                Vector3 targetDir = (target.transform.position - transform.position).normalized;
+                // 초당 최대 60° 회전 (라디안 변환)
+                float turnSpeed = 60f * Mathf.Deg2Rad;
+                Vector3 newDir = Vector3.RotateTowards(transform.up, targetDir, turnSpeed * Time.deltaTime, 0f);
+                transform.up = newDir;
+            }
+            // 미사일 이동: speed 10
+            transform.position += transform.up * 10f * Time.deltaTime;
+            if (transform.position.y >= 10f)
+            {
+                WeaponPool.Instance.ReturnWeapon("Missile", gameObject);
+            }
+        }
 
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         // Bullet 계열 무기는 충돌 시 한번 데미지를 주고 반환
-        if (weaponType == "Bullet" || weaponType == "Bullet1")
+        if (weaponType == "Bullet" || weaponType == "Bullet1" || weaponType == "Missile")
         {
             if (hasHit) return;
             if (other.CompareTag("Enemy"))
@@ -170,5 +189,24 @@ public class Weapon : MonoBehaviour
             }
             // 보스에 대해서도 동일하게 가능하게 할 수 있지만, 보스는 일반적으로 단발성 데미지를 주므로 생략할 수 있음.
         }
+    }
+
+    [System.Obsolete]
+    private Enemy FindTargetEnemy()
+    {
+        Enemy[] enemies = GameObject.FindObjectsOfType<Enemy>();
+        Enemy target = null;
+        float minDist = Mathf.Infinity;
+        foreach (Enemy e in enemies)
+        {
+            float dist = Vector3.Distance(transform.position, e.transform.position);
+            float angleDiff = Vector3.Angle(transform.up, e.transform.position - transform.position);
+            if (angleDiff <= 60f && dist < minDist)
+            {
+                minDist = dist;
+                target = e;
+            }
+        }
+        return target;
     }
 }
