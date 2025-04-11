@@ -127,13 +127,31 @@ public class Player : MonoBehaviour
 
         if (currentWeapon == ActiveWeapon.Gun && canShoot)
         {
-            if (Time.time - lastGunShootTime > gunShootInterval)
+            if (gunLevel == 1)
             {
-                FireGun();
-                lastGunShootTime = Time.time;
+                if (Time.time - lastGunShootTime > gunShootInterval)
+                {
+                    FireGun();
+                    lastGunShootTime = Time.time;
+                }
             }
-            if (gunLevel == 3)
+            else if (gunLevel == 2)
             {
+                gunShootInterval = 0.18f;
+                if (Time.time - lastGunShootTime > gunShootInterval)
+                {
+                    FireGun();
+                    lastGunShootTime = Time.time;
+                }
+            }
+            else if (gunLevel == 3)
+            {
+                gunShootInterval = 0.15f;
+                if (Time.time - lastGunShootTime > gunShootInterval)
+                {
+                    FireGun();
+                    lastGunShootTime = Time.time;
+                }
                 autoUpgradeTimerGun += Time.deltaTime;
                 if (autoUpgradeTimerGun >= autoUpgradeDelay)
                 {
@@ -141,11 +159,38 @@ public class Player : MonoBehaviour
                     autoUpgradeTimerGun = 0f;
                 }
             }
+            else
+            {
+                gunShootInterval = 0.1f;
+                if (Time.time - lastGunShootTime > gunShootInterval)
+                {
+                    FireGun();
+                    lastGunShootTime = Time.time;
+                }
+            }
         }
         else if (currentWeapon == ActiveWeapon.Raser && canShoot)
         {
-            if (raserLevel < 4)
+            if (raserLevel == 1)
             {
+                if (Time.time - lastRaserShootTime > raserShootInterval)
+                {
+                    FireRaser();
+                    lastRaserShootTime = Time.time;
+                }
+            }
+            else if (raserLevel == 2)
+            {
+                raserShootInterval = 0.7f;
+                if (Time.time - lastRaserShootTime > raserShootInterval)
+                {
+                    FireRaser();
+                    lastRaserShootTime = Time.time;
+                }
+            }
+            else if (raserLevel == 3)
+            {
+                raserShootInterval = 0.5f;
                 if (Time.time - lastRaserShootTime > raserShootInterval)
                 {
                     FireRaser();

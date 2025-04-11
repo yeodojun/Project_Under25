@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Weapon : MonoBehaviour
 {
-    public float speed = 5f;    // 기본 이동 속도
+    public float speed = 1f;    // 기본 이동 속도
     public int damage = 1;      // 기본 데미지
     private bool hasHit = false; // 충돌 처리 여부
 
@@ -13,14 +13,13 @@ public class Weapon : MonoBehaviour
 
     // 레이저 무기(Beam, BBeam)의 지속 시간 관리용 타이머
     private float lifetimeTimer = 0f;
-    public float beamLifetime = 0.5f; // 예: 0.5초
-                                      // 스폰 시 플레이어와의 상대 오프셋을 저장 (레이저용)
+    public float beamLifetime = 1f;  
     private Vector3 initialRelativeOffset;
     private bool offsetInitialized = false;
 
 
-    // 레이저 무기 중, UBeam와 level4에서 BBeam이 플레이어를 따라다니게 하고 싶으므로
-    // followPlayer가 true이면 매 프레임 플레이어 위치를 업데이트합니다.
+    // 레이저 무기 중, UBeam와 level4에서 BBeam이 플레이어를 유도
+    // followPlayer가 true이면 매 프레임 플레이어 위치를 업데이트
     public bool followPlayer = false;
 
     void Start()
@@ -149,7 +148,7 @@ public class Weapon : MonoBehaviour
                 Enemy enemy = other.GetComponent<Enemy>();
                 if (enemy != null)
                 {
-                    // OnTriggerStay2D에서 데미지 주도록 처리하므로 여기서는 별도 반환하지 않음.
+                    // OnTriggerStay2D에서 데미지 주도록 처리하므로 여기서는 별도 반환하지 않음
                     enemy.TakeDamage(damage);
                 }
             }
@@ -166,7 +165,7 @@ public class Weapon : MonoBehaviour
 
     // OnTriggerStay2D를 활용하여, 레이저 무기는 한 번 데미지를 준 후 0.2초간 재데미지를 막습니다.
     private static Dictionary<int, float> beamDamageCooldown = new Dictionary<int, float>();
-    private const float beamCooldownDuration = 0.2f;
+    private const float beamCooldownDuration = 0.1f;
 
     private void OnTriggerStay2D(Collider2D other)
     {
