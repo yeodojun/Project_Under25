@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class WaveManager : MonoBehaviour
 {
+    public static WaveManager Instance { get; private set; }
     public GameObject enemyPrefab;    // Enemy_0 (기본 적) 프리팹
     public GameObject enemyPrefab1;   // Enemy_1 (새 적, 체력 20, 총 미발사) 프리팹
     public GameObject enemyPrefab2;   // Enemy_2 (새 적, 체력 50, 총 발사) 프리팹
     public GameObject bossPrefab;
     public float waveDelay = 5f;      // 웨이브 간 딜레이
     private int currentWave = 1;      // 현재 웨이브 번호
+    public int CurrentWave { get { return currentWave; } }  // 외부 접근용 프로퍼티
     private bool waveInProgress = false; // 웨이브 진행 여부
     [Header("UI References")]
     public GameObject redWarningPanel;
@@ -1541,6 +1543,14 @@ public class WaveManager : MonoBehaviour
             list.AddRange(pattern);
         }
         return list.ToArray();
+    }
+    void Awake()
+    {
+        // 싱글턴 패턴 적용: 인스턴스가 없으면 자신을 할당, 이미 있으면 파괴
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
     }
 
 

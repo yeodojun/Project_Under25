@@ -23,11 +23,45 @@ public class Enemy : MonoBehaviour
 
     void Awake()
     {
+
+        int wave = 1;
+        if (WaveManager.Instance != null)
+        {
+            // 예) WaveManager.Instance.CurrentWave 또는 WaveManager.CurrentWave
+            wave = WaveManager.Instance.CurrentWave;
+        }
+        int multiplier = 1;
+        if (wave < 6)
+            multiplier = 1;
+        else if (wave < 11)
+            multiplier = 3;
+        else if (wave < 16)
+            multiplier = 9;
+        else if (wave < 26)
+            multiplier = 27;
+        else
+            multiplier = 27;
+
+        if (enemyType == 0)
+        {
+            health = 1 * multiplier;
+        }
+        else if (enemyType == 1)
+        {
+            health = 20 * multiplier;
+        }
+        else if (enemyType == 2)
+        {
+            health = 5 * multiplier;
+        }
+        else if (enemyType == 3)
+        {
+            health = 10 * multiplier;
+        }
         // enemyType에 따라 초기화
         if (enemyType == 1)
         {
             isEnemy1 = true;
-            health = 20;
             // 기존의 EnemyAttack 컴포넌트 비활성화
             EnemyAttack attack = GetComponent<EnemyAttack>();
             if (attack != null)
@@ -35,7 +69,6 @@ public class Enemy : MonoBehaviour
         }
         else if (enemyType == 2)
         {
-            health = 50;
             EnemyAttack attack = GetComponent<EnemyAttack>();
             if (attack != null)
                 attack.enabled = false;
@@ -43,8 +76,7 @@ public class Enemy : MonoBehaviour
         }
         else if (enemyType == 3)
         {
-            // Enemy_3: 체력 30, 공격력 1
-            health = 30;
+            // Enemy_3: 공격력 1
             EnemyAttack attack = GetComponent<EnemyAttack>();
             if (attack != null)
                 attack.enabled = false;

@@ -2,18 +2,53 @@ using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour
 {
-    public float speed = 4f; // 총알 속도
+    // "Gun", "Sniper", "ScreamWave" 설정해야함
+    public string bulletType;
+    public float speed = 1f; // 총알 속도
     public int damage = 1; // 총알 데미지
     internal bool isEnemy4Bullet;
+    private float lifetime = 0f;
+    public Vector3 direction;
+
+    void OnEnable()
+    {
+        // 총알이 활성화될 때마다 lifetime 초기화
+        lifetime = 0f;
+    }
 
     void Update()
     {
-        transform.position += Vector3.down * speed * Time.deltaTime; // 아래로 이동
-
-        // 화면 밖으로 나가면 제거
-        if (transform.position.y <= -5.5f)
+        if (bulletType == "Gun")
         {
-            Destroy(gameObject);
+            // Gun 총알: 1의 속도로 아래로 이동
+            transform.position += Vector3.down * speed * Time.deltaTime;
+            // y가 -10 이하이면 반환
+            if (transform.position.y <= -10f)
+            {
+                WeaponPool.Instance.ReturnWeapon(bulletType, gameObject);
+            }
+        }
+        else if (bulletType == "Sniper")
+        {
+            // Sniper 총알: direction 방향(플레이어를 향한 방향)으로 1.8의 속도로 이동
+            transform.position += direction * speed * Time.deltaTime;
+            // x가 6 또는 -6, y가 10 또는 -10 범위를 벗어나면 반환
+            if (transform.position.x >= 6f || transform.position.x <= -6f ||
+                transform.position.y >= 10f || transform.position.y <= -10f)
+            {
+                WeaponPool.Instance.ReturnWeapon(bulletType, gameObject);
+            }
+        }
+        else if (bulletType == "ScreamWave")
+        {
+            // ScreamWave 총알: 0.8의 속도로 이동 (플레이어를 향한 방향)
+            transform.position += direction * speed * Time.deltaTime;
+            lifetime += Time.deltaTime;
+            // 2초 후에 반환
+            if (lifetime >= 2f)
+            {
+                WeaponPool.Instance.ReturnWeapon(bulletType, gameObject);
+            }
         }
     }
 
@@ -25,17 +60,11 @@ public class EnemyBullet : MonoBehaviour
             Player player = other.GetComponent<Player>();
             if (player != null)
             {
-                if (isEnemy4Bullet)
+                if (bulletType == "Gun" || bulletType == "Sniper")
                 {
-                    // Enemy_4 총알: 플레이어에게 데미지를 주지 않고, 이동 속도를 30% 감소시키는 효과 적용.
-                    player.ApplySpeedReduction(0.3f); // 이거 Player 스크립트에서 사용
-                }
-                else
-                {
-                    // 일반 적 총알: 데미지 적용
                     player.TakeDamage(damage);
                 }
-                Destroy(gameObject); // 충돌 후 총알 제거
+                WeaponPool.Instance.ReturnWeapon(bulletType, gameObject);
             }
         }
     }

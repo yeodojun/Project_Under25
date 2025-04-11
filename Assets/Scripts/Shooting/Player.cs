@@ -110,10 +110,6 @@ public class Player : MonoBehaviour
     private float originalMoveSpeed;
     public GameObject gameOverPanel;
 
-    // 쉴드 관련
-    public GameObject shieldImage;
-    private bool isShieldActive = false;
-    private Coroutine shieldCoroutine;
 
     [SerializeField] private float collisionCheckRadius = 0.2f;
     [SerializeField] private LayerMask wallLayer;
@@ -123,8 +119,6 @@ public class Player : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         targetPosition = transform.position;
         originalMoveSpeed = moveSpeed;
-        if (shieldImage != null)
-            shieldImage.SetActive(false);
     }
 
     void Update()
@@ -147,7 +141,6 @@ public class Player : MonoBehaviour
                     autoUpgradeTimerGun = 0f;
                 }
             }
-            else autoUpgradeTimerGun = 0f;
         }
         else if (currentWeapon == ActiveWeapon.Raser && canShoot)
         {
@@ -173,7 +166,6 @@ public class Player : MonoBehaviour
                     autoUpgradeTimerRaser = 0f;
                 }
             }
-            else autoUpgradeTimerRaser = 0f;
         }
         else if (currentWeapon == ActiveWeapon.Missile && canShoot)
         {
@@ -417,51 +409,10 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void ActivateShield()
-    {
-        if (isShieldActive)
-        {
-            if (shieldCoroutine != null)
-                StopCoroutine(shieldCoroutine);
-            shieldCoroutine = StartCoroutine(ShieldDuration());
-            Debug.Log("쉴드 시간 리셋");
-        }
-        else
-        {
-            isShieldActive = true;
-            if (shieldImage != null)
-                shieldImage.SetActive(true);
-            shieldCoroutine = StartCoroutine(ShieldDuration());
-            Debug.Log("쉴드 활성화");
-        }
-    }
-
-    private IEnumerator ShieldDuration()
-    {
-        yield return new WaitForSeconds(30f);
-        isShieldActive = false;
-        if (shieldImage != null)
-            shieldImage.SetActive(false);
-        Debug.Log("쉴드 종료");
-    }
-
     public void TakeDamage(int damage)
     {
         if (isInvincible)
             return;
-        if (isShieldActive)
-        {
-            isShieldActive = false;
-            if (shieldImage != null)
-                shieldImage.SetActive(false);
-            if (shieldCoroutine != null)
-            {
-                StopCoroutine(shieldCoroutine);
-                shieldCoroutine = null;
-            }
-            Debug.Log("쉴드가 공격을 막음");
-            return;
-        }
         health -= damage;
         Debug.Log("플레이어 체력: " + health);
         if (health <= 0)
@@ -471,8 +422,59 @@ public class Player : MonoBehaviour
         }
         else
         {
+            // 피격 시 무기 초기화 및 리스폰 처리 (피격 후 0.2초 후 실행)
+            StartCoroutine(ResetWeaponsAndRespawn());
             StartCoroutine(Invincibility());
         }
+    }
+
+
+    private IEnumerator ResetWeaponsAndRespawn()
+    {
+        // (여기서 실제 토큰 프리팹이 있다면 Instantiate 하는 코드를 추가할 수 있습니다.)
+        Debug.Log("Dropping 1 Gun upgrade token and 3 Raser upgrade tokens.");
+
+        // persistent 무기(레이저)와 미사일 런쳐가 있다면 반환
+        if (persistentUBeam != null)
+        {
+            WeaponPool.Instance.ReturnWeapon("UBeam", persistentUBeam);
+            persistentUBeam = null;
+        }
+        if (persistentBBeam != null)
+        {
+            WeaponPool.Instance.ReturnWeapon("BBeam", persistentBBeam);
+            persistentBBeam = null;
+        }
+        if (missileLauncher1 != null)
+        {
+            WeaponPool.Instance.ReturnWeapon("MissileLauncher", missileLauncher1);
+            missileLauncher1 = null;
+        }
+        if (missileLauncher2 != null)
+        {
+            WeaponPool.Instance.ReturnWeapon("MissileLauncher", missileLauncher2);
+            missileLauncher2 = null;
+        }
+
+        // 플레이어 사라짐
+        gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.2f);
+
+        // 플레이어 리스폰: 지정 위치 (0, 2.5)로 이동
+        transform.position = new Vector3(0f, 2.5f, transform.position.z);
+
+        // 무기 상태 초기화
+        currentWeapon = ActiveWeapon.Gun;
+        gunLevel = 1;
+        raserLevel = 1;
+        missileLevel = 0;
+
+        // 자동 업그레이드 타이머 초기화
+        autoUpgradeTimerGun = 0f;
+        autoUpgradeTimerRaser = 0f;
+
+        // 플레이어 재활성화
+        gameObject.SetActive(true);
     }
 
     public void ApplySpeedReduction(float reductionPercent, float duration = 3f)
