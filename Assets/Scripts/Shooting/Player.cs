@@ -349,7 +349,7 @@ public class Player : MonoBehaviour
     // 서로 다른 무기 타입이면 무기를 전환하고 현재 저장된 레벨을 그대로 사용함.
     public void UpgradeWeapon(ActiveWeapon requestedWeapon)
     {
-        if (currentWeapon == requestedWeapon)
+        if (currentWeapon == requestedWeapon) // 현재 무기가 업그레이드 권 무기와 같은 경우
         {
             if (requestedWeapon == ActiveWeapon.Gun)
             {
@@ -383,9 +383,9 @@ public class Player : MonoBehaviour
                 }
             }
         }
-        else if (currentWeapon != requestedWeapon)
+        else if (currentWeapon != requestedWeapon) // 현재 무기가 업그레이드 권 무기와 다를 경우, 무기 전환
         {
-            // 전환 시, 현재 Raser persistent 오브젝트가 있다면 반환하고 null로 초기화
+            // 전환 시, 현재 Raser persistent 오브젝트가 있다면 반환하고 null로 초기화, 현재 무기가 레이저였던 경우 레이저 제거 지속되는 애들이라 따로 지워줘야 함
             if (currentWeapon == ActiveWeapon.Raser)
             {
                 if (persistentUBeam != null)
@@ -399,7 +399,21 @@ public class Player : MonoBehaviour
                     persistentBBeam = null;
                 }
             }
-            currentWeapon = requestedWeapon;
+            // 현재 무기가 Missile이면 missile launcher들을 반환, 현재 무기가 미사일일 경우 미사일 런처를 제거 해줘야함
+            else if (currentWeapon == ActiveWeapon.Missile)
+            {
+                if (missileLauncher1 != null)
+                {
+                    WeaponPool.Instance.ReturnWeapon("MissileLauncher", missileLauncher1);
+                    missileLauncher1 = null;
+                }
+                if (missileLauncher2 != null)
+                {
+                    WeaponPool.Instance.ReturnWeapon("MissileLauncher", missileLauncher2);
+                    missileLauncher2 = null;
+                }
+            }
+            currentWeapon = requestedWeapon; // 대입
             Debug.Log("Switched weapon to " + currentWeapon.ToString() + " at level " +
                       (currentWeapon == ActiveWeapon.Gun ? gunLevel : raserLevel));
 
@@ -467,7 +481,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            // 피격 시 무기 초기화 및 리스폰 처리 (피격 후 0.2초 후 실행)
+            // 피격 시 무기 초기화 및 리스폰 처리 (피격 후 0.2초 후 실행) 무기 드랍은 추가 예정 리소스 매우 필요
             StartCoroutine(ResetWeaponsAndRespawn());
             StartCoroutine(Invincibility());
         }
@@ -476,9 +490,6 @@ public class Player : MonoBehaviour
 
     private IEnumerator ResetWeaponsAndRespawn()
     {
-        // (여기서 실제 토큰 프리팹이 있다면 Instantiate 하는 코드를 추가할 수 있습니다.)
-        Debug.Log("Dropping 1 Gun upgrade token and 3 Raser upgrade tokens.");
-
         // persistent 무기(레이저)와 미사일 런쳐가 있다면 반환
         if (persistentUBeam != null)
         {
@@ -502,11 +513,11 @@ public class Player : MonoBehaviour
         }
 
         // 플레이어 사라짐
-        gameObject.SetActive(false);
-        yield return new WaitForSeconds(0.2f);
+        spriteRenderer.enabled = false;
+        yield return new WaitForSeconds(0.2f); // setActive(false)로 했다가 그 후 코드가 작동을 안해서 그냥 스프라이트를 꺼버림
 
-        // 플레이어 리스폰: 지정 위치 (0, 2.5)로 이동
-        transform.position = new Vector3(0f, 2.5f, transform.position.z);
+        // 플레이어 리스폰: 지정 위치 (0, -2.5)로 이동
+        transform.position = new Vector3(0f, -2.5f, 0);
 
         // 무기 상태 초기화
         currentWeapon = ActiveWeapon.Gun;
@@ -519,7 +530,7 @@ public class Player : MonoBehaviour
         autoUpgradeTimerRaser = 0f;
 
         // 플레이어 재활성화
-        gameObject.SetActive(true);
+        spriteRenderer.enabled = true;
     }
 
     public void ApplySpeedReduction(float reductionPercent, float duration = 3f)

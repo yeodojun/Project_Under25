@@ -8,12 +8,12 @@ public class Weapon : MonoBehaviour
     public int damage = 1;      // 기본 데미지
     private bool hasHit = false; // 충돌 처리 여부
 
-    // weaponType에 따라 "Bullet", "Beam", "BBeam", "UBeam" 등으로 구분합니다.
+    // weaponType "Bullet", "Bullet1", "Beam", "BBeam", "UBeam", "Missile"
     public string weaponType = "Bullet";
 
     // 레이저 무기(Beam, BBeam)의 지속 시간 관리용 타이머
     private float lifetimeTimer = 0f;
-    public float beamLifetime = 1f;  
+    public float beamLifetime = 1f;
     private Vector3 initialRelativeOffset;
     private bool offsetInitialized = false;
 
@@ -46,26 +46,34 @@ public class Weapon : MonoBehaviour
                 offsetInitialized = true;
             }
         }
+        if (weaponType == "Bullet" || weaponType == "Bullet1" || weaponType == "Missile")
+        {
+            Rigidbody2D rb = GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                // 총알(Bullet)은 설정된 speed를, Bullet1은 그 2배, Missile은 별도 속도로 부여
+                float forceMultiplier = speed;
+                if (weaponType == "Missile")
+                {
+                    // Missile은 기존 로직에서 추가적인 타겟팅 및 회전이 필요하므로, 적당한 값으로 설정하거나 별도의 로직 적용
+                    forceMultiplier = 5f;
+                }
+
+                // AddForce를 한번 호출하여 즉시 힘 뷰어
+                rb.linearVelocity = Vector2.zero;  // 기존 속도 초기화
+                rb.AddForce(transform.up * forceMultiplier, ForceMode2D.Impulse);
+            }
+        }
     }
 
     [System.Obsolete]
     void Update()
     {
-        if (weaponType == "Bullet")
+        if (weaponType == "Bullet" || weaponType == "Bullet1")
         {
-            // Bullet은 자신이 가진 transform.up 방향으로 이동
-            transform.position += transform.up * speed * Time.deltaTime;
             if (transform.position.y >= 10f)
             {
-                WeaponPool.Instance.ReturnWeapon("Bullet", gameObject);
-            }
-        }
-        else if (weaponType == "Bullet1")
-        {
-            transform.position += transform.up * speed * 2 * Time.deltaTime;
-            if (transform.position.y >= 10f)
-            {
-                WeaponPool.Instance.ReturnWeapon("Bullet1", gameObject);
+                WeaponPool.Instance.ReturnWeapon(weaponType, gameObject);
             }
         }
         else if (weaponType == "Beam" || weaponType == "BBeam")
@@ -93,7 +101,7 @@ public class Weapon : MonoBehaviour
         }
         else if (weaponType == "Missile")
         {
-            // 미사일 유도 기능: 화면 내 적 중, 미사일의 진행 방향과 60° 이내인 가장 가까운 적을 타겟팅
+            // 미사일 유도: 화면 내 적 중 미사일 진행 방향과 60° 이내인 가장 가까운 적을 타겟팅
             Enemy target = FindTargetEnemy();
             if (target != null)
             {
@@ -103,8 +111,12 @@ public class Weapon : MonoBehaviour
                 Vector3 newDir = Vector3.RotateTowards(transform.up, targetDir, turnSpeed * Time.deltaTime, 0f);
                 transform.up = newDir;
             }
-            // 미사일 이동: speed 10
-            transform.position += transform.up * 10f * Time.deltaTime;
+            // 미사일은 매 프레임 현재 transform.up 방향을 기반으로 속도를 갱신하여 유도 효과를 줍니다.
+            Rigidbody2D rb = GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                rb.velocity = transform.up * speed;
+            }
             if (transform.position.y >= 10f)
             {
                 WeaponPool.Instance.ReturnWeapon("Missile", gameObject);
