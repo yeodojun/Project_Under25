@@ -17,22 +17,16 @@ public class UpgradeItem : MonoBehaviour
     private float driftInterval = 0.5f;       // 0.5초마다 드리프트 이동
     private float driftTimer = 0f;            // 누적 드리프트 시간
     private float driftMoveTimer = 0f;        // 드리프트 이동 타이머
-    private float driftMoveDistance = 0.1f;   // 매 드리프트 이동 거리
+    private float driftMoveDistance = 0.3f;   // 매 드리프트 이동 거리
     private bool driftPhaseOver = false;      // 드리프트 단계 종료 여부
 
-    // 8방향 (동, 서, 남, 북, 동북, 동남, 서북, 서남) – normalized 벡터
+    // 8방향 (남, 동남, 서남) – normalized 벡터
     private readonly Vector3[] driftDirections = new Vector3[]
     {
-    new Vector3(0,1,0),
-    new Vector3(1,0,0),
-    new Vector3(0,-1,0),
-    new Vector3(-1,0,0),
-    (new Vector3(1,1,0)).normalized,
     (new Vector3(1,-1,0)).normalized,
-    (new Vector3(-1,1,0)).normalized,
+    (new Vector3(0,-1,0)).normalized,
     (new Vector3(-1,-1,0)).normalized
     };
-
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();

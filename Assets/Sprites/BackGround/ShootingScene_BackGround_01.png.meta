@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      ShootingScene_BackGround_01_0: -1378612233893563975
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

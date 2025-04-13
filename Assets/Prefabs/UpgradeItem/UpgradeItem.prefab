@@ -30,8 +30,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.02, y: 2.96, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.13, y: 0.13, z: 0.13}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -104,10 +104,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normalFallSpeed: 1
   cycleSprites:
-  - {fileID: 4570356204463421502, guid: 2ba8cdfb64a8bde409a928ebd4e81008, type: 3}
-  - {fileID: -250171964, guid: 26c8af059c802b5418f0091fff41ff1a, type: 3}
-  - {fileID: -3930516213004267924, guid: 2ba8cdfb64a8bde409a928ebd4e81008, type: 3}
-  - {fileID: 349921890693224715, guid: 2ba8cdfb64a8bde409a928ebd4e81008, type: 3}
+  - {fileID: 7322885499304307244, guid: 3f11cc88f86b5b64480a5b1f12c7dc36, type: 3}
+  - {fileID: -6687243199115631265, guid: 3f11cc88f86b5b64480a5b1f12c7dc36, type: 3}
+  - {fileID: -1463922387993793746, guid: 3f11cc88f86b5b64480a5b1f12c7dc36, type: 3}
+  - {fileID: -6482214888948375821, guid: 3f11cc88f86b5b64480a5b1f12c7dc36, type: 3}
 --- !u!61 &8822655887096246201
 BoxCollider2D:
   m_ObjectHideFlags: 0
