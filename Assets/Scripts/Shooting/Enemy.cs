@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
     public int health = 5; // 기본 적 체력
     public float dropChance = 0.05f; // 업그레이드 아이템 드롭 확률
     public GameObject upgradeItemPrefab; // 업그레이드 아이템 프리팹
-    public int scoreValue = 10; // 적 처치 시 획득 점수
+    public int scoreValue = 5; // 적 처치 시 획득 점수
 
     private bool isDead = false; // 적이 이미 죽었는지 확인
 

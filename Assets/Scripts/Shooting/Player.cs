@@ -399,20 +399,6 @@ public class Player : MonoBehaviour
                     persistentBBeam = null;
                 }
             }
-            // 현재 무기가 Missile이면 missile launcher들을 반환, 현재 무기가 미사일일 경우 미사일 런처를 제거 해줘야함
-            else if (currentWeapon == ActiveWeapon.Missile)
-            {
-                if (missileLauncher1 != null)
-                {
-                    WeaponPool.Instance.ReturnWeapon("MissileLauncher", missileLauncher1);
-                    missileLauncher1 = null;
-                }
-                if (missileLauncher2 != null)
-                {
-                    WeaponPool.Instance.ReturnWeapon("MissileLauncher", missileLauncher2);
-                    missileLauncher2 = null;
-                }
-            }
             currentWeapon = requestedWeapon; // 대입
             Debug.Log("Switched weapon to " + currentWeapon.ToString() + " at level " +
                       (currentWeapon == ActiveWeapon.Gun ? gunLevel : raserLevel));

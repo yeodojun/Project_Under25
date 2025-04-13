@@ -168,7 +168,7 @@ MonoBehaviour:
   health: 10
   dropChance: 0.05
   upgradeItemPrefab: {fileID: 2000207073148731593, guid: 8e034da5b64695342bb9fc2aa41b7d38, type: 3}
-  scoreValue: 10
+  scoreValue: 5
   enemyBulletPrefab: {fileID: 0}
   firePoint: {fileID: 0}
 --- !u!114 &2096236676618687891
