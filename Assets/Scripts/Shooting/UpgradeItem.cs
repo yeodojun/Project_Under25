@@ -1,9 +1,12 @@
 using UnityEngine;
+using System.Collections;
 
 public class UpgradeItem : MonoBehaviour
 {
     // 기존 fallSpeed는 사용하지 않고, 일반 낙하 속도를 별도로 관리
     public float normalFallSpeed = 1f; // 드리프트 후 정상 낙하 속도
+    [SerializeField]
+    private GameObject circlesprite;
 
     // 이미지 순서: 0=Gun, 1=Bomb, 2=Raser, 3=MissileLauncher
     public Sprite[] cycleSprites; // 반드시 4개의 스프라이트 할당 (인스펙터)
@@ -13,14 +16,15 @@ public class UpgradeItem : MonoBehaviour
     private float typeCycleInterval = 5f; // 5초마다 타입 변경
 
     // 초기 움직임 설정
-    private float driftDuration = 4f;       // 드리프트 지속 시간 (초)
-    private float driftInterval = 0.5f;       // 0.5초마다 드리프트 이동
+    private float driftDuration = 20f;       // 드리프트 지속 시간 (초)
+    private float driftInterval = 2f;       // 1초마다 드리프트 이동
     private float driftTimer = 0f;            // 누적 드리프트 시간
     private float driftMoveTimer = 0f;        // 드리프트 이동 타이머
-    private float driftMoveDistance = 0.3f;   // 매 드리프트 이동 거리
+    private float driftMoveDistance = 0.5f;   // 매 드리프트 이동 거리
     private bool driftPhaseOver = false;      // 드리프트 단계 종료 여부
+    private bool isDrifting = false;
 
-    // 8방향 (남, 동남, 서남) – normalized 벡터
+    // 3방향 (남, 동남, 서남) – normalized 벡터
     private readonly Vector3[] driftDirections = new Vector3[]
     {
     (new Vector3(1,-1,0)).normalized,
@@ -41,34 +45,27 @@ public class UpgradeItem : MonoBehaviour
 
     void Update()
     {
-        // 드리프트 단계: 드랍 후 처음 driftDuration 동안, 0.5초마다 8방향 중 무작위 이동
+        // 드리프트 단계: 드랍 후 처음 driftDuration 동안, 1초마다 3방향 중 무작위 이동
         if (!driftPhaseOver)
         {
             driftTimer += Time.deltaTime;
-            driftMoveTimer += Time.deltaTime;
-            if (driftMoveTimer >= driftInterval)
+            if (!isDrifting)
             {
                 int randIndex = Random.Range(0, driftDirections.Length);
-                transform.position += driftDirections[randIndex] * driftMoveDistance;
-                driftMoveTimer = 0f;
+                Vector3 targetPos = transform.position + driftDirections[randIndex] * driftMoveDistance;
+                StartCoroutine(DriftMove(targetPos));
             }
-            if (driftTimer >= driftDuration)
-            {
-                driftPhaseOver = true;
-            }
-        }
-        else
-        {
-            // 드리프트 단계 종료 후에는 아래로 일정 속도로 낙하, 한 사이클 종료
-            transform.position += Vector3.down * normalFallSpeed * Time.deltaTime;
         }
 
-        // 아이템 타입 순환: 드랍 후 5초마다 순차적으로 타입 변경
+        // 아이템 타입 순환
         typeCycleTimer += Time.deltaTime;
+        if (typeCycleTimer > 4)
+        {
+            StartCoroutine(BlinkCircleSprite());
+        }
         if (typeCycleTimer >= typeCycleInterval)
         {
             typeCycleTimer = 0f;
-            // 순서대로 변경: 현재 타입의 다음 타입으로 변경 (0→1→2→3→0)
             currentTypeIndex = (currentTypeIndex + 1) % 4;
             if (cycleSprites != null && cycleSprites.Length >= 4)
             {
@@ -76,6 +73,42 @@ public class UpgradeItem : MonoBehaviour
             }
         }
     }
+
+    private IEnumerator DriftMove(Vector3 targetPosition)
+    {
+        isDrifting = true;
+        Vector3 startPos = transform.position;
+        float elapsed = 0f;
+        float duration = 0.5f; // 이동 시간
+
+        while (elapsed < duration)
+        {
+            transform.position = Vector3.Lerp(startPos, targetPosition, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        transform.position = targetPosition;
+        yield return new WaitForSeconds(3f);
+        isDrifting = false;
+    }
+
+    private IEnumerator BlinkCircleSprite()
+    {
+        if (circlesprite == null) yield break;
+
+        SpriteRenderer circleRenderer = circlesprite.GetComponent<SpriteRenderer>();
+        circlesprite.SetActive(true);
+
+        for (int i = 0; i < 5; i++)
+        {
+            circleRenderer.enabled = false;
+            yield return new WaitForSeconds(0.2f);
+            circleRenderer.enabled = true;
+        }
+
+        circlesprite.SetActive(false);
+    }
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {

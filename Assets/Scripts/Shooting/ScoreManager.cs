@@ -10,6 +10,11 @@ public class ScoreManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI scoreText; // UI 텍스트 (TextMeshPro 사용)
 
+    private int health = 3;
+
+    [SerializeField]
+    private TextMeshProUGUI HealthText; 
+
     void Awake()
     {
         if (Instance == null)
@@ -26,6 +31,7 @@ public class ScoreManager : MonoBehaviour
     {
         LoadHighScore();
         UpdateScoreText();
+        UpdateHealth();
     }
 
     public void AddScore(int amount)
@@ -58,12 +64,25 @@ public class ScoreManager : MonoBehaviour
         score = 0;
         UpdateScoreText();
     }
+    public void fixHealth(int hp)
+    {
+        health = hp;
+        UpdateHealth();
+    }
 
     private void UpdateScoreText()
     {
         if (scoreText != null)
         {
             scoreText.text = "" + score;
+        }
+    }
+
+    private void UpdateHealth()
+    {
+        if (HealthText != null)
+        {
+            HealthText.text = "x" + health;
         }
     }
 

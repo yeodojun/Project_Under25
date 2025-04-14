@@ -460,6 +460,7 @@ public class Player : MonoBehaviour
             return;
         health -= damage;
         Debug.Log("플레이어 체력: " + health);
+        ScoreManager.Instance.fixHealth(health);
         if (health <= 0)
         {
             Debug.Log("플레이어 사망!");
@@ -469,7 +470,6 @@ public class Player : MonoBehaviour
         {
             // 피격 시 무기 초기화 및 리스폰 처리 (피격 후 0.2초 후 실행) 무기 드랍은 추가 예정 리소스 매우 필요
             StartCoroutine(ResetWeaponsAndRespawn());
-            StartCoroutine(Invincibility());
         }
     }
 
@@ -500,7 +500,7 @@ public class Player : MonoBehaviour
 
         // 플레이어 사라짐
         spriteRenderer.enabled = false;
-        yield return new WaitForSeconds(0.2f); // setActive(false)로 했다가 그 후 코드가 작동을 안해서 그냥 스프라이트를 꺼버림
+        yield return new WaitForSeconds(1f); // setActive(false)로 했다가 그 후 코드가 작동을 안해서 그냥 스프라이트를 꺼버림
 
         // 플레이어 리스폰: 지정 위치 (0, -2.5)로 이동
         transform.position = new Vector3(0f, -2.5f, 0);
@@ -517,6 +517,8 @@ public class Player : MonoBehaviour
 
         // 플레이어 재활성화
         spriteRenderer.enabled = true;
+        
+        yield return StartCoroutine(Invincibility());
     }
 
     public void ApplySpeedReduction(float reductionPercent, float duration = 3f)
