@@ -106,9 +106,9 @@ MonoBehaviour:
   normalFallSpeed: 1
   circlesprite: {fileID: 8035246447510310141}
   cycleSprites:
-  - {fileID: 7093458890843028584, guid: d83f058a0d194bc4b80eacae5f8db7a5, type: 3}
-  - {fileID: 5477873571931694683, guid: d83f058a0d194bc4b80eacae5f8db7a5, type: 3}
   - {fileID: -5636343253877202797, guid: d83f058a0d194bc4b80eacae5f8db7a5, type: 3}
+  - {fileID: 5477873571931694683, guid: d83f058a0d194bc4b80eacae5f8db7a5, type: 3}
+  - {fileID: 7093458890843028584, guid: d83f058a0d194bc4b80eacae5f8db7a5, type: 3}
   - {fileID: -2918604179126741271, guid: d83f058a0d194bc4b80eacae5f8db7a5, type: 3}
 --- !u!61 &8822655887096246201
 BoxCollider2D:

@@ -244,6 +244,12 @@ public class Player : MonoBehaviour
             isTouching = true;
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = transform.position.z;
+            RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
+            if (hit.collider != null && hit.collider.CompareTag("Wall"))
+            {
+                // 터치한 위치가 Wall이라면 무시
+                return;
+            }
             targetPosition = mousePos;
         }
         else
@@ -517,7 +523,7 @@ public class Player : MonoBehaviour
 
         // 플레이어 재활성화
         spriteRenderer.enabled = true;
-        
+
         yield return StartCoroutine(Invincibility());
     }
 
