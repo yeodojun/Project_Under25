@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
     private const float autoUpgradeDelay = 22f;
     private float autoUpgradeTimerGun = 0f;
     private float autoUpgradeTimerRaser = 0f;
+    // 피격시 사용
+    public GameObject upgradeItemPrefab;
 
     // 각 무기는 수동으로 최대 3단계까지 업그레이드되며, 3단계 상태에서 타이머 경과 시 자동으로 4단계가 됩니다.
     private int gunLevel = 1;
@@ -27,9 +29,6 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject missileLauncherPrefab; // 미사일 런처 프리팹 (인스펙터 할당)
     private GameObject missileLauncher1 = null; // Level 1 launcher
     private GameObject missileLauncher2 = null; // Level 2 launcher (반대편)
-
-
-
     private GameObject persistentUBeam = null;
     private GameObject persistentBBeam = null;
 
@@ -212,10 +211,9 @@ public class Player : MonoBehaviour
                 }
             }
         }
-        else if (currentWeapon == ActiveWeapon.Missile && canShoot)
+        if (missileLevel > 0 && canShoot)
         {
-            // Level 1: missileLevel 1 이상이면 오른쪽 런처 생성 (없으면)
-            if (missileLevel >= 1 && missileLauncher1 == null)
+            if (missileLauncher1 == null)
             {
                 missileLauncher1 = WeaponPool.Instance.SpawnWeapon("MissileLauncher", shootTransform.position, Quaternion.identity);
                 MissileLauncher launcher = missileLauncher1.GetComponent<MissileLauncher>();
@@ -224,7 +222,6 @@ public class Player : MonoBehaviour
                     launcher.Initialize(this, 1); // 오른쪽 launcher, side = 1
                 }
             }
-            // Level 2: missileLevel 2 이상이면 왼쪽 런처 생성 (없으면)
             if (missileLevel >= 2 && missileLauncher2 == null)
             {
                 missileLauncher2 = WeaponPool.Instance.SpawnWeapon("MissileLauncher", shootTransform.position, Quaternion.identity);
@@ -351,10 +348,27 @@ public class Player : MonoBehaviour
 
 
 
-    // ── 수동 업그레이드 (UpgradeItem 호출용): 현재 무기 타입이 요청과 같으면 해당 무기의 레벨을 1~3까지만 올림,
-    // 서로 다른 무기 타입이면 무기를 전환하고 현재 저장된 레벨을 그대로 사용함.
+    // ── 수동 업그레이드 (UpgradeItem 호출용): 현재 무기 타입이 요청과 같으면 해당 무기의 레벨을 1~3까지만 올림
+    // 서로 다른 무기 타입이면 무기를 전환하고 현재 저장된 레벨을 그대로 사용
     public void UpgradeWeapon(ActiveWeapon requestedWeapon)
     {
+        if (requestedWeapon == ActiveWeapon.Missile)
+        {
+            // Missile 업그레이드는 다른 무기와 같이 사용할 수 있도록 하며,
+            // 현재 무기를 전환하지 않고 missileLevel만 증가
+            if (missileLevel < 2)
+            {
+                missileLevel++;
+                ScoreManager.Instance.AddScore(5);
+                Debug.Log("Missile launcher upgraded to level " + missileLevel);
+            }
+            else
+            {
+                ScoreManager.Instance.AddScore(15);
+            }
+            return;
+        }
+
         if (currentWeapon == requestedWeapon) // 현재 무기가 업그레이드 권 무기와 같은 경우
         {
             if (requestedWeapon == ActiveWeapon.Gun)
@@ -362,11 +376,12 @@ public class Player : MonoBehaviour
                 if (gunLevel < 3)
                 {
                     gunLevel++;
+                    ScoreManager.Instance.AddScore(5);
                     Debug.Log("Gun upgraded via item to level " + gunLevel);
                 }
                 else
                 {
-                    Debug.Log("Gun is at maximum manual level (3).");
+                    ScoreManager.Instance.AddScore(15);
                 }
             }
             else if (requestedWeapon == ActiveWeapon.Raser) // ActiveWeapon.Raser
@@ -374,22 +389,16 @@ public class Player : MonoBehaviour
                 if (raserLevel < 3)
                 {
                     raserLevel++;
+                    ScoreManager.Instance.AddScore(5);
                     Debug.Log("Raser upgraded via item to level " + raserLevel);
                 }
                 else
                 {
-                    Debug.Log("Raser is at maximum manual level (3).");
-                }
-            }
-            else if (requestedWeapon == ActiveWeapon.Missile)
-            {
-                if (missileLevel < 2)
-                {
-                    missileLevel++;
+                    ScoreManager.Instance.AddScore(15);
                 }
             }
         }
-        else if (currentWeapon != requestedWeapon) // 현재 무기가 업그레이드 권 무기와 다를 경우, 무기 전환
+        else // 현재 무기가 업그레이드 권 무기와 다를 경우, 무기 전환
         {
             // 전환 시, 현재 Raser persistent 오브젝트가 있다면 반환하고 null로 초기화, 현재 무기가 레이저였던 경우 레이저 제거 지속되는 애들이라 따로 지워줘야 함
             if (currentWeapon == ActiveWeapon.Raser)
@@ -408,23 +417,6 @@ public class Player : MonoBehaviour
             currentWeapon = requestedWeapon; // 대입
             Debug.Log("Switched weapon to " + currentWeapon.ToString() + " at level " +
                       (currentWeapon == ActiveWeapon.Gun ? gunLevel : raserLevel));
-
-            // 먹은 무기 레벨 업
-            if (requestedWeapon == ActiveWeapon.Gun)
-            {
-                if (gunLevel < 3)
-                    gunLevel++;
-            }
-            else if (requestedWeapon == ActiveWeapon.Raser)
-            {
-                if (raserLevel < 3)
-                    raserLevel++;
-            }
-            else if (requestedWeapon == ActiveWeapon.Missile)
-            {
-                if (missileLevel < 2)
-                    missileLevel++;
-            }
         }
     }
 
@@ -462,6 +454,23 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if (missileLevel > 0)
+        {
+            // 우선 왼쪽 런처부터 제거, 그 다음 오른쪽 런처
+            if (missileLauncher2 != null)
+            {
+                WeaponPool.Instance.ReturnWeapon("MissileLauncher", missileLauncher2);
+                missileLauncher2 = null;
+            }
+            else if (missileLauncher1 != null)
+            {
+                WeaponPool.Instance.ReturnWeapon("MissileLauncher", missileLauncher1);
+                missileLauncher1 = null;
+            }
+            missileLevel--;
+            Debug.Log("" + missileLevel);
+            return;
+        }
         if (isInvincible)
             return;
         health -= damage;
@@ -482,14 +491,36 @@ public class Player : MonoBehaviour
 
     private IEnumerator ResetWeaponsAndRespawn()
     {
+        canShoot = false;
+        Collider2D playerCollider = GetComponent<Collider2D>();
+        if (playerCollider != null)
+        {
+            playerCollider.enabled = false;
+        }
+        Vector3 dropPosition = transform.position;
+        int gunItemCount = gunLevel - 1;
+        int raserItemCount = raserLevel - 1;
+        for (int i = 1; i <= gunItemCount; i++)
+        {
+            WeaponPool.Instance.SpawnWeapon("UpgradeItem", dropPosition, Quaternion.identity);
+        }
         // persistent 무기(레이저)와 미사일 런쳐가 있다면 반환
         if (persistentUBeam != null)
         {
+            for (int i = 0; i < raserItemCount; i++)
+            {
+                WeaponPool.Instance.SpawnWeapon("UpgradeItem", dropPosition, Quaternion.identity);
+            }
             WeaponPool.Instance.ReturnWeapon("UBeam", persistentUBeam);
             persistentUBeam = null;
         }
         if (persistentBBeam != null)
         {
+            for (int i = 0; i < raserItemCount; i++)
+            {
+                WeaponPool.Instance.SpawnWeapon("UpgradeItem", dropPosition, Quaternion.identity);
+            }
+            WeaponPool.Instance.SpawnWeapon("UpgradeItem", dropPosition, Quaternion.identity);
             WeaponPool.Instance.ReturnWeapon("BBeam", persistentBBeam);
             persistentBBeam = null;
         }
@@ -525,6 +556,11 @@ public class Player : MonoBehaviour
         spriteRenderer.enabled = true;
 
         yield return StartCoroutine(Invincibility());
+        if (playerCollider != null)
+        {
+            playerCollider.enabled = true;
+        }
+        canShoot = true;
     }
 
     public void ApplySpeedReduction(float reductionPercent, float duration = 3f)
@@ -562,7 +598,8 @@ public class Player : MonoBehaviour
         isInvincible = false;
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    // 얘가 중복떠서 데미지가 2씩 들어가던거였음 Enemy.cs에서 이미 사용 중
+    /*private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Enemy"))
         {
@@ -570,5 +607,5 @@ public class Player : MonoBehaviour
             if (enemy != null && enemy.enemyType != 4)
                 TakeDamage(1);
         }
-    }
+    }*/
 }

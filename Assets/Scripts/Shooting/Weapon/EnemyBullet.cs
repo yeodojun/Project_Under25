@@ -62,7 +62,7 @@ public class EnemyBullet : MonoBehaviour
             {
                 if (bulletType == "Gun" || bulletType == "Sniper")
                 {
-                    player.TakeDamage(damage);
+                    player.TakeDamage(1);
                 }
                 WeaponPool.Instance.ReturnWeapon(bulletType, gameObject);
             }

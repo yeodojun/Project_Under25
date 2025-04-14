@@ -16,10 +16,7 @@ public class UpgradeItem : MonoBehaviour
     private float typeCycleInterval = 5f; // 5초마다 타입 변경
 
     // 초기 움직임 설정
-    private float driftDuration = 20f;       // 드리프트 지속 시간 (초)
-    private float driftInterval = 2f;       // 1초마다 드리프트 이동
     private float driftTimer = 0f;            // 누적 드리프트 시간
-    private float driftMoveTimer = 0f;        // 드리프트 이동 타이머
     private float driftMoveDistance = 0.5f;   // 매 드리프트 이동 거리
     private bool driftPhaseOver = false;      // 드리프트 단계 종료 여부
     private bool isDrifting = false;
@@ -27,10 +24,16 @@ public class UpgradeItem : MonoBehaviour
     // 3방향 (남, 동남, 서남) – normalized 벡터
     private readonly Vector3[] driftDirections = new Vector3[]
     {
-    (new Vector3(1,-1,0)).normalized,
-    (new Vector3(0,-1,0)).normalized,
-    (new Vector3(-1,-1,0)).normalized
+    new Vector3(1,-1,0).normalized,
+    new Vector3(0,-1,0).normalized,
+    new Vector3(-1,-1,0).normalized
     };
+
+    private void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -102,16 +105,17 @@ public class UpgradeItem : MonoBehaviour
         for (int i = 0; i < 5; i++)
         {
             circleRenderer.enabled = false;
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.1f);
             circleRenderer.enabled = true;
+            yield return new WaitForSeconds(0.1f);
         }
 
         circlesprite.SetActive(false);
     }
 
-
     private void OnTriggerEnter2D(Collider2D other)
     {
+
         if (other.CompareTag("Player"))
         {
             Player player = other.GetComponent<Player>();
@@ -139,7 +143,10 @@ public class UpgradeItem : MonoBehaviour
                     player.UpgradeWeapon(Player.ActiveWeapon.Missile);
                     Debug.Log("Missile launcher upgrade item acquired!");
                 }
-                Destroy(gameObject);
+                if (this != null && gameObject != null)
+                {
+                    WeaponPool.Instance.ReturnWeapon("UpgradeItem", gameObject);
+                }
             }
         }
     }

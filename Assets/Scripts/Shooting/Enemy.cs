@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     // 기존 Enemy_1 관련 플래그 (enemyType 1일 때 사용)
     public bool isEnemy1 = false;
     public bool isFlipped = false; // Enemy_1이면 true로 설정
+    private bool hasDamaged = false;
 
     public int health = 5; // 기본 적 체력
     public float dropChance = 0.05f; // 업그레이드 아이템 드롭 확률
@@ -122,9 +123,9 @@ public class Enemy : MonoBehaviour
         if (isDead) return;
         isDead = true;
         ScoreManager.Instance.AddScore(scoreValue);
-        if (Random.value < dropChance && upgradeItemPrefab != null)
+        if (Random.value < dropChance)
         {
-            Instantiate(upgradeItemPrefab, transform.position, Quaternion.identity);
+            WeaponPool.Instance.SpawnWeapon("UpgradeItem", transform.position, Quaternion.identity);
         }
         Destroy(gameObject);
     }
@@ -132,14 +133,9 @@ public class Enemy : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         // 미사일과 충돌 시 데미지 처리 (Enemy_4는 이미 데미지 무시)
-        if (other.CompareTag("Missile"))
-        {
-            TakeDamage(3);
-            Destroy(other.gameObject);
-        }
         // 플레이어와의 충돌: 기본적으로 플레이어는 데미지를 받지만
         // Enemy_4와 충돌 시에는 플레이어에게 데미지를 주지 않음.
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !hasDamaged)
         {
             if (enemyType != 4)
             {
@@ -150,6 +146,14 @@ public class Enemy : MonoBehaviour
                 }
             }
             // Enemy_4: 플레이어와 닿아도 데미지 없음.
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            hasDamaged = false;
         }
     }
 

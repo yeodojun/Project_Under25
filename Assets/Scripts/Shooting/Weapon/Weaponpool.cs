@@ -9,7 +9,7 @@ public class WeaponPool : MonoBehaviour
     [System.Serializable]
     public class WeaponPoolItem
     {
-        [Tooltip("무기 식별자 (예: Bullet, Laser, Missile)")]
+        [Tooltip("무기 식별자 (예: Bullet, Bullet1, Beam, BBeam, UBeam, MissileLauncher, Missile, UpgradeItem")]
         public string weaponType;
         [Tooltip("해당 무기의 프리팹")]
         public GameObject prefab;
