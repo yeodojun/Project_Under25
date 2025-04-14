@@ -1110,7 +1110,6 @@ public class WaveManager : MonoBehaviour
                 )
             }
         },
-        
         // 웨이브 20
         { 20, new List<(Vector3[] positions, string[][] patterns, int enemyType)>()
             {
@@ -1502,6 +1501,7 @@ public class WaveManager : MonoBehaviour
                 )
             }
         },
+        // 웨이브 25
         { 25, new List<(Vector3[] positions, string[][] patterns, int enemyType)>()
             {
                 ( // 일단 버그 땜에 하나 추가
