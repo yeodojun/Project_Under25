@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class UpgradeItem : MonoBehaviour
 {
@@ -130,8 +131,7 @@ public class UpgradeItem : MonoBehaviour
                 }
                 else if (currentTypeIndex == 1)
                 {
-                    Debug.Log("Bomb!");
-                    // Bomb 추가 예정
+                    ScoreManager.Instance.addBomb(1);
                 }
                 else if (currentTypeIndex == 2)
                 {

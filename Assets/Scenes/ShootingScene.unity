@@ -2179,6 +2179,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreText: {fileID: 267183440}
   HealthText: {fileID: 258217846}
+  BombText: {fileID: 1413713959}
 --- !u!4 &477041483
 Transform:
   m_ObjectHideFlags: 0

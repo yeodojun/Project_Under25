@@ -11,9 +11,12 @@ public class ScoreManager : MonoBehaviour
     private TextMeshProUGUI scoreText; // UI 텍스트 (TextMeshPro 사용)
 
     private int health = 3;
+    private int BombScore = 0;
 
     [SerializeField]
-    private TextMeshProUGUI HealthText; 
+    private TextMeshProUGUI HealthText;
+    [SerializeField]
+    private TextMeshProUGUI BombText;
 
     void Awake()
     {
@@ -32,6 +35,15 @@ public class ScoreManager : MonoBehaviour
         LoadHighScore();
         UpdateScoreText();
         UpdateHealth();
+        UpdateBomb();
+    }
+
+    public void Health()
+    {
+        if (score == 900 || score == 1200 || score == 1500 || score == 1800)
+        {
+            Player.Instance.RecoverHealth();
+        }
     }
 
     public void AddScore(int amount)
@@ -69,6 +81,23 @@ public class ScoreManager : MonoBehaviour
         health = hp;
         UpdateHealth();
     }
+    public void addBomb(int amount)
+    {
+        if (BombScore < 9)
+        {
+            BombScore += amount;
+            UpdateBomb();
+        }
+        else if (BombScore >= 9)
+        {
+            AddScore(10);
+        }
+    }
+    public void fixBomb(int Bomb)
+    {
+        BombScore = Bomb;
+        UpdateBomb();
+    }
 
     private void UpdateScoreText()
     {
@@ -83,6 +112,13 @@ public class ScoreManager : MonoBehaviour
         if (HealthText != null)
         {
             HealthText.text = "x" + health;
+        }
+    }
+    private void UpdateBomb()
+    {
+        if (BombText != null)
+        {
+            BombText.text = "x" + BombScore;
         }
     }
 

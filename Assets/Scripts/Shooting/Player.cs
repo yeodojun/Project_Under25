@@ -4,15 +4,18 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    public static Player Instance;
     public enum ActiveWeapon { Gun, Raser, Missile }
     public ActiveWeapon currentWeapon = ActiveWeapon.Gun;
+    private Coroutine raserCycleCoroutine = null;
+    private bool hasSpawnedBBeam = false;
 
     [Header("Shoot Transform & Timings")]
     [SerializeField] private Transform shootTransform;
     [SerializeField] private float gunShootInterval = 0.2f; // Gun 발사 간격
     private float lastGunShootTime = 0f;
 
-    [SerializeField] private float raserShootInterval = 1f; // Raser 발사 간격 (raserLevel < 4)
+    [SerializeField] private float raserShootInterval = 2f; // Raser 발사 간격 (raserLevel < 4)
     private float lastRaserShootTime = 0f;
 
     private const float autoUpgradeDelay = 22f;
@@ -123,6 +126,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         HandleMovement();
+        ScoreHealth();
 
         if (currentWeapon == ActiveWeapon.Gun && canShoot)
         {
@@ -170,35 +174,17 @@ public class Player : MonoBehaviour
         }
         else if (currentWeapon == ActiveWeapon.Raser && canShoot)
         {
-            if (raserLevel == 1)
+            if (raserLevel < 4)
             {
-                if (Time.time - lastRaserShootTime > raserShootInterval)
+                // 예를 들어, 코루틴이 한 번도 실행되지 않았다면 시작
+                if (raserCycleCoroutine == null)
                 {
-                    FireRaser();
-                    lastRaserShootTime = Time.time;
-                }
-            }
-            else if (raserLevel == 2)
-            {
-                raserShootInterval = 0.7f;
-                if (Time.time - lastRaserShootTime > raserShootInterval)
-                {
-                    FireRaser();
-                    lastRaserShootTime = Time.time;
-                }
-            }
-            else if (raserLevel == 3)
-            {
-                raserShootInterval = 0.5f;
-                if (Time.time - lastRaserShootTime > raserShootInterval)
-                {
-                    FireRaser();
-                    lastRaserShootTime = Time.time;
+                    raserCycleCoroutine = StartCoroutine(RaserCycle());
                 }
             }
             else
             {
-                // raserLevel 4: 계속 발사 (쿨다운 없음)
+                // raserLevel 4인 경우는 기존처럼 지속발사 처리
                 FireRaser();
             }
             if (raserLevel == 3)
@@ -209,6 +195,15 @@ public class Player : MonoBehaviour
                     AutoUpgradeRaserToMax();
                     autoUpgradeTimerRaser = 0f;
                 }
+            }
+        }
+        else
+        {
+            // 무기가 Raser가 아니거나 발사가 불가능할 때, 레이저 코루틴이 있다면 정지
+            if (raserCycleCoroutine != null)
+            {
+                StopCoroutine(raserCycleCoroutine);
+                raserCycleCoroutine = null;
             }
         }
         if (missileLevel > 0 && canShoot)
@@ -308,6 +303,7 @@ public class Player : MonoBehaviour
                 Weapon w = persistentUBeam.GetComponent<Weapon>();
                 if (w != null)
                     w.followPlayer = true;
+                    w.beamLifetime = 999f;
             }
             if (persistentBBeam == null)
             {
@@ -315,6 +311,7 @@ public class Player : MonoBehaviour
                 Weapon w = persistentBBeam.GetComponent<Weapon>();
                 if (w != null)
                     w.followPlayer = true;
+                    w.beamLifetime = 999f;
             }
         }
         else
@@ -329,7 +326,15 @@ public class Player : MonoBehaviour
                 // 모든 레이저(Beam, BBeam 등)를 플레이어 따라다니게 설정
                 Weapon w = laserObj.GetComponent<Weapon>();
                 if (w != null)
+                {
                     w.followPlayer = true;
+                    if (raserLevel == 1)
+                        w.beamLifetime = 1f;
+                    else if (raserLevel == 2)
+                        w.beamLifetime = 3f;
+                    else if (raserLevel == 3)
+                        w.beamLifetime = 3.5f;
+                }
             }
         }
     }
@@ -346,7 +351,24 @@ public class Player : MonoBehaviour
             return raserLevel4Pattern;
     }
 
+    IEnumerator RaserCycle()
+    { // 레이저 레벨에 따라 대기 시간과 발사 시간을 설정합니다. 
+        float waitTime = 0f, shootDuration = 0f;
+        if (raserLevel == 1) { waitTime = 3f; shootDuration = 1f; }
+        else if (raserLevel == 2) { waitTime = 4.5f; shootDuration = 3f; }
+        else if (raserLevel == 3) { waitTime = 8f; shootDuration = 5f; }
+        else{yield break;}
+        while (currentWeapon == ActiveWeapon.Raser && raserLevel < 4)
+        {
+            yield return new WaitForSeconds(waitTime);
 
+            // 발사 시작 : FireRaser()를 호출할 때마다 스폰되는 레이저 오브젝트의 beamLifetime을 shootDuration으로 설정
+            FireRaser();  // 아래 FireRaser() 수정 참고
+
+            // 발사 시간 동안(예, beamLifetime이 shootDuration인 동안) 발사 상태 유지
+            yield return new WaitForSeconds(shootDuration);
+        }
+    }
 
     // ── 수동 업그레이드 (UpgradeItem 호출용): 현재 무기 타입이 요청과 같으면 해당 무기의 레벨을 1~3까지만 올림
     // 서로 다른 무기 타입이면 무기를 전환하고 현재 저장된 레벨을 그대로 사용
@@ -413,6 +435,7 @@ public class Player : MonoBehaviour
                     WeaponPool.Instance.ReturnWeapon("BBeam", persistentBBeam);
                     persistentBBeam = null;
                 }
+                hasSpawnedBBeam = false;
             }
             currentWeapon = requestedWeapon; // 대입
             Debug.Log("Switched weapon to " + currentWeapon.ToString() + " at level " +
@@ -438,18 +461,16 @@ public class Player : MonoBehaviour
             Debug.Log("Raser auto upgraded to max level " + raserLevel);
         }
     }
+    public void ScoreHealth()
+    {
+        ScoreManager.Instance.Health();
+    }
 
     public void RecoverHealth()
     {
-        if (health < 3)
-        {
-            health++;
-            Debug.Log("체력 회복, 현재 체력: " + health);
-        }
-        else
-        {
-            Debug.Log("체력이 이미 최대입니다.");
-        }
+        health++;
+        Debug.Log("체력 회복, 현재 체력: " + health);
+
     }
 
     public void TakeDamage(int damage)
