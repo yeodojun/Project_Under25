@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 2374880958468625592}
   - component: {fileID: -2300212311257259347}
   - component: {fileID: 5954654263561889693}
-  - component: {fileID: 2973434265826735775}
+  - component: {fileID: -6739798272339063023}
   m_Layer: 0
-  m_Name: Bullet
-  m_TagString: Bullet
+  m_Name: Bullet 1
+  m_TagString: Bullet1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.4870063, y: -1.8338331, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 0.09, y: 0.09, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -79,12 +79,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: -4477202895634683369, guid: 306ff246a4ae66c47bac0cc06ce84df5, type: 3}
+  m_Sprite: {fileID: -3468104654614503928, guid: a0dfcee95bcb05a49be316ffaedceaf4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.4, y: 0.89}
+  m_Size: {x: 1.53, y: 3.23}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -103,8 +103,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  damage: 1
-  weaponType: Bullet
+  damage: 3
+  weaponType: Bullet1
   beamLifetime: 0.5
   followPlayer: 0
 --- !u!61 &5954654263561889693
@@ -145,15 +145,15 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.4, y: 0.89}
-    newSize: {x: 0.4, y: 0.89}
+    oldSize: {x: 1.53, y: 3.23}
+    newSize: {x: 1.53, y: 3.23}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   m_Size: {x: 0.89, y: 0.4}
   m_EdgeRadius: 0
---- !u!50 &2973434265826735775
+--- !u!50 &-6739798272339063023
 Rigidbody2D:
   serializedVersion: 5
   m_ObjectHideFlags: 0

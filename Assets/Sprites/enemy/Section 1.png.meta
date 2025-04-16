@@ -1,19 +1,16 @@
 fileFormatVersion: 2
-guid: d83f058a0d194bc4b80eacae5f8db7a5
+guid: 0cb40be7ba1647245bc407492ac78c92
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5636343253877202797
-    second: item1_0
+      213: 707831198676715256
+    second: Section 1_0
   - first:
-      213: 7093458890843028584
-    second: item1_1
+      213: -2423195362809005209
+    second: Section 1_1
   - first:
-      213: -2918604179126741271
-    second: item1_2
-  - first:
-      213: 5477873571931694683
-    second: item1_3
+      213: 5989874763250247093
+    second: Section 1_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -105,17 +102,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: item1_0
+      name: Section 1_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 250
-        width: 250
-        height: 250
+        x: 66
+        y: 111
+        width: 206
+        height: 280
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,20 +134,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 390ea785cafa7c1b0800000000000000
-      internalID: -5636343253877202797
+      spriteID: 8f6801699b8b2d900800000000000000
+      internalID: 707831198676715256
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: item1_1
+      name: Section 1_1
       rect:
         serializedVersion: 2
-        x: 250
-        y: 250
-        width: 250
-        height: 250
+        x: 372
+        y: 106
+        width: 206
+        height: 286
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -146,20 +156,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 86cf8894747017260800000000000000
-      internalID: 7093458890843028584
+      spriteID: 76b356af7a41f5ed0800000000000000
+      internalID: -2423195362809005209
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: item1_2
+      name: Section 1_2
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 250
-        height: 250
+        x: 683
+        y: 100
+        width: 206
+        height: 280
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -168,30 +178,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9e61e2766f80f77d0800000000000000
-      internalID: -2918604179126741271
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: item1_3
-      rect:
-        serializedVersion: 2
-        x: 250
-        y: 0
-        width: 250
-        height: 250
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: b562d7b9df0550c40800000000000000
-      internalID: 5477873571931694683
+      spriteID: 5b5ab988c5f402350800000000000000
+      internalID: 5989874763250247093
       vertices: []
       indices: 
       edges: []
@@ -200,7 +188,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 4c163c0ddf5b5c346aeb17e2cd960e2e
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -209,11 +197,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      item1_0: -5636343253877202797
-      item1_1: 7093458890843028584
-      item1_2: -2918604179126741271
-      item1_3: 5477873571931694683
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,10 +1,16 @@
 fileFormatVersion: 2
-guid: bc596a82ddb93474ea402cf8595bbf8f
+guid: 15125470af1bce446a9a38929a8bee4c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4360945962274056614
-    second: E_2_0
+      213: -19329861153970304
+    second: Section 2_0
+  - first:
+      213: 4934528694186984498
+    second: Section 2_1
+  - first:
+      213: 4564659673281124663
+    second: Section 2_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -109,30 +115,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: iOS
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: E_2_0
+      name: Section 2_0
       rect:
         serializedVersion: 2
-        x: 492
-        y: 281
-        width: 206
-        height: 280
+        x: 88
+        y: 563
+        width: 324
+        height: 375
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +134,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a561bf9a0ceca73c0800000000000000
-      internalID: -4360945962274056614
+      spriteID: 0872c5cf7935bbff0800000000000000
+      internalID: -19329861153970304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Section 2_1
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 548
+        width: 514
+        height: 404
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 234ccfef3b7fa7440800000000000000
+      internalID: 4934528694186984498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Section 2_2
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 36
+        width: 514
+        height: 498
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 739d87ac9cde85f30800000000000000
+      internalID: 4564659673281124663
       vertices: []
       indices: 
       edges: []
@@ -160,8 +197,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      E_2_0: -4360945962274056614
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

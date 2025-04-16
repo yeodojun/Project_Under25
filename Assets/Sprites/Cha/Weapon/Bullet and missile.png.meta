@@ -1,10 +1,16 @@
 fileFormatVersion: 2
-guid: 42f270aa726feb34fa36ecb563748a99
+guid: a0dfcee95bcb05a49be316ffaedceaf4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -931563757290549974
-    second: E_1__0
+      213: -915098455579868725
+    second: Bullet and missile_0
+  - first:
+      213: -3468104654614503928
+    second: Bullet and missile_1
+  - first:
+      213: 2118693253900187248
+    second: Bullet and missile_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -109,30 +115,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: iOS
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: E_1__0
+      name: Bullet and missile_0
       rect:
         serializedVersion: 2
-        x: 492
-        y: 278
-        width: 206
-        height: 286
+        x: 74
+        y: 298
+        width: 153
+        height: 323
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +134,52 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a2d8119c2bb6213f0800000000000000
-      internalID: -931563757290549974
+      spriteID: bc147a49dcaec43f0800000000000000
+      internalID: -915098455579868725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bullet and missile_1
+      rect:
+        serializedVersion: 2
+        x: 412
+        y: 288
+        width: 153
+        height: 323
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80ed2d10131dedfc0800000000000000
+      internalID: -3468104654614503928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bullet and missile_2
+      rect:
+        serializedVersion: 2
+        x: 730
+        y: 200
+        width: 240
+        height: 567
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 076bcb20a4c176d10800000000000000
+      internalID: 2118693253900187248
       vertices: []
       indices: 
       edges: []
@@ -160,8 +197,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      E_1__0: -931563757290549974
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

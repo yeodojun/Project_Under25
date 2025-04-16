@@ -1,19 +1,28 @@
 fileFormatVersion: 2
-guid: 14db243d72651f3408c59d36ce181607
+guid: c3ce8d8470bf20b47a875c0a3ebb75de
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5818135930493486891
-    second: Character_Art_1_0
+      213: -2187574676084372009
+    second: Enemy_Bullet_0
   - first:
-      213: -6386033646757710612
-    second: Character_Art_1_1
+      213: 1882009965011301390
+    second: Enemy_Bullet_1
   - first:
-      213: -8648151633813894345
-    second: Character_Art_1_2
+      213: -7584289279896006496
+    second: Enemy_Bullet_2
   - first:
-      213: -4885798403062001786
-    second: Character_Art_1_3
+      213: 9077654932647749200
+    second: Enemy_Bullet_3
+  - first:
+      213: -5431690993514305832
+    second: Enemy_Bullet_4
+  - first:
+      213: 7609070462963171616
+    second: Enemy_Bullet_5
+  - first:
+      213: -2806680118138460009
+    second: Enemy_Bullet_6
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -105,93 +114,172 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Character_Art_1_0
+      name: Enemy_Bullet_0
       rect:
         serializedVersion: 2
-        x: 216
-        y: 1123
-        width: 36
-        height: 270
+        x: 83
+        y: 110
+        width: 168
+        height: 310
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b2740009dcb2eb050800000000000000
-      internalID: 5818135930493486891
+      spriteID: 7ddc9502c6c24a1e0800000000000000
+      internalID: -2187574676084372009
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Character_Art_1_1
+      name: Enemy_Bullet_1
       rect:
         serializedVersion: 2
-        x: 215
-        y: 565
-        width: 1058
-        height: 946
+        x: 393
+        y: 188
+        width: 161
+        height: 169
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ce47051ab304067a0800000000000000
-      internalID: -6386033646757710612
+      spriteID: e047e34871e3e1a10800000000000000
+      internalID: 1882009965011301390
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Character_Art_1_2
+      name: Enemy_Bullet_2
       rect:
         serializedVersion: 2
-        x: 1190
-        y: 1137
-        width: 44
-        height: 249
+        x: 673
+        y: 115
+        width: 204
+        height: 327
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 73b0fcea8e79bf780800000000000000
-      internalID: -8648151633813894345
+      spriteID: 0a0defd45113fb690800000000000000
+      internalID: -7584289279896006496
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Character_Art_1_3
+      name: Enemy_Bullet_3
       rect:
         serializedVersion: 2
-        x: 1237
-        y: 1214
-        width: 33
-        height: 122
+        x: 996
+        y: 143
+        width: 121
+        height: 283
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 68f815d0d38223cb0800000000000000
-      internalID: -4885798403062001786
+      spriteID: 056aa06d01f4afd70800000000000000
+      internalID: 9077654932647749200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Enemy_Bullet_4
+      rect:
+        serializedVersion: 2
+        x: 1284
+        y: 97
+        width: 69
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8d624e9d1d1ce94b0800000000000000
+      internalID: -5431690993514305832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Enemy_Bullet_5
+      rect:
+        serializedVersion: 2
+        x: 1505
+        y: 17
+        width: 168
+        height: 450
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 02146df7549d89960800000000000000
+      internalID: 7609070462963171616
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Enemy_Bullet_6
+      rect:
+        serializedVersion: 2
+        x: 1805
+        y: 91
+        width: 53
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 798a4309d4bac09d0800000000000000
+      internalID: -2806680118138460009
       vertices: []
       indices: 
       edges: []
@@ -200,7 +288,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: dd5a7613fa6a3344b8129ba56bfd734d
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -209,11 +297,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      Character_Art_1_0: 5818135930493486891
-      Character_Art_1_1: -6386033646757710612
-      Character_Art_1_2: -8648151633813894345
-      Character_Art_1_3: -4885798403062001786
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
