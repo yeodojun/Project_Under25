@@ -8,15 +8,11 @@ public class Player : MonoBehaviour
     public enum ActiveWeapon { Gun, Raser, Missile }
     public ActiveWeapon currentWeapon = ActiveWeapon.Gun;
     private Coroutine raserCycleCoroutine = null;
-    private bool hasSpawnedBBeam = false;
 
     [Header("Shoot Transform & Timings")]
     [SerializeField] private Transform shootTransform;
     [SerializeField] private float gunShootInterval = 0.2f; // Gun 발사 간격
     private float lastGunShootTime = 0f;
-
-    [SerializeField] private float raserShootInterval = 2f; // Raser 발사 간격 (raserLevel < 4)
-    private float lastRaserShootTime = 0f;
 
     private const float autoUpgradeDelay = 22f;
     private float autoUpgradeTimerGun = 0f;
@@ -435,7 +431,6 @@ public class Player : MonoBehaviour
                     WeaponPool.Instance.ReturnWeapon("BBeam", persistentBBeam);
                     persistentBBeam = null;
                 }
-                hasSpawnedBBeam = false;
             }
             currentWeapon = requestedWeapon; // 대입
             Debug.Log("Switched weapon to " + currentWeapon.ToString() + " at level " +

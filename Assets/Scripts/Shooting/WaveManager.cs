@@ -1994,7 +1994,6 @@ public class WaveManager : MonoBehaviour
                 if (enemyComponent != null)
                 {
                     enemyComponent.isFlipped = true;
-                    enemyComponent.isEnemy1 = true; // Enemy_1임을 표시 (Enemy.cs에 새 필드 추가)
                 }
             }
             StartCoroutine(ExecutePattern(enemy, patterns[i]));

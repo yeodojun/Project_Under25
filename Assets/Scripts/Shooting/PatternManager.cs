@@ -156,7 +156,7 @@ public class PatternManager : MonoBehaviour
                     // 만약 적이 flipped 상태이고, 패턴이 "N_1" (원래 위로 이동)라면 이동 벡터의 방향을 반전합니다.
                     Vector2 appliedStep = step;
                     Enemy enemyComponent = enemy.GetComponent<Enemy>();
-                    if (enemyComponent != null && enemyComponent.isFlipped && pattern == "P_1" && !enemyComponent.isEnemy1)
+                    if (enemyComponent != null && enemyComponent.isFlipped && pattern == "P_1")
                     {
                         appliedStep = -step;
                     }

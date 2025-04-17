@@ -5,71 +5,33 @@ public class Enemy : MonoBehaviour
 {
     // enemyType: 0 = 기본 적, 1 = Enemy_1, 2 = Enemy_2, 3 = Enemy_3, 4 = Enemy_4, 101 = Enemy_101
     public int enemyType = 0;
-
-    // 기존 Enemy_1 관련 플래그 (enemyType 1일 때 사용)
-    public bool isEnemy1 = false;
     public bool isFlipped = false; // Enemy_1이면 true로 설정
-    private bool hasDamaged = false;
+    private bool hasDamaged = false; 
 
-    public int health = 5; // 기본 적 체력
+    public int health = 10; // 기본 적 체력
     public float dropChance = 0.05f; // 업그레이드 아이템 드롭 확률
     public GameObject upgradeItemPrefab; // 업그레이드 아이템 프리팹
     public int scoreValue = 5; // 적 처치 시 획득 점수
 
     private bool isDead = false; // 적이 이미 죽었는지 확인
 
-    // 공용 필드: 적 총알 발사 관련 (Enemy_2,3,4용)
+    // 공용 필드: 적 총알 발사 관련
     public GameObject enemyBulletPrefab; // 총알 프리팹
     public Transform firePoint;          // 총알 발사 위치
 
     void Awake()
     {
-
-        int wave = 1;
-        if (WaveManager.Instance != null)
-        {
-            // 예) WaveManager.Instance.CurrentWave 또는 WaveManager.CurrentWave
-            wave = WaveManager.Instance.CurrentWave;
-        }
-        int multiplier = 1;
-        if (wave < 6)
-            multiplier = 1;
-        else if (wave < 11)
-            multiplier = 3;
-        else if (wave < 16)
-            multiplier = 9;
-        else if (wave < 26)
-            multiplier = 27;
-        else
-            multiplier = 27;
-
-        if (enemyType == 0)
-        {
-            health = 1 * multiplier;
-        }
-        else if (enemyType == 1)
-        {
-            health = 20 * multiplier;
-        }
-        else if (enemyType == 2)
-        {
-            health = 5 * multiplier;
-        }
-        else if (enemyType == 3)
-        {
-            health = 10 * multiplier;
-        }
         // enemyType에 따라 초기화
         if (enemyType == 1)
         {
-            isEnemy1 = true;
-            // 기존의 EnemyAttack 컴포넌트 비활성화
+            health = 30;
             EnemyAttack attack = GetComponent<EnemyAttack>();
             if (attack != null)
                 attack.enabled = false;
         }
         else if (enemyType == 2)
         {
+            health = 100;
             EnemyAttack attack = GetComponent<EnemyAttack>();
             if (attack != null)
                 attack.enabled = false;
@@ -77,7 +39,7 @@ public class Enemy : MonoBehaviour
         }
         else if (enemyType == 3)
         {
-            // Enemy_3: 공격력 1
+            health = 20;
             EnemyAttack attack = GetComponent<EnemyAttack>();
             if (attack != null)
                 attack.enabled = false;
@@ -85,9 +47,30 @@ public class Enemy : MonoBehaviour
         }
         else if (enemyType == 4)
         {
+            health = 50;
             // Enemy_4: 플레이어 공격에 면역
             // 기본 체력 (기본값 5 또는 Inspector에서 지정한 값) 그대로 사용
             // 단, 플레이어의 공격에 의한 데미지를 무시
+            StartCoroutine(Enemy4Attack());
+        }
+        else if (enemyType == 5)
+        {
+            health = 250;
+            StartCoroutine(Enemy4Attack());
+        }
+        else if (enemyType == 6)
+        {
+            health = 30;
+            StartCoroutine(Enemy4Attack());
+        }
+        else if (enemyType == 7)
+        {
+            health = 70;
+            StartCoroutine(Enemy4Attack());
+        }
+        else if (enemyType == 8)
+        {
+            health = 350;
             StartCoroutine(Enemy4Attack());
         }
         else if (enemyType == 101)
@@ -108,9 +91,6 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(int damage)
     {
         if (isDead) return; // 이미 죽은 경우 무시
-        // Enemy_4는 데미지를 받지 않음
-        if (enemyType == 4)
-            return;
         health -= damage;
         if (health <= 0)
         {
@@ -137,7 +117,7 @@ public class Enemy : MonoBehaviour
         // Enemy_4와 충돌 시에는 플레이어에게 데미지를 주지 않음.
         if (other.CompareTag("Player") && !hasDamaged)
         {
-            if (enemyType != 4)
+            if (enemyType != 11)
             {
                 Player player = other.GetComponent<Player>();
                 if (player != null)
