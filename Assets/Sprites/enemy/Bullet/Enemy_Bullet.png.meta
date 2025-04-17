@@ -131,155 +131,155 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Enemy_Bullet_0
+      name: Fire
       rect:
         serializedVersion: 2
-        x: 83
-        y: 110
-        width: 168
-        height: 310
+        x: 84
+        y: 111
+        width: 166
+        height: 307
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 7ddc9502c6c24a1e0800000000000000
-      internalID: -2187574676084372009
+      spriteID: 1bb0a930957da084a98968c67ef5132e
+      internalID: -639230447
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy_Bullet_1
+      name: Dust
       rect:
         serializedVersion: 2
-        x: 393
-        y: 188
-        width: 161
-        height: 169
+        x: 394
+        y: 190
+        width: 159
+        height: 167
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: e047e34871e3e1a10800000000000000
-      internalID: 1882009965011301390
+      spriteID: 31cfbebef81eddb479aed943a422c0d4
+      internalID: 1189548809
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy_Bullet_2
+      name: Gun
       rect:
         serializedVersion: 2
-        x: 673
-        y: 115
-        width: 204
-        height: 327
+        x: 674
+        y: 116
+        width: 202
+        height: 325
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 0a0defd45113fb690800000000000000
-      internalID: -7584289279896006496
+      spriteID: d1d5141a051d1e643940e03ffab20d61
+      internalID: 1882852961
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy_Bullet_3
+      name: Boom
       rect:
         serializedVersion: 2
-        x: 996
-        y: 143
-        width: 121
-        height: 283
+        x: 998
+        y: 144
+        width: 119
+        height: 281
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 056aa06d01f4afd70800000000000000
-      internalID: 9077654932647749200
+      spriteID: a537ef8829bffdf41b91425cbe1e1da8
+      internalID: -47784042
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy_Bullet_4
+      name: Lasergun
       rect:
         serializedVersion: 2
-        x: 1284
-        y: 97
-        width: 69
-        height: 362
+        x: 1285
+        y: 98
+        width: 67
+        height: 360
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 8d624e9d1d1ce94b0800000000000000
-      internalID: -5431690993514305832
+      spriteID: 5bccfd68537f7a94486a6e897d3978ae
+      internalID: 682854567
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy_Bullet_5
+      name: Scream
       rect:
         serializedVersion: 2
-        x: 1505
-        y: 17
-        width: 168
-        height: 450
+        x: 1507
+        y: 18
+        width: 164
+        height: 448
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 02146df7549d89960800000000000000
-      internalID: 7609070462963171616
+      spriteID: 410dac32995257945b562daa2622384d
+      internalID: -584143298
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Enemy_Bullet_6
+      name: Laser
       rect:
         serializedVersion: 2
-        x: 1805
-        y: 91
-        width: 53
-        height: 362
+        x: 1806
+        y: 92
+        width: 51
+        height: 360
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 798a4309d4bac09d0800000000000000
-      internalID: -2806680118138460009
+      spriteID: c5b623e74e25ef4439dcb0cdb9c9201f
+      internalID: 1578660580
       vertices: []
       indices: 
       edges: []
@@ -288,7 +288,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: cb59a597cbb1d0e4f9f728141a0722f0
     internalID: 0
     vertices: []
     indices: 
@@ -297,7 +297,14 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Boom: -47784042
+      Dust: 1189548809
+      Fire: -639230447
+      Gun: 1882852961
+      Laser: 1578660580
+      Lasergun: 682854567
+      Scream: -584143298
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

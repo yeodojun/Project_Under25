@@ -128,15 +128,15 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Section 2_0
+      name: Paper Ariplane
       rect:
         serializedVersion: 2
-        x: 32
-        y: 719
+        x: 31
+        y: 720
         width: 242
         height: 268
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -150,15 +150,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Section 2_1
+      name: Wright Ariplane
       rect:
         serializedVersion: 2
         x: 305
-        y: 710
+        y: 711
         width: 293
         height: 276
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -172,7 +172,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Section 2_2
+      name: Elite Airplane
       rect:
         serializedVersion: 2
         x: 609
@@ -180,7 +180,7 @@ TextureImporter:
         width: 290
         height: 291
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -194,7 +194,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Section 2_3
+      name: Paper Ariplane Hit
       rect:
         serializedVersion: 2
         x: 32
@@ -202,7 +202,7 @@ TextureImporter:
         width: 242
         height: 268
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -216,7 +216,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Section 2_4
+      name: Wright Ariplane Hit
       rect:
         serializedVersion: 2
         x: 302
@@ -224,7 +224,7 @@ TextureImporter:
         width: 293
         height: 276
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -238,7 +238,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Section 2_5
+      name: Elite Airplane Hit
       rect:
         serializedVersion: 2
         x: 609
@@ -246,7 +246,7 @@ TextureImporter:
         width: 290
         height: 291
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -263,7 +263,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: ce7252b640f01564f839b0248170d936
     internalID: 0
     vertices: []
     indices: 
@@ -273,12 +273,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Section 2_0: -19329861153970304
-      Section 2_1: 4934528694186984498
-      Section 2_2: 4564659673281124663
-      Section 2_3: 2907764164481318988
-      Section 2_4: -7057058263845670359
-      Section 2_5: 4371535629398387868
+      Elite Airplane: 4564659673281124663
+      Elite Airplane Hit: 4371535629398387868
+      Paper Ariplane: -19329861153970304
+      Paper Ariplane Hit: 2907764164481318988
+      Wright Ariplane: 4934528694186984498
+      Wright Ariplane Hit: -7057058263845670359
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

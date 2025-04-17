@@ -143,15 +143,15 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Beam_0
+      name: Beam
       rect:
         serializedVersion: 2
-        x: 36
-        y: 217
-        width: 72
-        height: 665
+        x: 0
+        y: 0
+        width: 165
+        height: 1000
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -165,15 +165,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Beam_1
+      name: BBeam
       rect:
         serializedVersion: 2
-        x: 119
-        y: 235
-        width: 226
-        height: 666
+        x: 165
+        y: 0
+        width: 165
+        height: 1000
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -187,199 +187,23 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Beam_2
+      name: UBeam
       rect:
         serializedVersion: 2
-        x: 131
-        y: 729
-        width: 8
-        height: 20
+        x: 330
+        y: 0
+        width: 165
+        height: 1000
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: fcbef96447df15290800000000000000
-      internalID: -7903257195215590449
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Beam_3
-      rect:
-        serializedVersion: 2
-        x: 376
-        y: 219
-        width: 103
-        height: 665
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 6835c62b5b6314640800000000000000
-      internalID: 5062387610151572358
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Beam_4
-      rect:
-        serializedVersion: 2
-        x: 471
-        y: 731
-        width: 8
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 64ee281cba8d24820800000000000000
-      internalID: 2901119342177611334
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Beam_5
-      rect:
-        serializedVersion: 2
-        x: 119
-        y: 404
-        width: 20
-        height: 185
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e3a42b4c3b3620f70800000000000000
-      internalID: 9151987016520583742
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Beam_6
-      rect:
-        serializedVersion: 2
-        x: 459
-        y: 406
-        width: 20
-        height: 185
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d3e35b353bd572470800000000000000
-      internalID: 8369761457276272189
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Beam_7
-      rect:
-        serializedVersion: 2
-        x: 127
-        y: 391
-        width: 6
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 95d4f0444555b6660800000000000000
-      internalID: 7380086234784157017
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Beam_8
-      rect:
-        serializedVersion: 2
-        x: 131
-        y: 392
-        width: 8
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 8a121f6f221d79a60800000000000000
-      internalID: 7680837637605761448
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Beam_9
-      rect:
-        serializedVersion: 2
-        x: 467
-        y: 393
-        width: 6
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 6cebc575c8beb6a50800000000000000
-      internalID: 6515560273915199174
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Beam_10
-      rect:
-        serializedVersion: 2
-        x: 471
-        y: 394
-        width: 8
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c63ebc4019fdec5e0800000000000000
-      internalID: -1887325379877936276
+      spriteID: 5c2667f54f7bff0498af262f92d80ac1
+      internalID: 1000739505
       vertices: []
       indices: 
       edges: []
@@ -388,7 +212,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 88d4f2fd33b0b33419589635ed5ee62c
     internalID: 0
     vertices: []
     indices: 
@@ -397,7 +221,10 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      BBeam: -385687906828721642
+      Beam: -7357873357605312705
+      UBeam: 1000739505
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

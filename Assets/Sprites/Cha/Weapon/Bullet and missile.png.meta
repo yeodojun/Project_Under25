@@ -119,7 +119,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Bullet and missile_0
+      name: Bullet 0
       rect:
         serializedVersion: 2
         x: 74
@@ -127,7 +127,7 @@ TextureImporter:
         width: 153
         height: 323
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -141,7 +141,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Bullet and missile_1
+      name: Bullet 1
       rect:
         serializedVersion: 2
         x: 412
@@ -149,7 +149,7 @@ TextureImporter:
         width: 153
         height: 323
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -163,7 +163,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Bullet and missile_2
+      name: Missile 0
       rect:
         serializedVersion: 2
         x: 730
@@ -171,7 +171,7 @@ TextureImporter:
         width: 240
         height: 567
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -188,7 +188,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: d05556d0b72408444ba8d0cb4f1d5bd4
     internalID: 0
     vertices: []
     indices: 
@@ -197,7 +197,10 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Bullet 0: -915098455579868725
+      Bullet 1: -3468104654614503928
+      Missile 0: 2118693253900187248
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

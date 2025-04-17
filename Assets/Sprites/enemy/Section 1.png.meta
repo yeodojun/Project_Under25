@@ -128,7 +128,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Section 1_0
+      name: Dragon
       rect:
         serializedVersion: 2
         x: 48
@@ -136,7 +136,7 @@ TextureImporter:
         width: 206
         height: 280
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -150,7 +150,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Section 1_1
+      name: Shield Dragon
       rect:
         serializedVersion: 2
         x: 350
@@ -158,7 +158,7 @@ TextureImporter:
         width: 206
         height: 286
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -172,7 +172,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Section 1_2
+      name: Elite Dragon
       rect:
         serializedVersion: 2
         x: 649
@@ -180,7 +180,7 @@ TextureImporter:
         width: 206
         height: 280
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -194,7 +194,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Section 1_3
+      name: Dragon Hit
       rect:
         serializedVersion: 2
         x: 50
@@ -202,7 +202,7 @@ TextureImporter:
         width: 206
         height: 280
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -216,7 +216,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Section 1_4
+      name: Shield Dragon Hit
       rect:
         serializedVersion: 2
         x: 346
@@ -224,7 +224,7 @@ TextureImporter:
         width: 206
         height: 286
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -238,7 +238,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Section 1_5
+      name: Elite Dragon Hit
       rect:
         serializedVersion: 2
         x: 651
@@ -246,7 +246,7 @@ TextureImporter:
         width: 206
         height: 280
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -263,7 +263,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 3e54798dc170bb94b8107f16d8b9c3ce
     internalID: 0
     vertices: []
     indices: 
@@ -272,7 +272,13 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Dragon: 707831198676715256
+      Dragon Hit: 1133583194184671567
+      Elite Dragon: 5989874763250247093
+      Elite Dragon Hit: -694810083675997077
+      Shield Dragon: -2423195362809005209
+      Shield Dragon Hit: 1492410606854234322
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

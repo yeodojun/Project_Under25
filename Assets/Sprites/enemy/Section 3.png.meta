@@ -182,7 +182,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Section 3_0
+      name: Fighter
       rect:
         serializedVersion: 2
         x: 0
@@ -190,7 +190,7 @@ TextureImporter:
         width: 300
         height: 300
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -204,7 +204,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Section 3_1
+      name: Supersonic Fighter
       rect:
         serializedVersion: 2
         x: 300
@@ -212,7 +212,7 @@ TextureImporter:
         width: 300
         height: 300
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -226,7 +226,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Section 3_2
+      name: Elite Fighter
       rect:
         serializedVersion: 2
         x: 600
@@ -234,7 +234,7 @@ TextureImporter:
         width: 300
         height: 300
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -248,7 +248,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Section 3_3
+      name: Fighter Hit
       rect:
         serializedVersion: 2
         x: 0
@@ -256,7 +256,7 @@ TextureImporter:
         width: 300
         height: 300
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -270,15 +270,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Section 3_4
+      name: Supersonic Fighter Hit
       rect:
         serializedVersion: 2
         x: 300
-        y: 400
+        y: 401
         width: 300
         height: 300
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -292,7 +292,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Section 3_5
+      name: Elite Fighter Hit
       rect:
         serializedVersion: 2
         x: 600
@@ -300,7 +300,7 @@ TextureImporter:
         width: 300
         height: 300
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -327,12 +327,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Section 3_0: -1202969261
-      Section 3_1: 481933974
-      Section 3_2: 95426641
-      Section 3_3: 38040253
-      Section 3_4: -1789878241
-      Section 3_5: 170186265
+      Elite Fighter: 95426641
+      Elite Fighter Hit: 170186265
+      Fighter: -1202969261
+      Fighter Hit: 38040253
+      Supersonic Fighter: 481933974
+      Supersonic Fighter Hit: -1789878241
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
