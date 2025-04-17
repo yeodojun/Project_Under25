@@ -1974,7 +1974,7 @@ public class WaveManager : MonoBehaviour
         else if (enemyType == 2)
             prefabToUse = enemyPrefab2;
         else
-            prefabToUse = enemyPrefab; // fallback
+            prefabToUse = enemyPrefab;
 
         for (int i = 0; i < positions.Length; i++)
         {

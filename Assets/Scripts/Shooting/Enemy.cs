@@ -12,99 +12,64 @@ public class Enemy : MonoBehaviour
     public float dropChance = 0.05f; // 업그레이드 아이템 드롭 확률
     public GameObject upgradeItemPrefab; // 업그레이드 아이템 프리팹
     public int scoreValue = 5; // 적 처치 시 획득 점수
-
-    private bool isDead = false; // 적이 이미 죽었는지 확인
-
-    // 공용 필드: 적 총알 발사 관련
-    public GameObject enemyBulletPrefab; // 총알 프리팹
     public Transform firePoint;          // 총알 발사 위치
 
     void Awake()
     {
-        // enemyType에 따라 초기화
-        if (enemyType == 1)
+        // 타입별 체력 설정 및 풀링 발사 코루틴 시작
+        switch (enemyType)
         {
-            health = 30;
-            EnemyAttack attack = GetComponent<EnemyAttack>();
-            if (attack != null)
-                attack.enabled = false;
-        }
-        else if (enemyType == 2)
-        {
-            health = 100;
-            EnemyAttack attack = GetComponent<EnemyAttack>();
-            if (attack != null)
-                attack.enabled = false;
-            StartCoroutine(Enemy2Attack());
-        }
-        else if (enemyType == 3)
-        {
-            health = 20;
-            EnemyAttack attack = GetComponent<EnemyAttack>();
-            if (attack != null)
-                attack.enabled = false;
-            StartCoroutine(Enemy3Attack());
-        }
-        else if (enemyType == 4)
-        {
-            health = 50;
-            // Enemy_4: 플레이어 공격에 면역
-            // 기본 체력 (기본값 5 또는 Inspector에서 지정한 값) 그대로 사용
-            // 단, 플레이어의 공격에 의한 데미지를 무시
-            StartCoroutine(Enemy4Attack());
-        }
-        else if (enemyType == 5)
-        {
-            health = 250;
-            StartCoroutine(Enemy4Attack());
-        }
-        else if (enemyType == 6)
-        {
-            health = 30;
-            StartCoroutine(Enemy4Attack());
-        }
-        else if (enemyType == 7)
-        {
-            health = 70;
-            StartCoroutine(Enemy4Attack());
-        }
-        else if (enemyType == 8)
-        {
-            health = 350;
-            StartCoroutine(Enemy4Attack());
-        }
-        else if (enemyType == 101)
-        {
-            // Enemy_101: 보스전 전용 적
-            health = 500;
-            // 시작 시 4초마다 두 개의 총알을 발사하는 공격 코루틴 실행
-            StartCoroutine(Enemy101Attack());
-        }
-        else if (enemyType == 102)
-        {
-            // Enemy_102: 체력 20, 데미지 1
-            health = 20;
-            StartCoroutine(Enemy102Attack());
+            case 1:
+                health = 30; break;
+            case 2:
+                health = 100;
+                StartCoroutine(EnemyAttackCycle("Fire", 1f, 1f, damage:1, 2, 1f));
+                return;
+            case 3:
+                health = 20;
+                return;
+            case 4:
+                health = 50;
+                return;
+            case 5:
+                health = 250;
+                StartCoroutine(EnemyAttackCycle("Gun", 1f, 0.5f, damage:1, 2, 1f));
+                return;
+            case 6:
+                health = 30;
+                StartCoroutine(EnemyAttackCycle("Boom", 1f, 10f, damage:1, 5, 1f));
+                return;
+            case 7:
+                health = 70;
+                StartCoroutine(EnemyAttackCycle("Gun", 1f, 0.3f, damage:1, 2, 1f));
+                return;
+            case 8:
+                health = 350;
+                return;
+            case 101:
+                health = 500;
+                StartCoroutine(EnemyAttackCycle("Gun", 4f, 0f, damage:1, shotsPerCycle:2, offset:0.2f));
+                return;
+            case 102:
+                health = 20;
+                StartCoroutine(EnemyAttackCycle("Fire", 3f, 1f, damage:1));
+                return;
         }
     }
 
     public void TakeDamage(int damage)
     {
-        if (isDead) return; // 이미 죽은 경우 무시
+        if (health <= 0) return;
         health -= damage;
-        if (health <= 0)
-        {
-            Die();
-        }
+        if (health <= 0) Die();
     }
 
     void Die()
     {
-        if (isDead) return;
-        isDead = true;
         ScoreManager.Instance.AddScore(scoreValue);
         if (Random.value < dropChance)
         {
+            // 업그레이드 아이템도 풀링으로
             WeaponPool.Instance.SpawnWeapon("UpgradeItem", transform.position, Quaternion.identity);
         }
         Destroy(gameObject);
@@ -112,9 +77,6 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // 미사일과 충돌 시 데미지 처리 (Enemy_4는 이미 데미지 무시)
-        // 플레이어와의 충돌: 기본적으로 플레이어는 데미지를 받지만
-        // Enemy_4와 충돌 시에는 플레이어에게 데미지를 주지 않음.
         if (other.CompareTag("Player") && !hasDamaged)
         {
             if (enemyType != 11)
@@ -137,97 +99,39 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    // Enemy_2 공격: 5초마다 firePoint에서 총알 발사, 총알 데미지 2
-    private IEnumerator Enemy2Attack()
+    private IEnumerator EnemyAttackCycle(
+        string bulletType, // 총알 타입
+        float interval,    // 한 사이클 주기(초)
+        float initialDelay,// 첫 발사 전 대기 시간(초)
+        int damage,        // 총알 데미지
+        int shotsPerCycle = 1,// 사이클당 발사 횟수
+        float offset = 0f, // 총알 사이 좌우 간격 shotsPerCycle >= 2 일 때 사용할 거
+        bool isEnemy11 = false)// 
     {
+        // 초기 대기
+        if (initialDelay > 0f)
+            yield return new WaitForSeconds(initialDelay);
+
         while (true)
         {
-            yield return new WaitForSeconds(5f);
-            if (firePoint != null && enemyBulletPrefab != null)
+            for (int i = 0; i < shotsPerCycle; i++)
             {
-                GameObject bullet = Instantiate(enemyBulletPrefab, firePoint.position, Quaternion.identity);
-                EnemyBullet eb = bullet.GetComponent<EnemyBullet>();
-                if (eb != null)
-                    eb.damage = 2;
+                // 좌우로 조금씩 벌리기
+                Vector3 spawnPos = firePoint.position + new Vector3(offset * (i - (shotsPerCycle-1)/2f), 0f, 0f);
+                SpawnPooledBullet(bulletType, spawnPos, damage, isEnemy11);
             }
+            yield return new WaitForSeconds(interval);
         }
     }
 
-    // Enemy_3 공격: 5초마다 firePoint에서 총알 발사, 총알 데미지 1
-    private IEnumerator Enemy3Attack()
+    private void SpawnPooledBullet(string type, Vector3 pos, int damage, bool isEnemy11)
     {
-        while (true)
-        {
-            yield return new WaitForSeconds(5f);
-            if (firePoint != null && enemyBulletPrefab != null)
-            {
-                GameObject bullet = Instantiate(enemyBulletPrefab, firePoint.position, Quaternion.identity);
-                EnemyBullet eb = bullet.GetComponent<EnemyBullet>();
-                if (eb != null)
-                    eb.damage = 1;
-            }
-        }
-    }
-
-    // Enemy_4 공격: 3초마다 firePoint에서 총알 발사
-    // 이 총알은 일반적으로 데미지를 주지 않고, 대신 플레이어의 이동 속도를 30% 감소시키도록 처리되어야 함.
-    private IEnumerator Enemy4Attack()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(3f);
-            if (firePoint != null && enemyBulletPrefab != null)
-            {
-                GameObject bullet = Instantiate(enemyBulletPrefab, firePoint.position, Quaternion.identity);
-                // assume EnemyBullet.cs has a boolean flag "isEnemy4Bullet" that, when true,
-                // causes the bullet to not deal damage but reduce player's move speed by 30%.
-                EnemyBullet eb = bullet.GetComponent<EnemyBullet>();
-                if (eb != null)
-                    eb.isEnemy4Bullet = true;
-            }
-        }
-    }
-
-    // Enemy_101 공격 : 4초마다 공격
-    // 총알 2개씩 발사 데미지 1
-    private IEnumerator Enemy101Attack()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(4f);
-            if (firePoint != null && enemyBulletPrefab != null)
-            {
-                // 두 발의 총알이 겹치지 않도록 좌우로 약간 오프셋을 줍니다.
-                Vector3 offset = new Vector3(0.2f, 0, 0); // 필요에 따라 값 조정
-                GameObject bullet1 = Instantiate(enemyBulletPrefab, firePoint.position - offset, Quaternion.identity);
-                GameObject bullet2 = Instantiate(enemyBulletPrefab, firePoint.position + offset, Quaternion.identity);
-
-                // 각 총알에 공격력 1 할당
-                EnemyBullet eb1 = bullet1.GetComponent<EnemyBullet>();
-                if (eb1 != null)
-                    eb1.damage = 1;
-                EnemyBullet eb2 = bullet2.GetComponent<EnemyBullet>();
-                if (eb2 != null)
-                    eb2.damage = 1;
-            }
-        }
-    }
-
-    // Enemy_102 공격 : 3초마다 공격
-    // 총알 1개씩 발사 데미지 1
-    // 카미카제 리턴 1번
-    private IEnumerator Enemy102Attack()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(3f);
-            if (firePoint != null && enemyBulletPrefab != null)
-            {
-                GameObject bullet = Instantiate(enemyBulletPrefab, firePoint.position, Quaternion.identity);
-                EnemyBullet eb = bullet.GetComponent<EnemyBullet>();
-                if (eb != null)
-                    eb.damage = 1;
-            }
-        }
+        GameObject bullet = WeaponPool.Instance.SpawnWeapon(type, pos, Quaternion.identity);
+        var eb = bullet.GetComponent<EnemyBullet>();
+        eb.bulletType     = type;
+        eb.damage         = damage;
+        eb.isEnemy11Bullet = isEnemy11;
+        // 방향이 필요한 타입이면 prefab에 설정된 direction을 사용하거나,
+        // eb.direction에 별도 할당 코드 추가 가능
     }
 }

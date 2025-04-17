@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1352019825343987954}
   - component: {fileID: 5823953381178116245}
   m_Layer: 0
-  m_Name: gunBullet
+  m_Name: Enemy_Projectile_LaserGun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79,12 +79,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: -7584289279896006496, guid: c3ce8d8470bf20b47a875c0a3ebb75de, type: 3}
+  m_Sprite: {fileID: 682854567, guid: c3ce8d8470bf20b47a875c0a3ebb75de, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.16, y: 0.14}
+  m_Size: {x: 2.02, y: 3.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -124,17 +124,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.4}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.04, y: 3.27}
-    newSize: {x: 0.16, y: 0.14}
+    oldSize: {x: 0.67, y: 3.6}
+    newSize: {x: 2.02, y: 3.25}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 2}
+  m_Size: {x: 0.67, y: 3.6}
   m_EdgeRadius: 0
 --- !u!50 &1352019825343987954
 Rigidbody2D:
@@ -176,6 +176,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletType: Gun
-  speed: 2
+  speed: 1.2
   damage: 1
   direction: {x: 0, y: 0, z: 0}

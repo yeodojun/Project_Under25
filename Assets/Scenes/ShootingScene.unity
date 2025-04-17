@@ -4187,6 +4187,15 @@ MonoBehaviour:
   - weaponType: UpgradeItem
     prefab: {fileID: 2000207073148731593, guid: 8e034da5b64695342bb9fc2aa41b7d38, type: 3}
     poolSize: 7
+  - weaponType: Fire
+    prefab: {fileID: 4943099279084232519, guid: c174f5044a5474c4d8f516d2f177d47c, type: 3}
+    poolSize: 10
+  - weaponType: Dust
+    prefab: {fileID: 4943099279084232519, guid: b15761aac1e08ad40a986285f16c78d5, type: 3}
+    poolSize: 10
+  - weaponType: Gun
+    prefab: {fileID: 4943099279084232519, guid: fa2977ad73b01cd46937db076870984d, type: 3}
+    poolSize: 10
 --- !u!4 &1210764176
 Transform:
   m_ObjectHideFlags: 0
@@ -4949,7 +4958,6 @@ MonoBehaviour:
   currentWeapon: 0
   shootTransform: {fileID: 1649759036}
   gunShootInterval: 0.15
-  raserShootInterval: 1
   upgradeItemPrefab: {fileID: 2000207073148731593, guid: 8e034da5b64695342bb9fc2aa41b7d38, type: 3}
   missileLauncherPrefab: {fileID: 0}
   canShoot: 1

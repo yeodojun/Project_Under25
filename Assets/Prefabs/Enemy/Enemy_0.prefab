@@ -43,7 +43,6 @@ GameObject:
   - component: {fileID: 4015382953097200867}
   - component: {fileID: 8022782016161154857}
   - component: {fileID: 5017721296246766955}
-  - component: {fileID: 2096236676618687891}
   - component: {fileID: 3508440493804584967}
   m_Layer: 0
   m_Name: Enemy_0
@@ -170,22 +169,6 @@ MonoBehaviour:
   scoreValue: 10
   enemyBulletPrefab: {fileID: 0}
   firePoint: {fileID: 0}
---- !u!114 &2096236676618687891
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2336088905530037732}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4bfa16adb4c48449b45d12d18444b7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyBulletPrefab: {fileID: 4943099279084232519, guid: fa2977ad73b01cd46937db076870984d, type: 3}
-  firePoint: {fileID: 4121154633417657754}
-  minAttackDelay: 2
-  maxAttackDelay: 6
 --- !u!60 &3508440493804584967
 PolygonCollider2D:
   m_ObjectHideFlags: 0

@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour
 {
-    // "Gun", "Sniper", "ScreamWave" 설정해야함
+    // "Fire", "Dust", "Gun", "Boom","LaserGun", "Sniper", "Scream" 설정해야함
     public string bulletType;
     public float speed = 1f; // 총알 속도
     public int damage = 1; // 총알 데미지
-    internal bool isEnemy4Bullet;
+    internal bool isEnemy11Bullet;
     private float lifetime = 0f;
     public Vector3 direction;
 
@@ -18,7 +18,27 @@ public class EnemyBullet : MonoBehaviour
 
     void Update()
     {
-        if (bulletType == "Gun")
+        if (bulletType == "Fire")
+        {
+            // Gun 총알: 0.8의 속도로 아래로 이동
+            transform.position += Vector3.down * speed * Time.deltaTime;
+            // y가 -10 이하이면 반환
+            if (transform.position.y <= -10f)
+            {
+                WeaponPool.Instance.ReturnWeapon(bulletType, gameObject);
+            }
+        }
+        else if (bulletType == "Dust")
+        {
+            // Dust 총알: 0.5의 속도로 아래로 이동
+            transform.position += Vector3.down * speed * Time.deltaTime;
+            // y가 -10 이하이면 반환
+            if (transform.position.y <= -10f)
+            {
+                WeaponPool.Instance.ReturnWeapon(bulletType, gameObject);
+            }
+        }
+        else if (bulletType == "Gun")
         {
             // Gun 총알: 1의 속도로 아래로 이동
             transform.position += Vector3.down * speed * Time.deltaTime;
@@ -39,13 +59,13 @@ public class EnemyBullet : MonoBehaviour
                 WeaponPool.Instance.ReturnWeapon(bulletType, gameObject);
             }
         }
-        else if (bulletType == "ScreamWave")
+        else if (bulletType == "Scream")
         {
-            // ScreamWave 총알: 0.8의 속도로 이동 (플레이어를 향한 방향)
+            // ScreamWave 총알: 0.1의 속도로 이동 (플레이어를 향한 방향)
             transform.position += direction * speed * Time.deltaTime;
             lifetime += Time.deltaTime;
             // 2초 후에 반환
-            if (lifetime >= 2f)
+            if (lifetime >= 1f)
             {
                 WeaponPool.Instance.ReturnWeapon(bulletType, gameObject);
             }
