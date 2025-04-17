@@ -11,6 +11,15 @@ TextureImporter:
   - first:
       213: 5989874763250247093
     second: Section 1_2
+  - first:
+      213: 1133583194184671567
+    second: Section 1_3
+  - first:
+      213: 1492410606854234322
+    second: Section 1_4
+  - first:
+      213: -694810083675997077
+    second: Section 1_5
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -122,8 +131,8 @@ TextureImporter:
       name: Section 1_0
       rect:
         serializedVersion: 2
-        x: 66
-        y: 111
+        x: 48
+        y: 713
         width: 206
         height: 280
       alignment: 0
@@ -144,8 +153,8 @@ TextureImporter:
       name: Section 1_1
       rect:
         serializedVersion: 2
-        x: 372
-        y: 106
+        x: 350
+        y: 706
         width: 206
         height: 286
       alignment: 0
@@ -166,8 +175,8 @@ TextureImporter:
       name: Section 1_2
       rect:
         serializedVersion: 2
-        x: 683
-        y: 100
+        x: 649
+        y: 706
         width: 206
         height: 280
       alignment: 0
@@ -180,6 +189,72 @@ TextureImporter:
       bones: []
       spriteID: 5b5ab988c5f402350800000000000000
       internalID: 5989874763250247093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Section 1_3
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 407
+        width: 206
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f41eabcb8eb4bbf00800000000000000
+      internalID: 1133583194184671567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Section 1_4
+      rect:
+        serializedVersion: 2
+        x: 346
+        y: 404
+        width: 206
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2d062903a8b16b410800000000000000
+      internalID: 1492410606854234322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Section 1_5
+      rect:
+        serializedVersion: 2
+        x: 651
+        y: 406
+        width: 206
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6cf12009e98b56f0800000000000000
+      internalID: -694810083675997077
       vertices: []
       indices: 
       edges: []

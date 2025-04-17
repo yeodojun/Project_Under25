@@ -11,6 +11,15 @@ TextureImporter:
   - first:
       213: 4564659673281124663
     second: Section 2_2
+  - first:
+      213: 2907764164481318988
+    second: Section 2_3
+  - first:
+      213: -7057058263845670359
+    second: Section 2_4
+  - first:
+      213: 4371535629398387868
+    second: Section 2_5
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -122,10 +131,10 @@ TextureImporter:
       name: Section 2_0
       rect:
         serializedVersion: 2
-        x: 88
-        y: 563
-        width: 324
-        height: 375
+        x: 32
+        y: 719
+        width: 242
+        height: 268
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -144,10 +153,10 @@ TextureImporter:
       name: Section 2_1
       rect:
         serializedVersion: 2
-        x: 443
-        y: 548
-        width: 514
-        height: 404
+        x: 305
+        y: 710
+        width: 293
+        height: 276
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,10 +175,10 @@ TextureImporter:
       name: Section 2_2
       rect:
         serializedVersion: 2
-        x: 224
-        y: 36
-        width: 514
-        height: 498
+        x: 609
+        y: 699
+        width: 290
+        height: 291
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -180,6 +189,72 @@ TextureImporter:
       bones: []
       spriteID: 739d87ac9cde85f30800000000000000
       internalID: 4564659673281124663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Section 2_3
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 416
+        width: 242
+        height: 268
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4005820a147a5820800000000000000
+      internalID: 2907764164481318988
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Section 2_4
+      rect:
+        serializedVersion: 2
+        x: 302
+        y: 410
+        width: 293
+        height: 276
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9227e3026ea401e90800000000000000
+      internalID: -7057058263845670359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Section 2_5
+      rect:
+        serializedVersion: 2
+        x: 609
+        y: 402
+        width: 290
+        height: 291
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c9c21495e70daac30800000000000000
+      internalID: 4371535629398387868
       vertices: []
       indices: 
       edges: []
