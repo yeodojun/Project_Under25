@@ -1,4 +1,6 @@
+using System.Numerics;
 using UnityEngine;
+using Vector3 = UnityEngine.Vector3;
 
 public class EnemyBullet : MonoBehaviour
 {
@@ -9,36 +11,58 @@ public class EnemyBullet : MonoBehaviour
     internal bool isEnemy11Bullet;
     private float lifetime = 0f;
     public Vector3 direction;
+    public Vector3 direction1;
 
     void OnEnable()
     {
-        // 총알이 활성화될 때마다 lifetime 초기화
         lifetime = 0f;
+
+        if (bulletType == "Gun" || bulletType == "LaserGun" || bulletType == "Scream" || bulletType == "Fire")
+        {
+            GameObject player = GameObject.FindWithTag("Player");
+            if (player != null)
+            {
+                direction = (player.transform.position - transform.position).normalized;
+            }
+        }
     }
+
 
     void Update()
     {
         if (bulletType == "Fire")
         {
             // Gun 총알: 0.8의 속도로 아래로 이동
-            transform.position += Vector3.down * speed * Time.deltaTime;
+            transform.position += direction * speed * Time.deltaTime;
             // y가 -10 이하이면 반환
-            if (transform.position.y <= -10f)
+            if (transform.position.x >= 6f || transform.position.x <= -6f ||
+                transform.position.y >= 10f || transform.position.y <= -10f)
             {
                 WeaponPool.Instance.ReturnWeapon(bulletType, gameObject);
             }
         }
         else if (bulletType == "Dust")
         {
-            // Dust 총알: 0.5의 속도로 아래로 이동
-            transform.position += Vector3.down * speed * Time.deltaTime;
+            transform.position += direction * speed * Time.deltaTime;
             // y가 -10 이하이면 반환
-            if (transform.position.y <= -10f)
+            if (transform.position.x >= 6f || transform.position.x <= -6f ||
+                transform.position.y >= 10f || transform.position.y <= -10f)
             {
                 WeaponPool.Instance.ReturnWeapon(bulletType, gameObject);
             }
         }
         else if (bulletType == "Gun")
+        {
+            // Gun 총알: 1의 속도로 아래로 이동
+            transform.position += direction * speed * Time.deltaTime;
+            // y가 -10 이하이면 반환
+            if (transform.position.x >= 6f || transform.position.x <= -6f ||
+                transform.position.y >= 10f || transform.position.y <= -10f)
+            {
+                WeaponPool.Instance.ReturnWeapon(bulletType, gameObject);
+            }
+        }
+        else if (bulletType == "Boom")
         {
             // Gun 총알: 1의 속도로 아래로 이동
             transform.position += Vector3.down * speed * Time.deltaTime;
@@ -48,11 +72,11 @@ public class EnemyBullet : MonoBehaviour
                 WeaponPool.Instance.ReturnWeapon(bulletType, gameObject);
             }
         }
-        else if (bulletType == "Sniper")
+        else if (bulletType == "LaserGun")
         {
-            // Sniper 총알: direction 방향(플레이어를 향한 방향)으로 1.8의 속도로 이동
+            // Gun 총알: 1의 속도로 아래로 이동
             transform.position += direction * speed * Time.deltaTime;
-            // x가 6 또는 -6, y가 10 또는 -10 범위를 벗어나면 반환
+            // y가 -10 이하이면 반환
             if (transform.position.x >= 6f || transform.position.x <= -6f ||
                 transform.position.y >= 10f || transform.position.y <= -10f)
             {
@@ -64,8 +88,16 @@ public class EnemyBullet : MonoBehaviour
             // ScreamWave 총알: 0.1의 속도로 이동 (플레이어를 향한 방향)
             transform.position += direction * speed * Time.deltaTime;
             lifetime += Time.deltaTime;
-            // 2초 후에 반환
+            // 1초 후에 반환
             if (lifetime >= 1f)
+            {
+                WeaponPool.Instance.ReturnWeapon(bulletType, gameObject);
+            }
+        }
+        else if (bulletType == "Laser")
+        {
+            // y가 -10 이하이면 반환
+            if (lifetime >= 2f)
             {
                 WeaponPool.Instance.ReturnWeapon(bulletType, gameObject);
             }
@@ -80,9 +112,9 @@ public class EnemyBullet : MonoBehaviour
             Player player = other.GetComponent<Player>();
             if (player != null)
             {
-                if (bulletType == "Gun" || bulletType == "Sniper")
+                if (bulletType != "Scream")
                 {
-                    player.TakeDamage(1);
+                    player.TakeDamage(damage);
                 }
                 WeaponPool.Instance.ReturnWeapon(bulletType, gameObject);
             }

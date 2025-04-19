@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 4015382953097200867}
   - component: {fileID: 8022782016161154857}
   - component: {fileID: 5017721296246766955}
+  - component: {fileID: 5617048407956655562}
   - component: {fileID: 4585446521029870843}
   m_Layer: 0
   m_Name: Enemy_4
@@ -169,6 +170,21 @@ MonoBehaviour:
   scoreValue: 50
   firePoint: {fileID: 4121154633417657754}
   damageSprite: {fileID: 0}
+  deathDelay: 0.4
+--- !u!114 &5617048407956655562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2336088905530037732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d7a1a7986766f54f841b09b72f8e45d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponType: Explosion
+  direction: {x: 0, y: 0, z: 0}
 --- !u!60 &4585446521029870843
 PolygonCollider2D:
   m_ObjectHideFlags: 0

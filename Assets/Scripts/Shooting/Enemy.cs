@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour
     private Sprite originalSprite;
     public Sprite damageSprite;
     Animator animator;
-    public float deathDelay = 0.1f;
+    public float deathDelay = 0.4f;
 
     void Awake()
     {
@@ -28,6 +28,10 @@ public class Enemy : MonoBehaviour
         // 타입별 체력 설정 및 풀링 발사 코루틴 시작
         switch (enemyType)
         {
+            case 0:
+                health = 10;
+                StartCoroutine(EnemyAttackCycle("Fire", 5f, 5f, damage: 1, 1, 0f));
+                return;
             case 1:
                 health = 30; break;
             case 2:
@@ -35,25 +39,42 @@ public class Enemy : MonoBehaviour
                 StartCoroutine(EnemyAttackCycle("Fire", 1f, 1f, damage: 1, 2, 1f));
                 return;
             case 3:
-                health = 20;
+                health = 10;
                 return;
             case 4:
                 health = 50;
                 return;
             case 5:
                 health = 250;
-                StartCoroutine(EnemyAttackCycle("Gun", 1f, 0.5f, damage: 1, 2, 1f));
+                StartCoroutine(EnemyAttackCycle("Gun", 0.5f, 0.5f, damage: 1, 2, 1f));
                 return;
             case 6:
                 health = 30;
-                StartCoroutine(EnemyAttackCycle("Boom", 1f, 10f, damage: 1, 5, 1f));
+                StartCoroutine(EnemyAttackCycle("Boom", 3f, 3f, damage: 1));
                 return;
             case 7:
                 health = 70;
-                StartCoroutine(EnemyAttackCycle("Gun", 1f, 0.3f, damage: 1, 2, 1f));
+                StartCoroutine(EnemyAttackCycle("Gun", 0.3f, 0.3f, damage: 1, 2, 1f));
                 return;
             case 8:
                 health = 350;
+                StartCoroutine(EnemyAttackCycle("Laser", 4f, 4f, damage: 1));
+                return;
+            case 9:
+                health = 50;
+                StartCoroutine(EnemyAttackCycle("LaserGun", 2f, 2f, damage: 1));
+                return;
+            case 10:
+                health = 70;
+                StartCoroutine(EnemyAttackCycle("Laser", 4f, 4f, damage: 1));
+                return;
+            case 11:
+                health = 30;
+                StartCoroutine(EnemyAttackCycle("Scream", 5f, 5f, damage: 0));
+                return;
+            case 12:
+                health = 500;
+                StartCoroutine(EnemyAttackCycle("LaserGun", 2f, 2f, damage: 1));
                 return;
             case 101:
                 health = 500;
@@ -91,6 +112,19 @@ public class Enemy : MonoBehaviour
         animator.SetTrigger("Die");
         GetComponent<Collider2D>().enabled = false;
         ScoreManager.Instance.AddScore(scoreValue);
+        if (enemyType == 4) // 무기 explosion 사용 예쩡
+        {
+            EnemyWeapon weapon = GetComponent<EnemyWeapon>();
+            if (weapon != null)
+            {
+                weapon.weaponType = "Explosion";
+                weapon.Explode();           // 직접 실행
+            }
+        }
+        if (enemyType == 10) // 위치에 고스트 소환 예쩡
+        {
+
+        }
         if (Random.value < dropChance)
         {
             // 업그레이드 아이템도 풀링으로
@@ -111,7 +145,7 @@ public class Enemy : MonoBehaviour
                     player.TakeDamage(1);
                 }
             }
-            // Enemy_4: 플레이어와 닿아도 데미지 없음.
+            // Enemy_11: 플레이어와 닿아도 데미지 없음.
         }
     }
 

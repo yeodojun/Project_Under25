@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 8022782016161154857}
   - component: {fileID: 5017721296246766955}
   - component: {fileID: 2094001382184105886}
+  - component: {fileID: -794007754168675488}
   m_Layer: 0
   m_Name: Enemy_3
   m_TagString: Enemy
@@ -166,9 +167,10 @@ MonoBehaviour:
   health: 10
   dropChance: 0.05
   upgradeItemPrefab: {fileID: 2000207073148731593, guid: 8e034da5b64695342bb9fc2aa41b7d38, type: 3}
-  scoreValue: 20
-  enemyBulletPrefab: {fileID: 4943099279084232519, guid: 79c36ee0fa5e22641ae083c3917ec47d, type: 3}
+  scoreValue: 10
   firePoint: {fileID: 4121154633417657754}
+  damageSprite: {fileID: 0}
+  deathDelay: 0.6
 --- !u!60 &2094001382184105886
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -591,3 +593,25 @@ PolygonCollider2D:
       - {x: -0.03, y: 0.5}
       - {x: -0.02, y: 0.48999998}
   m_UseDelaunayMesh: 0
+--- !u!95 &-794007754168675488
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2336088905530037732}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 559edf5245e2d324da9f493b0f962888, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

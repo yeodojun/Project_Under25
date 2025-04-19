@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor.EditorTools;
 using UnityEngine;
 
 public class WeaponPool : MonoBehaviour
@@ -9,7 +10,8 @@ public class WeaponPool : MonoBehaviour
     [System.Serializable]
     public class WeaponPoolItem
     {
-        [Tooltip("무기 식별자 (Player : Bullet, Bullet1, Beam, BBeam, UBeam, MissileLauncher, Missile, UpgradeItem), (Enemy : Fire, Dust, Gun, Boom, LaserGun, Scream, Laser)")]
+        [Tooltip("무기 식별자 (Player : Bullet, Bullet1, Beam, BBeam, UBeam, MissileLauncher, Missile, UpgradeItem)")]
+        // (Enemy : Fire, Dust, Gun, Boom, LaserGun, Scream, Laser)
         public string weaponType;
         [Tooltip("해당 무기의 프리팹")]
         public GameObject prefab;
