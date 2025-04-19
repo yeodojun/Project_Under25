@@ -167,8 +167,8 @@ MonoBehaviour:
   dropChance: 0.05
   upgradeItemPrefab: {fileID: 2000207073148731593, guid: 8e034da5b64695342bb9fc2aa41b7d38, type: 3}
   scoreValue: 50
-  enemyBulletPrefab: {fileID: 4943099279084232519, guid: 79c36ee0fa5e22641ae083c3917ec47d, type: 3}
   firePoint: {fileID: 4121154633417657754}
+  damageSprite: {fileID: 0}
 --- !u!60 &4585446521029870843
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -216,7 +216,7 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: 0.59499997, y: -0.87}
-      - {x: 0.24499999, y: -0.71}
+      - {x: 0.2074962, y: -0.86358976}
       - {x: 0.24499999, y: -0.17999999}
       - {x: 1.405, y: -0.17999999}
       - {x: 1.4649999, y: -0.099999994}

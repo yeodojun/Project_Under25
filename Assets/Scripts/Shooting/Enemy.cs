@@ -6,16 +6,25 @@ public class Enemy : MonoBehaviour
     // enemyType: 0 = 기본 적, 1 = Enemy_1, 2 = Enemy_2, 3 = Enemy_3, 4 = Enemy_4, 101 = Enemy_101
     public int enemyType = 0;
     public bool isFlipped = false; // Enemy_1이면 true로 설정
-    private bool hasDamaged = false; 
+    private bool hasDamaged = false;
 
     public int health = 10; // 기본 적 체력
     public float dropChance = 0.05f; // 업그레이드 아이템 드롭 확률
     public GameObject upgradeItemPrefab; // 업그레이드 아이템 프리팹
     public int scoreValue = 5; // 적 처치 시 획득 점수
     public Transform firePoint;          // 총알 발사 위치
+    private SpriteRenderer spriteRenderer;
+    private Sprite originalSprite;
+    public Sprite damageSprite;
+    Animator animator;
+    public float deathDelay = 0.1f;
 
     void Awake()
     {
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        originalSprite = spriteRenderer.sprite;
+
         // 타입별 체력 설정 및 풀링 발사 코루틴 시작
         switch (enemyType)
         {
@@ -23,7 +32,7 @@ public class Enemy : MonoBehaviour
                 health = 30; break;
             case 2:
                 health = 100;
-                StartCoroutine(EnemyAttackCycle("Fire", 1f, 1f, damage:1, 2, 1f));
+                StartCoroutine(EnemyAttackCycle("Fire", 1f, 1f, damage: 1, 2, 1f));
                 return;
             case 3:
                 health = 20;
@@ -33,46 +42,61 @@ public class Enemy : MonoBehaviour
                 return;
             case 5:
                 health = 250;
-                StartCoroutine(EnemyAttackCycle("Gun", 1f, 0.5f, damage:1, 2, 1f));
+                StartCoroutine(EnemyAttackCycle("Gun", 1f, 0.5f, damage: 1, 2, 1f));
                 return;
             case 6:
                 health = 30;
-                StartCoroutine(EnemyAttackCycle("Boom", 1f, 10f, damage:1, 5, 1f));
+                StartCoroutine(EnemyAttackCycle("Boom", 1f, 10f, damage: 1, 5, 1f));
                 return;
             case 7:
                 health = 70;
-                StartCoroutine(EnemyAttackCycle("Gun", 1f, 0.3f, damage:1, 2, 1f));
+                StartCoroutine(EnemyAttackCycle("Gun", 1f, 0.3f, damage: 1, 2, 1f));
                 return;
             case 8:
                 health = 350;
                 return;
             case 101:
                 health = 500;
-                StartCoroutine(EnemyAttackCycle("Gun", 4f, 0f, damage:1, shotsPerCycle:2, offset:0.2f));
+                StartCoroutine(EnemyAttackCycle("Gun", 4f, 0f, damage: 1, shotsPerCycle: 2, offset: 0.2f));
                 return;
             case 102:
                 health = 20;
-                StartCoroutine(EnemyAttackCycle("Fire", 3f, 1f, damage:1));
+                StartCoroutine(EnemyAttackCycle("Fire", 3f, 1f, damage: 1));
                 return;
         }
     }
 
     public void TakeDamage(int damage)
     {
-        if (health <= 0) return;
+        animator.SetTrigger("Hit");
         health -= damage;
-        if (health <= 0) Die();
+        new WaitForSeconds(1f);
+        animator.SetTrigger("End");
+        StartCoroutine(FlashDamage());
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+    private IEnumerator FlashDamage()
+    {
+        spriteRenderer.sprite = damageSprite;
+        yield return new WaitForSeconds(0.05f);
+        spriteRenderer.sprite = originalSprite;
+
     }
 
     void Die()
     {
+        animator.SetTrigger("Die");
+        GetComponent<Collider2D>().enabled = false;
         ScoreManager.Instance.AddScore(scoreValue);
         if (Random.value < dropChance)
         {
             // 업그레이드 아이템도 풀링으로
             WeaponPool.Instance.SpawnWeapon("UpgradeItem", transform.position, Quaternion.identity);
         }
-        Destroy(gameObject);
+        Destroy(gameObject, deathDelay);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -117,7 +141,7 @@ public class Enemy : MonoBehaviour
             for (int i = 0; i < shotsPerCycle; i++)
             {
                 // 좌우로 조금씩 벌리기
-                Vector3 spawnPos = firePoint.position + new Vector3(offset * (i - (shotsPerCycle-1)/2f), 0f, 0f);
+                Vector3 spawnPos = firePoint.position + new Vector3(offset * (i - (shotsPerCycle - 1) / 2f), 0f, 0f);
                 SpawnPooledBullet(bulletType, spawnPos, damage, isEnemy11);
             }
             yield return new WaitForSeconds(interval);
@@ -128,8 +152,8 @@ public class Enemy : MonoBehaviour
     {
         GameObject bullet = WeaponPool.Instance.SpawnWeapon(type, pos, Quaternion.identity);
         var eb = bullet.GetComponent<EnemyBullet>();
-        eb.bulletType     = type;
-        eb.damage         = damage;
+        eb.bulletType = type;
+        eb.damage = damage;
         eb.isEnemy11Bullet = isEnemy11;
         // 방향이 필요한 타입이면 prefab에 설정된 direction을 사용하거나,
         // eb.direction에 별도 할당 코드 추가 가능
