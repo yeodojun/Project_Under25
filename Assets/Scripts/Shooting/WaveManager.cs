@@ -5,11 +5,7 @@ using UnityEngine;
 public class WaveManager : MonoBehaviour
 {
     public static WaveManager Instance { get; private set; }
-    public GameObject enemyPrefab;    // Enemy_0 (기본 적) 프리팹
-    public GameObject enemyPrefab1;   // Enemy_1 (새 적, 체력 20, 총 미발사) 프리팹
-    public GameObject enemyPrefab2;   // Enemy_2 (새 적, 체력 50, 총 발사) 프리팹
-    public GameObject bossPrefab;
-    public float waveDelay = 5f;      // 웨이브 간 딜레이
+    public float waveDelay = 10f;      // 웨이브 간 딜레이
     private int currentWave = 1;      // 현재 웨이브 번호
     public int CurrentWave { get { return currentWave; } }  // 외부 접근용 프로퍼티
     private bool waveInProgress = false; // 웨이브 진행 여부
@@ -27,35 +23,31 @@ public class WaveManager : MonoBehaviour
         // 웨이브 1
         { 1, new List<(Vector3[], string[][], int)>()
             {
-                // 첫 번째 스폰: 좌표 {(-2,4.6), (0,4.6), (2,4.6)} – 각 "N_0" 4회 실행, enemyType 0
+                // 첫 번째 스폰: 0초에 좌표 {(-2,6), (0,6), (2,6)} – 각 "P_0" 5회 실행, enemyType 0
                 (
                     new Vector3[] {
-                        new Vector3(-2, 4.6f, 0),
-                        new Vector3(0, 4.6f, 0),
-                        new Vector3(2, 4.6f, 0)
+                        new Vector3(-2, 6f, 0),
+                        new Vector3(0, 6f, 0),
+                        new Vector3(2, 6f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_0", 5),
+                        GetRepeatedPattern("P_0", 5),
+                        GetRepeatedPattern("P_0", 5)
+                    },
+                    0
+                ),
+                // 두 번째 스폰: 3초에 좌표 {(-1,6), (-1,6), (1,6)} – 각 "P_0" 4회 실행, enemyType 0
+                (
+                    new Vector3[] {
+                        new Vector3(-1, 6f, 0),
+                        new Vector3(-1, 6f, 0),
+                        new Vector3(1, 6f, 0),
                     },
                     new string[][] {
                         GetRepeatedPattern("P_0", 4),
                         GetRepeatedPattern("P_0", 4),
                         GetRepeatedPattern("P_0", 4)
-                    },
-                    0
-                ),
-                // 두 번째 스폰: 좌표 {(-2,4.6), (-1,4.6), (0,4.6), (1,4.6), (2,4.6)} – 각 "N_0" 3회 실행, enemyType 0
-                (
-                    new Vector3[] {
-                        new Vector3(-2, 4.6f, 0),
-                        new Vector3(-1, 4.6f, 0),
-                        new Vector3(0, 4.6f, 0),
-                        new Vector3(1, 4.6f, 0),
-                        new Vector3(2, 4.6f, 0)
-                    },
-                    new string[][] {
-                        GetRepeatedPattern("P_0", 3),
-                        GetRepeatedPattern("P_0", 3),
-                        GetRepeatedPattern("P_0", 3),
-                        GetRepeatedPattern("P_0", 3),
-                        GetRepeatedPattern("P_0", 3)
                     },
                     0
                 )
@@ -64,31 +56,29 @@ public class WaveManager : MonoBehaviour
         // 웨이브 2
         { 2, new List<(Vector3[], string[][], int)>()
             {
-                // 첫 번째 스폰: 좌표 {(-2,4.5), (-2,3.5), (-2,2.5)} – 각 "N_2" 4회 실행, enemyType 0
+                // 첫 번째 스폰: 0초에 좌표 {(-2,6), (0,6), (2,6)} – 각 "P_0" 5회 실행, enemyType 1
                 (
                     new Vector3[] {
-                        new Vector3(-2, 4.5f, 0),
-                        new Vector3(-2, 3.5f, 0),
-                        new Vector3(-2, 2.5f, 0)
+                        new Vector3(-2, 6f, 0),
+                        new Vector3(0, 6f, 0),
+                        new Vector3(2, 6f, 0)
                     },
                     new string[][] {
-                        GetRepeatedPattern("P_2", 4),
-                        GetRepeatedPattern("P_2", 4),
-                        GetRepeatedPattern("P_2", 4)
+                        GetRepeatedPattern("P_0", 5),
+                        GetRepeatedPattern("P_0", 5),
+                        GetRepeatedPattern("P_0", 5)
                     },
-                    0
+                    1
                 ),
-                // 두 번째 스폰: 좌표 {(2,4.5), (2,3.5), (2,2.5)} – 각 "N_3" 4회 실행, enemyType 0
+                // 두 번째 스폰: 3초에 좌표 {(-1,6), (1,6)} – 각 "P_0" 4회 실행, enemyType 0
                 (
                     new Vector3[] {
-                        new Vector3(2, 4.5f, 0),
-                        new Vector3(2, 3.5f, 0),
-                        new Vector3(2, 2.5f, 0)
+                        new Vector3(-1, 6f, 0),
+                        new Vector3(1, 6f, 0)
                     },
                     new string[][] {
-                        GetRepeatedPattern("P_3", 4),
-                        GetRepeatedPattern("P_3", 4),
-                        GetRepeatedPattern("P_3", 4)
+                        GetRepeatedPattern("P_0", 4),
+                        GetRepeatedPattern("P_0", 4)
                     },
                     0
                 )
@@ -97,16 +87,86 @@ public class WaveManager : MonoBehaviour
         // 웨이브 3
         { 3, new List<(Vector3[], string[][], int)>()
             {
-                // 9마리를 순차적으로 (1초 간격) 스폰, 처음 3마리는 "N_0" 3번 실행, 다음 3마리는 2번 실행, 다음 3마리는 1번 실행, enemyType 0
-                ( new Vector3[]{ new Vector3(-2, 4.6f, 0) }, new string[][] { GetRepeatedPattern("P_0", 4) }, 0 ),
-                ( new Vector3[]{ new Vector3(0, 4.6f, 0) }, new string[][] { GetRepeatedPattern("P_0", 4) }, 0 ),
-                ( new Vector3[]{ new Vector3(2, 4.6f, 0) }, new string[][] { GetRepeatedPattern("P_0", 4) }, 0 ),
-                ( new Vector3[]{ new Vector3(-2, 4.6f, 0) }, new string[][] { GetRepeatedPattern("P_0", 3) }, 0 ),
-                ( new Vector3[]{ new Vector3(0, 4.6f, 0) }, new string[][] { GetRepeatedPattern("P_0", 3) }, 0 ),
-                ( new Vector3[]{ new Vector3(2, 4.6f, 0) }, new string[][] { GetRepeatedPattern("P_0", 3) }, 0 ),
-                ( new Vector3[]{ new Vector3(-2, 4.6f, 0) }, new string[][] { GetRepeatedPattern("P_0", 2) }, 0 ),
-                ( new Vector3[]{ new Vector3(0, 4.6f, 0) }, new string[][] { GetRepeatedPattern("P_0", 2) }, 0 ),
-                ( new Vector3[]{ new Vector3(2, 4.6f, 0) }, new string[][] { GetRepeatedPattern("P_0", 2) }, 0 )
+                // 첫번째 스폰: 0초에 좌표 {(-1,6), (1,6)} - 각 "P_0" 4회 실행, 4초 후에 "P_1" 1회 실행, "P_25R_boss" 1회 실행, enemyType 1
+                (
+                    new Vector3[] {
+                        new Vector3(-1, 6f, 0),
+                        new Vector3(1, 6f, 0)
+                    },
+                    new string[][] {
+                        // 패턴: N_0 4회 → N_1 1회 → N_25 1회 → N_25R 1회
+                        ConcatPatterns(
+                            ConcatPatterns( GetRepeatedPattern("P_0", 4), GetRepeatedPattern("P_1", 1) ),
+                            GetRepeatedPattern("P_25R", 1)
+                        ),
+                        // 패턴: N_0 4회 → N_1 1회 → N_25 1회 → N_25R 1회
+                        ConcatPatterns(
+                            ConcatPatterns( GetRepeatedPattern("P_0", 4), GetRepeatedPattern("P_1", 1) ),
+                            GetRepeatedPattern("P_25R", 1)
+                        )
+                    },
+                    1
+                ),
+                // 두번째 스폰: 3초에 좌표{(0,6)} - "P_0" 2회 실행, "P_16" 무한 실행, enemyType 0
+                (
+                    new Vector3[] {
+                        new Vector3(-1, 6f, 0)
+                    },
+                    new string[][] {
+                        // 패턴: N_0 2회 -> P_16 25회
+                        ConcatPatterns( GetRepeatedPattern("P_0", 2), GetRepeatedPattern("P_16", 25) )
+
+                    },
+                    1
+                ),
+                // 세번째 스폰: 3.5초에 좌표 {(0,6)}
+                (
+                    new Vector3[] {
+                        new Vector3(-1, 6f, 0)
+                    },
+                    new string[][] {
+                        // 패턴: N_0 2회 -> P_16 25회
+                        ConcatPatterns( GetRepeatedPattern("P_0", 2), GetRepeatedPattern("P_16", 25) )
+
+                    },
+                    1
+                ),
+                // 네번째 스폰: 4초에 좌표 {(0,6)}
+                (
+                    new Vector3[] {
+                        new Vector3(-1, 6f, 0)
+                    },
+                    new string[][] {
+                        // 패턴: N_0 2회 -> P_16 25회
+                        ConcatPatterns( GetRepeatedPattern("P_0", 2), GetRepeatedPattern("P_16", 25) )
+
+                    },
+                    1
+                ),
+                // 다섯번째 스폰: 4.5초에 좌표 {(0,6)}
+                (
+                    new Vector3[] {
+                        new Vector3(-1, 6f, 0)
+                    },
+                    new string[][] {
+                        // 패턴: N_0 2회 -> P_16 25회
+                        ConcatPatterns( GetRepeatedPattern("P_0", 2), GetRepeatedPattern("P_16", 25) )
+
+                    },
+                    1
+                ),
+                // 여섯번째 스폰: 5초에 좌표 {(0,6)}
+                (
+                    new Vector3[] {
+                        new Vector3(-1, 6f, 0)
+                    },
+                    new string[][] {
+                        // 패턴: N_0 2회 -> P_16 25회
+                        ConcatPatterns( GetRepeatedPattern("P_0", 2), GetRepeatedPattern("P_16", 25) )
+
+                    },
+                    1
+                ),
             }
         },
         // 웨이브 4
@@ -1520,29 +1580,28 @@ public class WaveManager : MonoBehaviour
     // 헬퍼 메서드: 지정한 패턴을 count만큼 반복하는 배열을 생성
     private static string[] GetRepeatedPattern(string pattern, int count)
     {
-        string[] arr = new string[count];
+        string[] result = new string[count];
         for (int i = 0; i < count; i++)
-        {
-            arr[i] = pattern;
-        }
-        return arr;
+            result[i] = pattern;
+        return result;
     }
 
-    private static string[] ConcatPatterns(string[] first, string[] second)
+    private static string[] ConcatPatterns(string[] a, string[] b)
     {
-        List<string> list = new List<string>(first);
-        list.AddRange(second);
-        return list.ToArray();
+        string[] result = new string[a.Length + b.Length];
+        a.CopyTo(result, 0);
+        b.CopyTo(result, a.Length);
+        return result;
     }
-    // 주어진 패턴 배열을 times만큼 반복한 결과를 반환하는 헬퍼 함수
-    private static string[] RepeatPattern(string[] pattern, int times)
+
+    private static string[] RepeatPattern(string[] patternGroup, int times)
     {
-        List<string> list = new List<string>();
+        List<string> result = new List<string>();
         for (int i = 0; i < times; i++)
         {
-            list.AddRange(pattern);
+            result.AddRange(patternGroup);
         }
-        return list.ToArray();
+        return result.ToArray();
     }
     void Awake()
     {
@@ -1556,451 +1615,99 @@ public class WaveManager : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(ManageWaves());
+        StartCoroutine(StartNextWave());
     }
-
-    IEnumerator ManageWaves()
+    private IEnumerator StartNextWave()
     {
         while (true)
         {
             if (!waveInProgress)
             {
                 waveInProgress = true;
-                Debug.Log($"Starting Wave {currentWave}");
-
-                if (waveData.ContainsKey(currentWave))
-                {
-                    var waveSteps = waveData[currentWave];
-                    // 웨이브 3
-                    if (currentWave == 3)
-                    {
-                        foreach (var step in waveSteps)
-                        {
-                            yield return StartCoroutine(SpawnEnemies(step.positions, step.patterns, step.enemyType));
-                            yield return new WaitForSeconds(1f);
-                        }
-                    }
-                    // 웨이브 6
-                    else if (currentWave == 6)
-                    {
-                        // Wave 6: custom delays
-                        for (int i = 0; i < waveSteps.Count; i++)
-                        {
-                            yield return StartCoroutine(SpawnEnemies(waveSteps[i].positions, waveSteps[i].patterns, waveSteps[i].enemyType));
-                            // Group A -> B: 1초, B -> C: 1초, C -> D: 5초
-                            if (i == 0 || i == 1)
-                                yield return new WaitForSeconds(1f);
-                            else if (i == 2)
-                                yield return new WaitForSeconds(5f);
-                        }
-                    }
-                    // 웨이브 7
-                    else if (currentWave == 7)
-                    {
-                        for (int i = 0; i < waveSteps.Count; i++)
-                        {
-                            yield return StartCoroutine(SpawnEnemies(waveSteps[i].positions, waveSteps[i].patterns, waveSteps[i].enemyType));
-                            // Group A 이벤트 1 후 2초, 그룹 A 이벤트 2 후 5초, 그룹 B 이벤트 1 후 2초
-                            if (i == 0) yield return new WaitForSeconds(2f);
-                            else if (i == 1) yield return new WaitForSeconds(5f);
-                            else if (i == 2) yield return new WaitForSeconds(2f);
-                        }
-                    }
-                    // 웨이브 8
-                    else if (currentWave == 8)
-                    {
-                        // Wave 8: 이벤트 1 바로 스폰, 이후 5초 대기, 그리고 이벤트 2와 3 스폰 (연달아)
-                        yield return StartCoroutine(SpawnEnemies(waveSteps[0].positions, waveSteps[0].patterns, waveSteps[0].enemyType));
-                        yield return new WaitForSeconds(5f);
-                        yield return StartCoroutine(SpawnEnemies(waveSteps[1].positions, waveSteps[1].patterns, waveSteps[1].enemyType));
-                        yield return StartCoroutine(SpawnEnemies(waveSteps[2].positions, waveSteps[2].patterns, waveSteps[2].enemyType));
-                    }
-                    // 웨이브 9
-                    else if (currentWave == 9)
-                    {
-                        // Wave 9: 각 스폰 이벤트 후 1초 간격으로 진행
-                        foreach (var step in waveSteps)
-                        {
-                            yield return StartCoroutine(SpawnEnemies(step.positions, step.patterns, step.enemyType));
-                            yield return new WaitForSeconds(1f);
-                        }
-                    }
-                    // 웨이브 10
-                    else if (currentWave == 10)
-                    {
-                        waveSteps = waveData[currentWave];
-                        // 그룹 A: 5번의 스폰 이벤트, 각 이벤트 후 1초 대기
-                        for (int i = 0; i < 5; i++)
-                        {
-                            yield return StartCoroutine(SpawnEnemies(waveSteps[i].positions, waveSteps[i].patterns, waveSteps[i].enemyType));
-                            yield return new WaitForSeconds(1f);
-                        }
-                        // 그룹 B: 그 후 1초 대기하여 총 5초 후에 스폰 (혹은 바로 1초 대기 후 스폰)
-                        yield return new WaitForSeconds(1f);
-                        yield return StartCoroutine(SpawnEnemies(waveSteps[5].positions, waveSteps[5].patterns, waveSteps[5].enemyType));
-                    }
-                    // 웨이브 11
-                    else if (currentWave == 11)
-                    {
-                        waveSteps = waveData[currentWave];
-                        // 그룹 A: 인덱스 0 ~ 4, 1초 간격
-                        for (int i = 0; i < 5; i++)
-                        {
-                            yield return StartCoroutine(SpawnEnemies(waveSteps[i].positions, waveSteps[i].patterns, waveSteps[i].enemyType));
-                            yield return new WaitForSeconds(1f);
-                        }
-                        // 그룹 B: 5초 대기 후, 인덱스 5 ~ 9, 1초 간격
-                        yield return new WaitForSeconds(5f);
-                        for (int i = 5; i < 10; i++)
-                        {
-                            yield return StartCoroutine(SpawnEnemies(waveSteps[i].positions, waveSteps[i].patterns, waveSteps[i].enemyType));
-                            yield return new WaitForSeconds(1f);
-                        }
-                    }
-                    // 웨이브 12
-                    else if (currentWave == 12)
-                    {
-                        waveSteps = waveData[currentWave];
-                        // 그룹 A: 인덱스 0 ~ 4, 1초 간격
-                        for (int i = 0; i < 5; i++)
-                        {
-                            yield return StartCoroutine(SpawnEnemies(waveSteps[i].positions, waveSteps[i].patterns, waveSteps[i].enemyType));
-                            yield return new WaitForSeconds(1f);
-                        }
-                    }
-                    // 웨이브 14
-                    else if (currentWave == 14)
-                    {
-                        waveSteps = waveData[currentWave];
-                        // 그룹 0: Enemy_1 그룹 즉시 스폰
-                        yield return StartCoroutine(SpawnEnemies(waveSteps[0].positions, waveSteps[0].patterns, waveSteps[0].enemyType));
-                        // 그룹 1: Enemy_0 그룹 1 스폰
-                        yield return StartCoroutine(SpawnEnemies(waveSteps[1].positions, waveSteps[1].patterns, waveSteps[1].enemyType));
-                        yield return new WaitForSeconds(2f);
-                        // 그룹 2: Enemy_0 그룹 2 스폰
-                        yield return StartCoroutine(SpawnEnemies(waveSteps[2].positions, waveSteps[2].patterns, waveSteps[2].enemyType));
-                    }
-                    // 웨이브 15
-                    else if (currentWave == 15)
-                    {
-                        waveSteps = waveData[currentWave];
-                        // 그룹 A: 인덱스 0 ~ 4, 1초 간격
-                        for (int i = 0; i < 5; i++)
-                        {
-                            yield return StartCoroutine(SpawnEnemies(waveSteps[i].positions, waveSteps[i].patterns, waveSteps[i].enemyType));
-                            yield return new WaitForSeconds(1f);
-                        }
-                        // 그룹 B: 그룹 A 완료 후 2초 대기
-                        yield return new WaitForSeconds(2f);
-                        // 그룹 B: 인덱스 5 ~ 9, 1초 간격
-                        for (int i = 5; i < 10; i++)
-                        {
-                            yield return StartCoroutine(SpawnEnemies(waveSteps[i].positions, waveSteps[i].patterns, waveSteps[i].enemyType));
-                            yield return new WaitForSeconds(1f);
-                        }
-                    }
-                    // 웨이브 16
-                    else if (currentWave == 16)
-                    {
-                        waveSteps = waveData[currentWave];
-                        // 그룹 A: 즉시 (t=0)
-                        yield return StartCoroutine(SpawnEnemies(waveSteps[0].positions, waveSteps[0].patterns, waveSteps[0].enemyType));
-                        yield return new WaitForSeconds(2f);
-                        // 그룹 B: (t=2)
-                        yield return StartCoroutine(SpawnEnemies(waveSteps[1].positions, waveSteps[1].patterns, waveSteps[1].enemyType));
-                        yield return new WaitForSeconds(1f);
-                        // 그룹 C: (t=3)
-                        yield return StartCoroutine(SpawnEnemies(waveSteps[2].positions, waveSteps[2].patterns, waveSteps[2].enemyType));
-                        yield return new WaitForSeconds(1f);
-                        // 그룹 D: (t=4) – 첫 번째 Enemy_0 스폰
-                        yield return StartCoroutine(SpawnEnemies(waveSteps[3].positions, waveSteps[3].patterns, waveSteps[3].enemyType));
-                        // 동시에 또는 바로 이어서 그룹 E: (t=4) – Enemy_2 스폰
-                        yield return StartCoroutine(SpawnEnemies(waveSteps[4].positions, waveSteps[4].patterns, waveSteps[4].enemyType));
-                    }
-                    // 웨이브 17
-                    else if (currentWave == 17)
-                    {
-                        waveSteps = waveData[currentWave];
-                        // 그룹 A: 즉시 스폰
-                        yield return StartCoroutine(SpawnEnemies(waveSteps[0].positions, waveSteps[0].patterns, waveSteps[0].enemyType));
-                        // 그룹 B: 2초 후에 스폰
-                        yield return new WaitForSeconds(2f);
-                        yield return StartCoroutine(SpawnEnemies(waveSteps[1].positions, waveSteps[1].patterns, waveSteps[1].enemyType));
-                        // 그룹 C: 3초 후에 스폰
-                        yield return new WaitForSeconds(1f);
-                        yield return StartCoroutine(SpawnEnemies(waveSteps[2].positions, waveSteps[2].patterns, waveSteps[2].enemyType));
-                        // 그룹 D: 4초 후에 스폰
-                        yield return new WaitForSeconds(1f);
-                        yield return StartCoroutine(SpawnEnemies(waveSteps[3].positions, waveSteps[3].patterns, waveSteps[3].enemyType));
-                        // 그룹 E: 5초 후에 스폰
-                        yield return new WaitForSeconds(1f);
-                        yield return StartCoroutine(SpawnEnemies(waveSteps[4].positions, waveSteps[4].patterns, waveSteps[4].enemyType));
-                        // 그룹 F: 6초 후에 스폰
-                        yield return new WaitForSeconds(1f);
-                        yield return StartCoroutine(SpawnEnemies(waveSteps[5].positions, waveSteps[5].patterns, waveSteps[5].enemyType));
-                        yield return StartCoroutine(SpawnEnemies(waveSteps[6].positions, waveSteps[6].patterns, waveSteps[6].enemyType));
-                        // 그룹 G: 7초 후에 스폰
-                        yield return new WaitForSeconds(1f);
-                        yield return StartCoroutine(SpawnEnemies(waveSteps[7].positions, waveSteps[7].patterns, waveSteps[7].enemyType));
-                        yield return StartCoroutine(SpawnEnemies(waveSteps[8].positions, waveSteps[8].patterns, waveSteps[8].enemyType));
-                        // 그룹 H: 8초 후에 스폰
-                        yield return new WaitForSeconds(1f);
-                        yield return StartCoroutine(SpawnEnemies(waveSteps[9].positions, waveSteps[9].patterns, waveSteps[9].enemyType));
-                        // 그룹 I: 9초 후에 스폰
-                        yield return new WaitForSeconds(1f);
-                        yield return StartCoroutine(SpawnEnemies(waveSteps[10].positions, waveSteps[10].patterns, waveSteps[10].enemyType));
-                        // 그룹 J: 10초 후에 스폰
-                        yield return new WaitForSeconds(1f);
-                        yield return StartCoroutine(SpawnEnemies(waveSteps[11].positions, waveSteps[11].patterns, waveSteps[11].enemyType));
-                    }
-                    // 웨이브 18
-                    else if (currentWave == 18)
-                    {
-                        waveSteps = waveData[currentWave];
-                        // 그룹 A: 인덱스 0 ~ 4, 1초 간격으로 스폰
-                        for (int i = 0; i < 5; i++)
-                        {
-                            yield return StartCoroutine(SpawnEnemies(waveSteps[i].positions, waveSteps[i].patterns, waveSteps[i].enemyType));
-                            yield return new WaitForSeconds(1f);
-                        }
-                        // 그룹 F: 웨이브 시작 5초 후
-                        yield return new WaitForSeconds(5f);
-                        yield return StartCoroutine(SpawnEnemies(waveSteps[5].positions, waveSteps[5].patterns, waveSteps[5].enemyType));
-                        // 그룹 G: 3초 후
-                        yield return new WaitForSeconds(3f);
-                        yield return StartCoroutine(SpawnEnemies(waveSteps[6].positions, waveSteps[6].patterns, waveSteps[6].enemyType));
-                    }
-                    // 웨이브 19
-                    else if (currentWave == 19)
-                    {
-                        waveSteps = waveData[currentWave];
-                        // 그룹 A ~ D: 각각 한 번에 2마리씩 스폰, 1초 간격
-                        for (int i = 0; i < 4; i++)
-                        {
-                            yield return StartCoroutine(SpawnEnemies(waveSteps[i].positions, waveSteps[i].patterns, waveSteps[i].enemyType));
-                            yield return new WaitForSeconds(1f);
-                        }
-                        // 그룹 E: 4마리를 1개씩 순차적으로 스폰 (1초 간격)
-                        Vector3[] groupEPositions = waveSteps[4].positions;
-                        string[][] groupEPatterns = waveSteps[4].patterns;
-                        for (int i = 0; i < groupEPositions.Length; i++)
-                        {
-                            yield return StartCoroutine(SpawnEnemyIndividual(groupEPositions[i], groupEPatterns[i], waveSteps[4].enemyType));
-                            yield return new WaitForSeconds(1f);
-                        }
-                    }
-                    // 웨이브 20
-                    else if (currentWave == 20)
-                    {
-                        waveSteps = waveData[currentWave];
-                        // 그룹 A: 인덱스 0 ~ 4, 1초 간격
-                        for (int i = 0; i < 5; i++)
-                        {
-                            yield return StartCoroutine(SpawnEnemies(waveSteps[i].positions, waveSteps[i].patterns, waveSteps[i].enemyType));
-                            yield return new WaitForSeconds(1f);
-                        }
-                        // 그룹 B: 인덱스 5 ~ 9, 그룹 A 완료 후 2초 대기 후 시작, 1초 간격
-                        yield return new WaitForSeconds(2f);
-                        for (int i = 5; i < 10; i++)
-                        {
-                            yield return StartCoroutine(SpawnEnemies(waveSteps[i].positions, waveSteps[i].patterns, waveSteps[i].enemyType));
-                            yield return new WaitForSeconds(1f);
-                        }
-                        // 그룹 C: 인덱스 10 ~ 14, 그룹 B 완료 후 2초 대기 후 시작, 1초 간격
-                        yield return new WaitForSeconds(2f);
-                        for (int i = 10; i < 15; i++)
-                        {
-                            yield return StartCoroutine(SpawnEnemies(waveSteps[i].positions, waveSteps[i].patterns, waveSteps[i].enemyType));
-                            yield return new WaitForSeconds(1f);
-                        }
-                        // 그룹 D: 인덱스 15, 그룹 C 완료 후 3초 대기 후 시작
-                        yield return new WaitForSeconds(3f);
-                        yield return StartCoroutine(SpawnEnemies(waveSteps[15].positions, waveSteps[15].patterns, waveSteps[15].enemyType));
-                    }
-                    // 웨이브 21
-                    else if (currentWave == 21)
-                    {
-                        waveSteps = waveData[currentWave];
-                        // 그룹 1: 웨이브 시작 0초 – 3개의 스폰 이벤트 (각 1초 간격)
-                        for (int i = 0; i < 3; i++)
-                        {
-                            yield return StartCoroutine(SpawnEnemies(waveSteps[i].positions, waveSteps[i].patterns, waveSteps[i].enemyType));
-                            yield return new WaitForSeconds(1f);
-                        }
-                        // 그룹 2: 웨이브 시작 5초 후 – 3번 반복, 매 번 2마리 동시에 스폰 (1초 간격)
-                        yield return new WaitForSeconds(5f);
-                        for (int i = 3; i < 6; i++)
-                        {
-                            yield return StartCoroutine(SpawnEnemies(waveSteps[i].positions, waveSteps[i].patterns, waveSteps[i].enemyType));
-                            yield return new WaitForSeconds(1f);
-                        }
-                    }
-                    // 웨이브 22
-                    else if (currentWave == 22)
-                    {
-                        waveSteps = waveData[currentWave];
-                        // 그룹 B (인덱스 0~4): 웨이브 시작 0초부터, 1초 간격으로 스폰
-                        for (int i = 0; i < 5; i++)
-                        {
-                            yield return StartCoroutine(SpawnEnemies(waveSteps[i].positions, waveSteps[i].patterns, waveSteps[i].enemyType));
-                            yield return new WaitForSeconds(1f);
-                        }
-                        // 그룹 C (인덱스 5~9): 웨이브 시작 1.5초 후, 1초 간격으로 스폰
-                        yield return new WaitForSeconds(1.5f);
-                        for (int i = 5; i < 10; i++)
-                        {
-                            yield return StartCoroutine(SpawnEnemies(waveSteps[i].positions, waveSteps[i].patterns, waveSteps[i].enemyType));
-                            yield return new WaitForSeconds(1f);
-                        }
-                    }
-                    // 웨이브 23
-                    else if (currentWave == 23)
-                    {
-                        waveSteps = waveData[currentWave];
-                        yield return StartCoroutine(SpawnEnemies(waveSteps[0].positions, waveSteps[0].patterns, waveSteps[0].enemyType));
-                    }
-                    // 웨이브 24
-                    else if (currentWave == 24)
-                    {
-                        waveSteps = waveData[currentWave];
-                        // 그룹 A: 인덱스 0 ~ 4, 1초 간격으로 스폰 (Enemy_2)
-                        for (int i = 0; i < 5; i++)
-                        {
-                            yield return StartCoroutine(SpawnEnemies(waveSteps[i].positions, waveSteps[i].patterns, waveSteps[i].enemyType));
-                            yield return new WaitForSeconds(1f);
-                        }
-                        // 그룹 B: 인덱스 5 ~ 9, 1초 간격으로 스폰 (Enemy_1)
-                        for (int i = 5; i < 10; i++)
-                        {
-                            yield return StartCoroutine(SpawnEnemies(waveSteps[i].positions, waveSteps[i].patterns, waveSteps[i].enemyType));
-                            yield return new WaitForSeconds(1f);
-                        }
-                        // 그룹 C: 인덱스 10 ~ 14, 그룹 A/B 완료 후 2초 대기 후 1초 간격 (Enemy_0 at (0,2.5))
-                        yield return new WaitForSeconds(2f);
-                        for (int i = 10; i < 15; i++)
-                        {
-                            yield return StartCoroutine(SpawnEnemies(waveSteps[i].positions, waveSteps[i].patterns, waveSteps[i].enemyType));
-                            yield return new WaitForSeconds(1f);
-                        }
-                        // 그룹 D: 인덱스 15 ~ 19, 그룹 C 완료 후 2초 대기 후 1초 간격 (Enemy_0 at (0,3.5))
-                        yield return new WaitForSeconds(2f);
-                        for (int i = 15; i < 20; i++)
-                        {
-                            yield return StartCoroutine(SpawnEnemies(waveSteps[i].positions, waveSteps[i].patterns, waveSteps[i].enemyType));
-                            yield return new WaitForSeconds(1f);
-                        }
-                        AudioManager.Instance.UpdateWave(currentWave); // BGM3번으로 전환
-
-                    }
-                    // 웨이브 25 보스
-                    else if (currentWave == 25)
-                    {
-                        Debug.Log("=== Wave 25: 보스 등장 ===");
-
-                        // 1) 배경 멈추기
-                        BackGround[] backgrounds = Object.FindObjectsByType<BackGround>(FindObjectsSortMode.None);
-                        foreach (var bg in backgrounds)
-                        {
-                            bg.StopScrolling();
-                        }
-
-                        // 2) 3초간 빨간 경고 UI 표시 (ShowRedWarning 등)
-                        yield return StartCoroutine(ShowRedWarning(3f));
-
-                        // 3) 보스 소환 & 전투
-                        GameObject bossObj = Instantiate(bossPrefab, new Vector3(0f, 2.5f, 0f), Quaternion.identity);
-                        Debug.Log("보스 프리팹 생성 완료");
-                        // 보스가 죽을 때까지 대기
-                        while (Object.FindAnyObjectByType<Boss>() != null)
-                        {
-                            yield return null;
-                        }
-
-
-                        // 4) 배경 재개 (보스 전투 후에 다시 움직이려면)
-                        foreach (var bg in backgrounds)
-                        {
-                            bg.ResumeScrolling();
-                        }
-
-                        // 웨이브 진행 로직
-                        currentWave++;
-                        waveInProgress = false;
-                        yield break;
-                    }
-
-                    else
-                    {
-                        for (int i = 0; i < waveSteps.Count; i++)
-                        {
-                            if (i > 0) yield return new WaitForSeconds(5f);
-                            yield return StartCoroutine(SpawnEnemies(waveSteps[i].positions, waveSteps[i].patterns, waveSteps[i].enemyType));
-                        }
-                    }
-                }
-
-                // 스폰 완료 후, 화면에 남은 적이 모두 제거될 때까지 대기
-                while (GameObject.FindGameObjectsWithTag("Enemy").Length > 0)
-                {
-                    yield return null;
-                }
-
-                Debug.Log($"Wave {currentWave} complete. Waiting {waveDelay} seconds before next wave...");
-
-                if (currentWave == 1 && BossGaugeManager.Instance != null) // 웨이브 1 끝나면 게이지 보이기
-                {
-                    BossGaugeManager.Instance.ShowGauge();
-                }
-                if (currentWave < 25 && BossGaugeManager.Instance != null)
-                {
-                    float increment = BossGaugeManager.Instance.maxGauge / 24f;
-                    BossGaugeManager.Instance.AddGauge(increment);
-                }
-                yield return new WaitForSeconds(waveDelay);
+                yield return StartCoroutine(ManageWaves(currentWave));
                 currentWave++;
+                yield return new WaitForSeconds(waveDelay);
                 waveInProgress = false;
             }
-            yield return null;
+            else
+            {
+                yield return null;
+            }
         }
     }
 
-    IEnumerator SpawnEnemies(Vector3[] positions, string[][] patterns, int enemyType)
+    private IEnumerator ManageWaves(int waveNumber)
     {
-        GameObject prefabToUse = null;
-        if (enemyType == 0)
-            prefabToUse = enemyPrefab;
-        else if (enemyType == 1)
-            prefabToUse = enemyPrefab1;
-        else if (enemyType == 2)
-            prefabToUse = enemyPrefab2;
-        else
-            prefabToUse = enemyPrefab;
-
-        for (int i = 0; i < positions.Length; i++)
+        if (!waveData.ContainsKey(waveNumber))
         {
-            GameObject enemy = Instantiate(prefabToUse, positions[i], Quaternion.identity);
-            if (enemy == null)
+            Debug.Log("Wave " + waveNumber + " is not defined.");
+            yield break;
+        }
+
+        var waveEvents = waveData[waveNumber];
+
+        for (int i = 0; i < waveEvents.Count; i++)
+        {
+            var (spawnPositions, spawnPatterns, type) = waveEvents[i];
+
+            // 지연 처리 (Wave마다 커스텀 딜레이 반영)
+            if (waveNumber == 1 && i == 1) yield return new WaitForSeconds(3f);
+            if (waveNumber == 2 && i == 1) yield return new WaitForSeconds(3f);
+            if (waveNumber == 3 && i == 1) yield return new WaitForSeconds(3f);
+            if (waveNumber == 3 && i == 2) yield return new WaitForSeconds(0.5f);
+            if (waveNumber == 3 && i == 3) yield return new WaitForSeconds(0.5f);
+            if (waveNumber == 3 && i == 4) yield return new WaitForSeconds(0.5f);
+            if (waveNumber == 3 && i == 5) yield return new WaitForSeconds(0.5f);
+            if (waveNumber == 4 && i == 1) yield return new WaitForSeconds(5f);
+            if (waveNumber == 5 && i == 1) yield return new WaitForSeconds(5f);
+            if (waveNumber == 6 && i == 3) yield return new WaitForSeconds(5f);
+            if (waveNumber == 7 && i == 1) yield return new WaitForSeconds(2f);
+            if (waveNumber == 7 && i == 2) yield return new WaitForSeconds(5f);
+            if (waveNumber == 7 && i == 3) yield return new WaitForSeconds(2f);
+            if (waveNumber == 8 && i == 1) yield return new WaitForSeconds(5f);
+            if (waveNumber == 8 && i == 2) yield return new WaitForSeconds(5f);
+            if (waveNumber == 16 && i == 1) yield return new WaitForSeconds(2f);
+            if (waveNumber == 16 && i == 2) yield return new WaitForSeconds(1f);
+            if (waveNumber == 16 && i == 3) yield return new WaitForSeconds(1f);
+            if (waveNumber == 16 && i == 4) yield return new WaitForSeconds(0f);
+            if (waveNumber == 18 && i == 1) yield return new WaitForSeconds(1f);
+            if (waveNumber == 18 && i == 2) yield return new WaitForSeconds(1f);
+            if (waveNumber == 18 && i == 3) yield return new WaitForSeconds(1f);
+            if (waveNumber == 18 && i == 4) yield return new WaitForSeconds(1f);
+            if (waveNumber == 18 && i == 5) yield return new WaitForSeconds(1f);
+            if (waveNumber == 18 && i == 6) yield return new WaitForSeconds(3f);
+            if (waveNumber == 19 && i == 1) yield return new WaitForSeconds(1f);
+            if (waveNumber == 19 && i == 2) yield return new WaitForSeconds(4f);
+            if (waveNumber == 19 && i == 3) yield return new WaitForSeconds(1f);
+
+            if (waveNumber == 19 && i == 4)
             {
-                Debug.LogError("적 생성 실패! prefab이 올바르게 설정되어 있는지 확인하세요.");
+                for (int k = 0; k < 4; k++)
+                {
+                    string enemyTypeName = "Enemy_" + type;
+                    GameObject enemy = Pool.Instance.SpawnEnemy(enemyTypeName, spawnPositions[k], Quaternion.identity);
+
+                    if (enemy != null)
+                    {
+                        StartCoroutine(PatternManager.Instance.ExecutePattern(enemy, spawnPatterns[k]));
+                    }
+                    yield return new WaitForSeconds(1f);
+                }
                 continue;
             }
-            // 웨이브 5의 두 번째 스폰 이벤트에서 enemyType이 1인 경우,
-            // 180도 회전 대신 localScale.x를 음수로 설정하고 isFlipped 플래그를 true로 합니다.
-            if (currentWave == 6 && enemyType == 1)
+
+            for (int j = 0; j < spawnPositions.Length; j++)
             {
-                Vector3 scale = enemy.transform.localScale;
-                enemy.transform.localScale = new Vector3(scale.x, -Mathf.Abs(scale.y), scale.z);
-                Enemy enemyComponent = enemy.GetComponent<Enemy>();
-                if (enemyComponent != null)
+                string enemyTypeName = "Enemy_" + type;
+                GameObject enemy = Pool.Instance.SpawnEnemy(enemyTypeName, spawnPositions[j], Quaternion.identity);
+
+                if (enemy != null)
                 {
-                    enemyComponent.isFlipped = true;
+                    StartCoroutine(PatternManager.Instance.ExecutePattern(enemy, spawnPatterns[j]));
                 }
             }
-            StartCoroutine(ExecutePattern(enemy, patterns[i]));
         }
-        yield return null;
     }
-
 
     IEnumerator ExecutePattern(GameObject enemy, string[] patterns)
     {
@@ -2015,18 +1722,6 @@ public class WaveManager : MonoBehaviour
         {
             //Debug.Log($"적 {enemy.name} - 패턴 실행 완료");
         }
-    }
-    IEnumerator SpawnEnemyIndividual(Vector3 position, string[] pattern, int enemyType)
-    {
-        GameObject prefabToUse = (enemyType == 0) ? enemyPrefab : (enemyType == 1 ? enemyPrefab1 : enemyPrefab2);
-        GameObject enemy = Instantiate(prefabToUse, position, Quaternion.identity);
-        if (enemy == null)
-        {
-            Debug.LogError("적 생성 실패! prefab이 올바르게 설정되어 있는지 확인하세요.");
-            yield break;
-        }
-        StartCoroutine(ExecutePattern(enemy, pattern));
-        yield return null;
     }
     private IEnumerator ShowRedWarning(float duration)
     {

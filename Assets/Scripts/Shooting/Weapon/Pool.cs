@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using UnityEditor.EditorTools;
 using UnityEngine;
 
-public class WeaponPool : MonoBehaviour
+public class Pool : MonoBehaviour
 {
-    public static WeaponPool Instance;
+    public static Pool Instance;
 
     // 각 무기 유형의 풀 정보를 담는 클래스
     [System.Serializable]
@@ -20,6 +20,17 @@ public class WeaponPool : MonoBehaviour
         [HideInInspector]
         public Queue<GameObject> pool;
     }
+    [System.Serializable]
+    public class EnemyPoolItem
+    {
+        [Tooltip("적 (Enemy_N)")]
+        public string enemyTypeName;
+        public GameObject prefab;
+        public int poolSize = 20;
+        [HideInInspector]
+        public Queue<GameObject> pool;
+    }
+    public EnemyPoolItem[] enemyPoolItems;
 
     // Inspector에서 설정할 수 있도록 배열로 관리
     public WeaponPoolItem[] poolItems;
@@ -39,6 +50,18 @@ public class WeaponPool : MonoBehaviour
                 item.pool.Enqueue(obj);
             }
         }
+        // 각 적 유형별로 풀 초기화
+        foreach (EnemyPoolItem item in enemyPoolItems)
+        {
+            item.pool = new Queue<GameObject>();
+            for (int i = 0; i < item.poolSize; i++)
+            {
+                GameObject obj = Instantiate(item.prefab);
+                obj.SetActive(false);
+                item.pool.Enqueue(obj);
+            }
+        }
+
     }
 
     // 특정 무기 유형(weaponType)의 오브젝트를 풀에서 가져와 활성화
@@ -83,4 +106,47 @@ public class WeaponPool : MonoBehaviour
         Debug.LogError("Weapon type not found in pool: " + weaponType);
         Destroy(weapon);
     }
+
+    // 적 소환
+    public GameObject SpawnEnemy(string enemyTypeName, Vector3 position, Quaternion rotation)
+    {
+        foreach (EnemyPoolItem item in enemyPoolItems)
+        {
+            if (item.enemyTypeName == enemyTypeName)
+            {
+                GameObject enemy;
+                if (item.pool.Count > 0)
+                {
+                    enemy = item.pool.Dequeue();
+                }
+                else
+                {
+                    enemy = Instantiate(item.prefab);
+                }
+                enemy.transform.position = position;
+                enemy.transform.rotation = rotation;
+                enemy.SetActive(true);
+                return enemy;
+            }
+        }
+        Debug.LogError("Enemy type not found in pool: " + enemyTypeName);
+        return null;
+    }
+
+    // 적 반환
+    public void ReturnEnemy(string enemyTypeName, GameObject enemy)
+    {
+        foreach (EnemyPoolItem item in enemyPoolItems)
+        {
+            if (item.enemyTypeName == enemyTypeName)
+            {
+                enemy.SetActive(false);
+                item.pool.Enqueue(enemy);
+                return;
+            }
+        }
+        Debug.LogError("Enemy type not found in pool: " + enemyTypeName);
+        Destroy(enemy);
+    }
+
 }

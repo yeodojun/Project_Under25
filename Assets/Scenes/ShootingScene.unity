@@ -4185,6 +4185,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88cd9d2b2f8be6940a233cb2dc8fcfbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyPoolItems:
+  - enemyTypeName: Enemy_0
+    prefab: {fileID: 2336088905530037732, guid: 62bb36d9019b35149a0878a13584f338, type: 3}
+    poolSize: 10
+  - enemyTypeName: Enemy_1
+    prefab: {fileID: 2336088905530037732, guid: 155b16a9fbbf24f4f81fa0e5ca9e79d2, type: 3}
+    poolSize: 10
+  - enemyTypeName: Enemy_2
+    prefab: {fileID: 2336088905530037732, guid: 220db0a82fce5a141a8701cdfdbf26d3, type: 3}
+    poolSize: 10
+  - enemyTypeName: Enemy_3
+    prefab: {fileID: 2336088905530037732, guid: 162f39331bccf2e42ae3dc576c4138ca, type: 3}
+    poolSize: 10
+  - enemyTypeName: Enemy_4
+    prefab: {fileID: 2336088905530037732, guid: 81d12962081c31b49a36f278445508be, type: 3}
+    poolSize: 10
+  - enemyTypeName: Enemy_5
+    prefab: {fileID: 2336088905530037732, guid: e84ca4d82de06f34aa63b41c0f1ad00a, type: 3}
+    poolSize: 10
+  - enemyTypeName: Enemy_6
+    prefab: {fileID: 2336088905530037732, guid: 8cdac425d20b69f4dae6c4dcc647460e, type: 3}
+    poolSize: 10
+  - enemyTypeName: Enemy_7
+    prefab: {fileID: 2336088905530037732, guid: b69f0d734ead608448a5e615e90a7336, type: 3}
+    poolSize: 10
+  - enemyTypeName: Enemy_8
+    prefab: {fileID: 2336088905530037732, guid: 3ffc99563b8455c4e83efb7b026afe7e, type: 3}
+    poolSize: 10
   poolItems:
   - weaponType: Bullet
     prefab: {fileID: 4093369639878249957, guid: 92bd293cdb926b142b06974877a036cd, type: 3}
@@ -5399,11 +5427,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6636357098480990051, guid: 8e034da5b64695342bb9fc2aa41b7d38, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.81391716
+      value: -1.2
       objectReference: {fileID: 0}
     - target: {fileID: 6636357098480990051, guid: 8e034da5b64695342bb9fc2aa41b7d38, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.2710528
+      value: 3.38
       objectReference: {fileID: 0}
     - target: {fileID: 6636357098480990051, guid: 8e034da5b64695342bb9fc2aa41b7d38, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6303,11 +6331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50c229c7e28b98145bb41e9ea3c4a13f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 2336088905530037732, guid: 62bb36d9019b35149a0878a13584f338, type: 3}
-  enemyPrefab1: {fileID: 2336088905530037732, guid: 155b16a9fbbf24f4f81fa0e5ca9e79d2, type: 3}
-  enemyPrefab2: {fileID: 2336088905530037732, guid: 220db0a82fce5a141a8701cdfdbf26d3, type: 3}
-  bossPrefab: {fileID: 2336088905530037732, guid: bd08156759f1bb34280fb8a33293380c, type: 3}
-  waveDelay: 1
+  waveDelay: 10
   redWarningPanel: {fileID: 0}
 --- !u!4 &1964446570
 Transform:

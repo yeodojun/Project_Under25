@@ -118,7 +118,7 @@ public class Enemy : MonoBehaviour
             if (weapon != null)
             {
                 weapon.weaponType = "Explosion";
-                weapon.Explode();           // 직접 실행
+                weapon.Explode();
             }
         }
         if (enemyType == 10) // 위치에 고스트 소환 예쩡
@@ -128,9 +128,10 @@ public class Enemy : MonoBehaviour
         if (Random.value < dropChance)
         {
             // 업그레이드 아이템도 풀링으로
-            WeaponPool.Instance.SpawnWeapon("UpgradeItem", transform.position, Quaternion.identity);
+            Pool.Instance.SpawnWeapon("UpgradeItem", transform.position, Quaternion.identity);
         }
-        Destroy(gameObject, deathDelay);
+        GetComponent<Collider2D>().enabled = true;
+        Pool.Instance.ReturnEnemy("Enemy_" + enemyType, gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -184,7 +185,7 @@ public class Enemy : MonoBehaviour
 
     private void SpawnPooledBullet(string type, Vector3 pos, int damage, bool isEnemy11)
     {
-        GameObject bullet = WeaponPool.Instance.SpawnWeapon(type, pos, Quaternion.identity);
+        GameObject bullet = Pool.Instance.SpawnWeapon(type, pos, Quaternion.identity);
         var eb = bullet.GetComponent<EnemyBullet>();
         eb.bulletType = type;
         eb.damage = damage;

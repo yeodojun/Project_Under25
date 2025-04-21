@@ -38,7 +38,7 @@ public class EnemyBullet : MonoBehaviour
             if (transform.position.x >= 6f || transform.position.x <= -6f ||
                 transform.position.y >= 10f || transform.position.y <= -10f)
             {
-                WeaponPool.Instance.ReturnWeapon(bulletType, gameObject);
+                Pool.Instance.ReturnWeapon(bulletType, gameObject);
             }
         }
         else if (bulletType == "Dust")
@@ -48,7 +48,7 @@ public class EnemyBullet : MonoBehaviour
             if (transform.position.x >= 6f || transform.position.x <= -6f ||
                 transform.position.y >= 10f || transform.position.y <= -10f)
             {
-                WeaponPool.Instance.ReturnWeapon(bulletType, gameObject);
+                Pool.Instance.ReturnWeapon(bulletType, gameObject);
             }
         }
         else if (bulletType == "Gun")
@@ -59,7 +59,7 @@ public class EnemyBullet : MonoBehaviour
             if (transform.position.x >= 6f || transform.position.x <= -6f ||
                 transform.position.y >= 10f || transform.position.y <= -10f)
             {
-                WeaponPool.Instance.ReturnWeapon(bulletType, gameObject);
+                Pool.Instance.ReturnWeapon(bulletType, gameObject);
             }
         }
         else if (bulletType == "Boom")
@@ -69,7 +69,7 @@ public class EnemyBullet : MonoBehaviour
             // y가 -10 이하이면 반환
             if (transform.position.y <= -10f)
             {
-                WeaponPool.Instance.ReturnWeapon(bulletType, gameObject);
+                Pool.Instance.ReturnWeapon(bulletType, gameObject);
             }
         }
         else if (bulletType == "LaserGun")
@@ -80,7 +80,7 @@ public class EnemyBullet : MonoBehaviour
             if (transform.position.x >= 6f || transform.position.x <= -6f ||
                 transform.position.y >= 10f || transform.position.y <= -10f)
             {
-                WeaponPool.Instance.ReturnWeapon(bulletType, gameObject);
+                Pool.Instance.ReturnWeapon(bulletType, gameObject);
             }
         }
         else if (bulletType == "Scream")
@@ -91,7 +91,7 @@ public class EnemyBullet : MonoBehaviour
             // 1초 후에 반환
             if (lifetime >= 1f)
             {
-                WeaponPool.Instance.ReturnWeapon(bulletType, gameObject);
+                Pool.Instance.ReturnWeapon(bulletType, gameObject);
             }
         }
         else if (bulletType == "Laser")
@@ -99,7 +99,7 @@ public class EnemyBullet : MonoBehaviour
             // y가 -10 이하이면 반환
             if (lifetime >= 2f)
             {
-                WeaponPool.Instance.ReturnWeapon(bulletType, gameObject);
+                Pool.Instance.ReturnWeapon(bulletType, gameObject);
             }
         }
     }
@@ -116,7 +116,7 @@ public class EnemyBullet : MonoBehaviour
                 {
                     player.TakeDamage(damage);
                 }
-                WeaponPool.Instance.ReturnWeapon(bulletType, gameObject);
+                Pool.Instance.ReturnWeapon(bulletType, gameObject);
             }
         }
     }

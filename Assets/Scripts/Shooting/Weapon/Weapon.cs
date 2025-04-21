@@ -73,7 +73,7 @@ public class Weapon : MonoBehaviour
         {
             if (transform.position.y >= 10f)
             {
-                WeaponPool.Instance.ReturnWeapon(weaponType, gameObject);
+                Pool.Instance.ReturnWeapon(weaponType, gameObject);
             }
         }
         else if (weaponType == "Beam" || weaponType == "BBeam")
@@ -86,7 +86,7 @@ public class Weapon : MonoBehaviour
             lifetimeTimer += Time.deltaTime;
             if (lifetimeTimer >= beamLifetime)
             {
-                WeaponPool.Instance.ReturnWeapon(weaponType, gameObject);
+                Pool.Instance.ReturnWeapon(weaponType, gameObject);
             }
         }
         // UBeam와 followPlayer가 true인 BBeam는 플레이어를 따라 다니게 함
@@ -119,7 +119,7 @@ public class Weapon : MonoBehaviour
             }
             if (transform.position.y >= 10f)
             {
-                WeaponPool.Instance.ReturnWeapon("Missile", gameObject);
+                Pool.Instance.ReturnWeapon("Missile", gameObject);
             }
         }
 
@@ -138,7 +138,7 @@ public class Weapon : MonoBehaviour
                 {
                     enemy.TakeDamage(damage);
                     hasHit = true;
-                    WeaponPool.Instance.ReturnWeapon(weaponType, gameObject);
+                    Pool.Instance.ReturnWeapon(weaponType, gameObject);
                 }
             }
             else
@@ -148,7 +148,7 @@ public class Weapon : MonoBehaviour
                 {
                     boss.TakeDamage(damage);
                     hasHit = true;
-                    WeaponPool.Instance.ReturnWeapon(weaponType, gameObject);
+                    Pool.Instance.ReturnWeapon(weaponType, gameObject);
                 }
             }
         }

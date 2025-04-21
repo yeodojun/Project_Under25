@@ -206,7 +206,7 @@ public class Player : MonoBehaviour
         {
             if (missileLauncher1 == null)
             {
-                missileLauncher1 = WeaponPool.Instance.SpawnWeapon("MissileLauncher", shootTransform.position, Quaternion.identity);
+                missileLauncher1 = Pool.Instance.SpawnWeapon("MissileLauncher", shootTransform.position, Quaternion.identity);
                 MissileLauncher launcher = missileLauncher1.GetComponent<MissileLauncher>();
                 if (launcher != null)
                 {
@@ -215,7 +215,7 @@ public class Player : MonoBehaviour
             }
             if (missileLevel >= 2 && missileLauncher2 == null)
             {
-                missileLauncher2 = WeaponPool.Instance.SpawnWeapon("MissileLauncher", shootTransform.position, Quaternion.identity);
+                missileLauncher2 = Pool.Instance.SpawnWeapon("MissileLauncher", shootTransform.position, Quaternion.identity);
                 MissileLauncher launcher2 = missileLauncher2.GetComponent<MissileLauncher>();
                 if (launcher2 != null)
                 {
@@ -272,7 +272,7 @@ public class Player : MonoBehaviour
                 else if (i == pattern.Length - 1)
                     rotation = baseRotation * Quaternion.Euler(0f, 0f, -15f);
             }
-            WeaponPool.Instance.SpawnWeapon(info.weaponType, spawnPos, rotation);
+            Pool.Instance.SpawnWeapon(info.weaponType, spawnPos, rotation);
         }
     }
 
@@ -295,7 +295,7 @@ public class Player : MonoBehaviour
         {
             if (persistentUBeam == null)
             {
-                persistentUBeam = WeaponPool.Instance.SpawnWeapon("UBeam", shootTransform.position, shootTransform.rotation);
+                persistentUBeam = Pool.Instance.SpawnWeapon("UBeam", shootTransform.position, shootTransform.rotation);
                 Weapon w = persistentUBeam.GetComponent<Weapon>();
                 if (w != null)
                     w.followPlayer = true;
@@ -303,7 +303,7 @@ public class Player : MonoBehaviour
             }
             if (persistentBBeam == null)
             {
-                persistentBBeam = WeaponPool.Instance.SpawnWeapon("BBeam", shootTransform.position, shootTransform.rotation);
+                persistentBBeam = Pool.Instance.SpawnWeapon("BBeam", shootTransform.position, shootTransform.rotation);
                 Weapon w = persistentBBeam.GetComponent<Weapon>();
                 if (w != null)
                     w.followPlayer = true;
@@ -318,7 +318,7 @@ public class Player : MonoBehaviour
             {
                 GunFireInfo info = pattern[i];
                 Vector3 spawnPos = shootTransform.position + info.offset;
-                GameObject laserObj = WeaponPool.Instance.SpawnWeapon(info.weaponType, spawnPos, baseRotation);
+                GameObject laserObj = Pool.Instance.SpawnWeapon(info.weaponType, spawnPos, baseRotation);
                 // 모든 레이저(Beam, BBeam 등)를 플레이어 따라다니게 설정
                 Weapon w = laserObj.GetComponent<Weapon>();
                 if (w != null)
@@ -423,12 +423,12 @@ public class Player : MonoBehaviour
             {
                 if (persistentUBeam != null)
                 {
-                    WeaponPool.Instance.ReturnWeapon("UBeam", persistentUBeam);
+                    Pool.Instance.ReturnWeapon("UBeam", persistentUBeam);
                     persistentUBeam = null;
                 }
                 if (persistentBBeam != null)
                 {
-                    WeaponPool.Instance.ReturnWeapon("BBeam", persistentBBeam);
+                    Pool.Instance.ReturnWeapon("BBeam", persistentBBeam);
                     persistentBBeam = null;
                 }
             }
@@ -475,12 +475,12 @@ public class Player : MonoBehaviour
             // 우선 왼쪽 런처부터 제거, 그 다음 오른쪽 런처
             if (missileLauncher2 != null)
             {
-                WeaponPool.Instance.ReturnWeapon("MissileLauncher", missileLauncher2);
+                Pool.Instance.ReturnWeapon("MissileLauncher", missileLauncher2);
                 missileLauncher2 = null;
             }
             else if (missileLauncher1 != null)
             {
-                WeaponPool.Instance.ReturnWeapon("MissileLauncher", missileLauncher1);
+                Pool.Instance.ReturnWeapon("MissileLauncher", missileLauncher1);
                 missileLauncher1 = null;
             }
             missileLevel--;
@@ -518,36 +518,36 @@ public class Player : MonoBehaviour
         int raserItemCount = raserLevel - 1;
         for (int i = 1; i <= gunItemCount; i++)
         {
-            WeaponPool.Instance.SpawnWeapon("UpgradeItem", dropPosition, Quaternion.identity);
+            Pool.Instance.SpawnWeapon("UpgradeItem", dropPosition, Quaternion.identity);
         }
         // persistent 무기(레이저)와 미사일 런쳐가 있다면 반환
         if (persistentUBeam != null)
         {
             for (int i = 0; i < raserItemCount; i++)
             {
-                WeaponPool.Instance.SpawnWeapon("UpgradeItem", dropPosition, Quaternion.identity);
+                Pool.Instance.SpawnWeapon("UpgradeItem", dropPosition, Quaternion.identity);
             }
-            WeaponPool.Instance.ReturnWeapon("UBeam", persistentUBeam);
+            Pool.Instance.ReturnWeapon("UBeam", persistentUBeam);
             persistentUBeam = null;
         }
         if (persistentBBeam != null)
         {
             for (int i = 0; i < raserItemCount; i++)
             {
-                WeaponPool.Instance.SpawnWeapon("UpgradeItem", dropPosition, Quaternion.identity);
+                Pool.Instance.SpawnWeapon("UpgradeItem", dropPosition, Quaternion.identity);
             }
-            WeaponPool.Instance.SpawnWeapon("UpgradeItem", dropPosition, Quaternion.identity);
-            WeaponPool.Instance.ReturnWeapon("BBeam", persistentBBeam);
+            Pool.Instance.SpawnWeapon("UpgradeItem", dropPosition, Quaternion.identity);
+            Pool.Instance.ReturnWeapon("BBeam", persistentBBeam);
             persistentBBeam = null;
         }
         if (missileLauncher1 != null)
         {
-            WeaponPool.Instance.ReturnWeapon("MissileLauncher", missileLauncher1);
+            Pool.Instance.ReturnWeapon("MissileLauncher", missileLauncher1);
             missileLauncher1 = null;
         }
         if (missileLauncher2 != null)
         {
-            WeaponPool.Instance.ReturnWeapon("MissileLauncher", missileLauncher2);
+            Pool.Instance.ReturnWeapon("MissileLauncher", missileLauncher2);
             missileLauncher2 = null;
         }
 

@@ -145,7 +145,7 @@ public class UpgradeItem : MonoBehaviour
                 }
                 if (this != null && gameObject != null)
                 {
-                    WeaponPool.Instance.ReturnWeapon("UpgradeItem", gameObject);
+                    Pool.Instance.ReturnWeapon("UpgradeItem", gameObject);
                 }
             }
         }

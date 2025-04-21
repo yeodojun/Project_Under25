@@ -39,7 +39,7 @@ public class MissileLauncher : MonoBehaviour
         if (Time.time - lastFireTime >= fireDelay && IsAnyEnemyOnScreen())
         {
             // 미사일은 항상 Quaternion.identity (월드 up 방향)으로 발사
-            WeaponPool.Instance.SpawnWeapon("Missile", transform.position, Quaternion.identity);
+            Pool.Instance.SpawnWeapon("Missile", transform.position, Quaternion.identity);
             lastFireTime = Time.time;
         }
     }
