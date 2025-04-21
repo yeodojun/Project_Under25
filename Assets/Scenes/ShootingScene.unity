@@ -2105,11 +2105,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6636357098480990051, guid: 8e034da5b64695342bb9fc2aa41b7d38, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.5147538
+      value: -0.41
       objectReference: {fileID: 0}
     - target: {fileID: 6636357098480990051, guid: 8e034da5b64695342bb9fc2aa41b7d38, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.18318504
+      value: 2.29
       objectReference: {fileID: 0}
     - target: {fileID: 6636357098480990051, guid: 8e034da5b64695342bb9fc2aa41b7d38, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4151,6 +4151,10 @@ PrefabInstance:
       propertyPath: bgm3
       value: 
       objectReference: {fileID: 8300000, guid: 4383d4433f2abfd4d9f230b1efb3d9db, type: 3}
+    - target: {fileID: 9169718420749318489, guid: ce1dab2d00811e74099f8ffe74e14f99, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6332,7 +6336,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveDelay: 10
-  redWarningPanel: {fileID: 0}
 --- !u!4 &1964446570
 Transform:
   m_ObjectHideFlags: 0
