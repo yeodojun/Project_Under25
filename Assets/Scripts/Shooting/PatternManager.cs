@@ -140,6 +140,18 @@ public class PatternManager : MonoBehaviour
             {
                 yield return StartCoroutine(MirrorMovement(enemy));
             }
+            else if (pattern == "P_28")
+            {
+                yield return StartCoroutine(Leftright(enemy));
+            }
+            else if (pattern == "P_29")
+            {
+                yield return StartCoroutine(LeftrightReverse(enemy));
+            }
+            else if (pattern == "P_3RL")
+            {
+                yield return StartCoroutine(Rightleft(enemy));
+            }
             else // 기본 패턴 처리 (예: "N_0", "N_1", "N_2", "N_3", 등)
             {
                 Vector2[] movementSteps = this.patterns[pattern];
@@ -334,7 +346,6 @@ public class PatternManager : MonoBehaviour
         float minX = -2f, maxX = 2f;
         float minY = -4.6f, maxY = 4.5f;
         float playerSafeRadius = 1.0f;  // 플레이어로부터 최소 안전 거리
-        float overlapRadius = 0.5f;     // 다른 적과 겹치지 않을 최소 거리
 
         while (enemy != null)
         {
@@ -358,22 +369,6 @@ public class PatternManager : MonoBehaviour
                     if (Vector3.Distance(candidate, player.transform.position) < playerSafeRadius)
                         continue;
                 }
-
-                // 적끼리 겹침 체크 (자기 자신 제외)
-                Collider2D[] hits = Physics2D.OverlapCircleAll(candidate, overlapRadius);
-                bool overlapFound = false;
-                foreach (Collider2D col in hits)
-                {
-                    if (col.gameObject != enemy && col.CompareTag("Enemy"))
-                    {
-                        overlapFound = true;
-                        break;
-                    }
-                }
-                if (overlapFound)
-                    continue;
-
-                validCandidate = true;
             }
 
             // 후보 좌표가 범위 내에 있는지 체크 (이론상 항상 만족해야 함)
@@ -779,6 +774,113 @@ public class PatternManager : MonoBehaviour
                     yield break;
                 }
             }
+        }
+    }
+
+    // 패턴 P_28
+    private IEnumerator Leftright(GameObject enemy)
+    {
+        float moveDuration = 3f;
+        while (enemy != null)
+        {
+            Vector3 startpos = enemy.transform.position;
+            float targetX = enemy.transform.position.x - 6f;
+            float targetY = enemy.transform.position.y + 2f;
+            Vector3 endPos1 = new Vector3(targetX, targetY, startpos.z);
+
+            float elapsed = 0f;
+
+            while (elapsed < moveDuration)
+            {
+                float t = elapsed / moveDuration;
+                enemy.transform.position = Vector3.Lerp(startpos, endPos1, t);
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+            enemy.transform.position = endPos1;
+            elapsed = 0f;
+
+            while (elapsed < moveDuration)
+            {
+
+                float t = elapsed / moveDuration;
+                enemy.transform.position = Vector3.Lerp(endPos1, startpos, t);
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+            enemy.transform.position = startpos;
+        }
+    }
+
+    // "P_29"
+    private IEnumerator LeftrightReverse(GameObject enemy)
+    {
+        float moveDuration = 3f;
+        while (enemy != null)
+        {
+            Vector3 startpos = enemy.transform.position;
+            float targetX = enemy.transform.position.x + 6f;
+            float targetY = enemy.transform.position.y + 2f;
+            Vector3 endPos1 = new Vector3(targetX, targetY, startpos.z);
+
+            float elapsed = 0f;
+
+            while (elapsed < moveDuration)
+            {
+
+                float t = elapsed / moveDuration;
+                enemy.transform.position = Vector3.Lerp(startpos, endPos1, t);
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+            enemy.transform.position = endPos1;
+            elapsed = 0f;
+
+            while (elapsed < moveDuration)
+            {
+
+                float t = elapsed / moveDuration;
+                enemy.transform.position = Vector3.Lerp(endPos1, startpos, t);
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+            enemy.transform.position = startpos;
+        }
+    }
+
+    // "P_3RL"
+    private IEnumerator Rightleft(GameObject enemy)
+    {
+        float moveDuration = 3f;
+        while (enemy != null)
+        {
+            Vector3 startpos = enemy.transform.position;
+            float targetX = enemy.transform.position.x + 2f;
+            float targetY = enemy.transform.position.y;
+            Vector3 endPos1 = new Vector3(targetX, targetY, startpos.z);
+
+            float elapsed = 0f;
+
+            while (elapsed < moveDuration)
+            {
+
+                float t = elapsed / moveDuration;
+                enemy.transform.position = Vector3.Lerp(startpos, endPos1, t);
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+            enemy.transform.position = endPos1;
+            elapsed = 0f;
+
+            while (elapsed < moveDuration)
+            {
+
+                float t = elapsed / moveDuration;
+                enemy.transform.position = Vector3.Lerp(endPos1, startpos, t);
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+            enemy.transform.position = startpos;
         }
     }
 
