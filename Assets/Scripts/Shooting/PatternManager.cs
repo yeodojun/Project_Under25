@@ -34,11 +34,11 @@ public class PatternManager : MonoBehaviour
         { "P_19", null }, // 물결 우→좌 이동
         { "P_20", null }, // 물결 위→아래 이동
         { "P_20D", null}, // 물결 위→아래 한번만 이동
-        { "P_21", null }  // 물결 아래→위 이동
+        { "P_21", null }, // 물결 아래→위 이동
         // "P_22"는 아래 TeleportPattern(), ExecutePattern()에서 별도로 처리
         // "P_23"도 아래 ZigzagMovement(), " 별도로 처리
         // "P_23B"도 아래 별도로 처리 '보스 전용'
-        // "P_24" 미구현
+        { "P_24", null }// "P_24" 정지 패턴
         // "P_25"도 아래 KamikazeMovement(), " 별도로 처리
         // "P_25R"도 아래 별도로 처리
         // "P_25B"도 아래 별도로 처리 '보스 전용'
@@ -240,7 +240,7 @@ public class PatternManager : MonoBehaviour
     private IEnumerator MoveInWave(GameObject enemy, string pattern)
     {
         Boss boss = enemy.GetComponent<Boss>();
-        
+
         if (enemy == null) yield break;
         SpriteRenderer sr = enemy.GetComponent<SpriteRenderer>();
 
@@ -531,6 +531,13 @@ public class PatternManager : MonoBehaviour
                 yield break;
             }
         }
+    }
+    // 새로운 패턴 P_24
+    private IEnumerator Stop(GameObject enemy)
+    {
+        if (enemy != null)
+            yield return new WaitForSeconds(1f);
+
     }
 
 
@@ -916,7 +923,7 @@ public class PatternManager : MonoBehaviour
         while (enemy != null)
         {
             Vector3 startpos = enemy.transform.position;
-            Vector3 endPos = new Vector3(startpos.x, startpos.y -1, startpos.z);
+            Vector3 endPos = new Vector3(startpos.x, startpos.y - 1, startpos.z);
             float elapsed = 0f;
             while (elapsed < moveDuration)
             {
