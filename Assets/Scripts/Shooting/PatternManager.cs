@@ -194,12 +194,10 @@ public class PatternManager : MonoBehaviour
 
                         enemy.transform.position = Vector3.Lerp(startPosition, targetPosition, elapsedTime / moveTime);
                         elapsedTime += Time.deltaTime;
-                        Pool.Instance.ReturnEnemy(enemy);
                         yield return null;
                     }
                     if (enemy == null) yield break;
                     enemy.transform.position = targetPosition;
-                    Pool.Instance.ReturnEnemy(enemy);
                 }
             }
 
