@@ -33,6 +33,7 @@ public class PatternManager : MonoBehaviour
         { "P_18", null }, // 물결 좌→우 이동
         { "P_19", null }, // 물결 우→좌 이동
         { "P_20", null }, // 물결 위→아래 이동
+        { "P_20D", null}, // 물결 위→아래 한번만 이동
         { "P_21", null }  // 물결 아래→위 이동
         // "P_22"는 아래 TeleportPattern(), ExecutePattern()에서 별도로 처리
         // "P_23"도 아래 ZigzagMovement(), " 별도로 처리
@@ -106,6 +107,11 @@ public class PatternManager : MonoBehaviour
                 // 순간 이동 패턴
                 yield return StartCoroutine(TeleportPattern(enemy));
             }
+            else if (pattern == "P_22F")
+            {
+                // 빠른 순간 이동 패턴
+                yield return StartCoroutine(RapidTeleportPattern(enemy));
+            }
             else if (pattern == "P_23")
             {
                 // 지그재그 이동 패턴
@@ -152,6 +158,10 @@ public class PatternManager : MonoBehaviour
             {
                 yield return StartCoroutine(Rightleft(enemy));
             }
+            else if (pattern == "P_0F")
+            {
+                yield return StartCoroutine(RapidDown(enemy));
+            }
             else // 기본 패턴 처리 (예: "N_0", "N_1", "N_2", "N_3", 등)
             {
                 Vector2[] movementSteps = this.patterns[pattern];
@@ -184,12 +194,12 @@ public class PatternManager : MonoBehaviour
 
                         enemy.transform.position = Vector3.Lerp(startPosition, targetPosition, elapsedTime / moveTime);
                         elapsedTime += Time.deltaTime;
-                        DestroyIfOutOfScreen(enemy);
+                        Pool.Instance.ReturnEnemy(enemy);
                         yield return null;
                     }
                     if (enemy == null) yield break;
                     enemy.transform.position = targetPosition;
-                    DestroyIfOutOfScreen(enemy);
+                    Pool.Instance.ReturnEnemy(enemy);
                 }
             }
 
@@ -230,7 +240,9 @@ public class PatternManager : MonoBehaviour
     private IEnumerator MoveInWave(GameObject enemy, string pattern)
     {
         Boss boss = enemy.GetComponent<Boss>();
+        
         if (enemy == null) yield break;
+        SpriteRenderer sr = enemy.GetComponent<SpriteRenderer>();
 
         float waveSpeed = 2f;      // 이동 속도
         float waveAmplitude = 1f;  // 파동의 높이
@@ -243,6 +255,7 @@ public class PatternManager : MonoBehaviour
         if (pattern == "P_18") { directionX = 1f; directionY = 0f; }
         if (pattern == "P_19") { directionX = -1f; directionY = 0f; }
         if (pattern == "P_20") { directionX = 0f; directionY = -1f; }
+        if (pattern == "P_20D") { directionX = 0f; directionY = -1f; }
         if (pattern == "P_21") { directionX = 0f; directionY = 1f; }
 
         float initialX = enemy.transform.position.x;
@@ -263,7 +276,7 @@ public class PatternManager : MonoBehaviour
                 newX += waveSpeed * directionX * Time.deltaTime;
                 newY = initialY + waveAmplitude * Mathf.Sin(waveFrequency * newX);
             }
-            else if (pattern == "P_20" || pattern == "P_21")
+            else if (pattern == "P_20" || pattern == "P_21" || pattern == "P_20D")
             {
                 newY += waveSpeed * directionY * Time.deltaTime;
                 newX = initialX + waveAmplitude * Mathf.Sin(waveFrequency * newY);
@@ -273,13 +286,19 @@ public class PatternManager : MonoBehaviour
             {
                 waveAmplitude = -waveAmplitude;
             }
+            if (pattern == "P_20D" && newX >= 2.3f)
+            {
+                Pool.Instance.ReturnEnemy(enemy);
+            }
             if (newX >= 2.3f)
             {
                 directionX = -Mathf.Abs(directionX);
+                if (sr != null) sr.flipX = true;
             }
             if (newX <= -2.3f)
             {
                 directionX = Mathf.Abs(directionX);
+                if (sr != null) sr.flipX = false;
             }
             if (newY >= 5.5f)
             {
@@ -291,23 +310,8 @@ public class PatternManager : MonoBehaviour
             }
 
             enemy.transform.position = new Vector3(newX, newY, 0);
-            DestroyIfOutOfScreen(enemy);
+            Pool.Instance.ReturnEnemy(enemy);
             yield return null;
-        }
-    }
-
-    public void DestroyIfOutOfScreen(GameObject enemy)
-    {
-        if (enemy == null) return;
-
-        float destroyBoundaryX = 10f;
-        float destroyBoundaryY = 10f;
-
-        if (enemy.transform.position.y > destroyBoundaryY || enemy.transform.position.y < -destroyBoundaryY ||
-            enemy.transform.position.x < -destroyBoundaryX || enemy.transform.position.x > destroyBoundaryX)
-        {
-            Debug.Log($"적 {enemy.name} 삭제됨 - 현재 위치: {enemy.transform.position}");
-            Destroy(enemy);
         }
     }
 
@@ -317,25 +321,6 @@ public class PatternManager : MonoBehaviour
                (position.x >= screenRight && direction.x > 0) ||
                (position.y >= screenTop && direction.y > 0) ||
                (position.y <= screenBottom && direction.y < 0);
-    }
-
-    private IEnumerator ApplyPattern(GameObject enemy, string pattern)
-    {
-        if (enemy == null) yield break;
-
-        Debug.Log($"적 {enemy.name} - {pattern} 패턴 적용 중");
-
-        switch (pattern)
-        {
-            case "P_0":
-                while (enemy != null)
-                {
-                    enemy.transform.position += Vector3.down * 2f * Time.deltaTime;
-                    DestroyIfOutOfScreen(enemy);
-                    yield return null;
-                }
-                break;
-        }
     }
 
     // 새로운 패턴 P_22: 순간 이동 패턴
@@ -374,7 +359,48 @@ public class PatternManager : MonoBehaviour
             // 후보 좌표가 범위 내에 있는지 체크 (이론상 항상 만족해야 함)
             if (candidate.x < minX || candidate.x > maxX || candidate.y < minY || candidate.y > maxY)
             {
-                Destroy(enemy);
+                Pool.Instance.ReturnEnemy(enemy);
+                yield break;
+            }
+
+            enemy.transform.position = candidate;
+        }
+    }
+    // P_22F
+    private IEnumerator RapidTeleportPattern(GameObject enemy)
+    {
+        float minX = -2f, maxX = 2f;
+        float minY = -4.6f, maxY = 4.5f;
+        float playerSafeRadius = 1.0f;  // 플레이어로부터 최소 안전 거리
+
+        while (enemy != null)
+        {
+            yield return new WaitForSeconds(1f); // 3초마다 순간 이동
+
+            Vector3 candidate = Vector3.zero;
+            bool validCandidate = false;
+            int attempts = 0;
+            while (!validCandidate && attempts < 10)
+            {
+                attempts++;
+                float candidateX = Random.Range(minX, maxX);
+                float candidateY = Random.Range(minY, maxY);
+                if (enemy == null) yield break; // 또는 return;
+                candidate = new Vector3(candidateX, candidateY, enemy.transform.position.z);
+
+                // 플레이어 피격 범위 체크
+                GameObject player = GameObject.FindGameObjectWithTag("Player");
+                if (player != null)
+                {
+                    if (Vector3.Distance(candidate, player.transform.position) < playerSafeRadius)
+                        continue;
+                }
+            }
+
+            // 후보 좌표가 범위 내에 있는지 체크 (이론상 항상 만족해야 함)
+            if (candidate.x < minX || candidate.x > maxX || candidate.y < minY || candidate.y > maxY)
+            {
+                Pool.Instance.ReturnEnemy(enemy);
                 yield break;
             }
 
@@ -437,7 +463,7 @@ public class PatternManager : MonoBehaviour
             if (enemy.transform.position.x < patternMinX || enemy.transform.position.x > patternMaxX ||
                 enemy.transform.position.y < patternMinY || enemy.transform.position.y > patternMaxY)
             {
-                Destroy(enemy);
+                Pool.Instance.ReturnEnemy(enemy);
                 yield break;
             }
         }
@@ -501,7 +527,7 @@ public class PatternManager : MonoBehaviour
             if (enemy.transform.position.x < patternMinX || enemy.transform.position.x > patternMaxX ||
                 enemy.transform.position.y < patternMinY || enemy.transform.position.y > patternMaxY)
             {
-                Destroy(enemy);
+                Pool.Instance.ReturnEnemy(enemy);
                 yield break;
             }
         }
@@ -545,16 +571,16 @@ public class PatternManager : MonoBehaviour
             // 화면 범위 체크 (필요 시)
             if (targetPos.x < minX || targetPos.x > maxX || targetPos.y < minY || targetPos.y > maxY)
             {
-                Destroy(enemy);
+                Pool.Instance.ReturnEnemy(enemy);
                 yield break;
             }
         }
         yield return null;
     }
-    // P_25R 5번
+    // P_25R 25번
     private IEnumerator KamikazeReturnMovement(GameObject enemy, Vector3 spawnPos)
     {
-        int cycles = 5;
+        int cycles = 25;
         for (int i = 0; i < cycles; i++)
         {
             // 플레이어 위치를 목표로
@@ -725,7 +751,7 @@ public class PatternManager : MonoBehaviour
             if (enemy.transform.position.x < -2f || enemy.transform.position.x > 2f ||
                 enemy.transform.position.y < -4.5f || enemy.transform.position.y > 4.5f)
             {
-                Destroy(enemy);
+                Pool.Instance.ReturnEnemy(enemy);
                 yield break;
             }
 
@@ -770,7 +796,7 @@ public class PatternManager : MonoBehaviour
                 // 화면 범위 체크
                 if (endPos.x < minX || endPos.x > maxX || endPos.y < minY || endPos.y > maxY)
                 {
-                    Destroy(enemy);
+                    Pool.Instance.ReturnEnemy(enemy);
                     yield break;
                 }
             }
@@ -881,6 +907,25 @@ public class PatternManager : MonoBehaviour
                 yield return null;
             }
             enemy.transform.position = startpos;
+        }
+    }
+
+    private IEnumerator RapidDown(GameObject enemy)
+    {
+        float moveDuration = 1f;
+        while (enemy != null)
+        {
+            Vector3 startpos = enemy.transform.position;
+            Vector3 endPos = new Vector3(startpos.x, startpos.y -1, startpos.z);
+            float elapsed = 0f;
+            while (elapsed < moveDuration)
+            {
+                float t = elapsed / moveDuration;
+                enemy.transform.position = Vector3.Lerp(startpos, endPos, t);
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+            enemy.transform.position = endPos;
         }
     }
 
