@@ -148,5 +148,10 @@ public class Pool : MonoBehaviour
         Debug.LogError("Enemy type not found in pool: " + enemyTypeName);
         Destroy(enemy);
     }
+    public void ReturnEnemy(GameObject enemy)
+    {
+        string typeName = enemy.name.Replace("(Clone)", "").Trim();
+        ReturnEnemy(typeName, enemy);
+    }
 
 }

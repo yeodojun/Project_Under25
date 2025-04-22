@@ -10,8 +10,8 @@ public class WaveManager : MonoBehaviour
     public int CurrentWave { get { return currentWave; } }  // 외부 접근용 프로퍼티
     private bool waveInProgress = false; // 웨이브 진행 여부
 
-    // waveData: 각 웨이브의 스폰 이벤트 목록.
-    // 각 스폰 이벤트는 (positions, patterns, enemyType) 튜플로 구성합니다.
+    // waveData: 각 웨이브의 스폰 이벤트 목록
+    // 각 스폰 이벤트는 (positions, patterns, enemyType) 튜플로 구성
     // positions: 스폰할 좌표 배열
     // patterns: 각 적에 적용할 패턴 배열(각 적마다 string[]), GetRepeatedPattern() 헬퍼로 손쉽게 생성
     // enemyType: 0이면 기본 적(Enemy_0), 1이면 새 적(Enemy_1)
@@ -398,546 +398,1084 @@ public class WaveManager : MonoBehaviour
         },
         // 웨이브 7
         { 7, new List<(Vector3[], string[][], int)>()
-        {
-            // Group A 이벤트 1
-            (
-                new Vector3[] {
-                    new Vector3(-2f, 4.5f, 0),
-                    new Vector3(-1f, 4.5f, 0),
-                    new Vector3(0f, 4.5f, 0),
-                    new Vector3(-2f, 0.5f, 0),
-                    new Vector3(-1f, 0.5f, 0),
-                    new Vector3(0f, 0.5f, 0)
-                },
-                new string[][] {
-                    GetRepeatedPattern("P_8", 15),
-                    GetRepeatedPattern("P_8", 15),
-                    GetRepeatedPattern("P_8", 15),
-                    GetRepeatedPattern("P_8", 15),
-                    GetRepeatedPattern("P_8", 15),
-                    GetRepeatedPattern("P_8", 15)
-                },
-                0
-            ),
-            // Group A 이벤트 2 (2초 후)
-            (
-                new Vector3[] {
-                    new Vector3(-2f, 4.5f, 0),
-                    new Vector3(-1f, 4.5f, 0),
-                    new Vector3(0f, 4.5f, 0),
-                    new Vector3(-2f, 0.5f, 0),
-                    new Vector3(-1f, 0.5f, 0),
-                    new Vector3(0f, 0.5f, 0)
-                },
-                new string[][] {
-                    GetRepeatedPattern("P_8", 15),
-                    GetRepeatedPattern("P_8", 15),
-                    GetRepeatedPattern("P_8", 15),
-                    GetRepeatedPattern("P_8", 15),
-                    GetRepeatedPattern("P_8", 15),
-                    GetRepeatedPattern("P_8", 15)
-                },
-                0
-            ),
-            // Group B 이벤트 1 (그룹 A 완료 후 5초 대기)
-            (
-                new Vector3[] {
-                    new Vector3(0f, 4.5f, 0),
-                    new Vector3(1f, 4.5f, 0),
-                    new Vector3(2f, 4.5f, 0),
-                    new Vector3(0f, 0.5f, 0),
-                    new Vector3(1f, 0.5f, 0),
-                    new Vector3(2f, 0.5f, 0)
-                },
-                new string[][] {
-                    GetRepeatedPattern("P_9", 15),
-                    GetRepeatedPattern("P_9", 15),
-                    GetRepeatedPattern("P_9", 15),
-                    GetRepeatedPattern("P_9", 15),
-                    GetRepeatedPattern("P_9", 15),
-                    GetRepeatedPattern("P_9", 15)
-                },
-                0
-            ),
-            // Group B 이벤트 2 (2초 후)
-            (
-                new Vector3[] {
-                    new Vector3(0f, 4.5f, 0),
-                    new Vector3(1f, 4.5f, 0),
-                    new Vector3(2f, 4.5f, 0),
-                    new Vector3(0f, 0.5f, 0),
-                    new Vector3(1f, 0.5f, 0),
-                    new Vector3(2f, 0.5f, 0)
-                },
-                new string[][] {
-                    GetRepeatedPattern("P_9", 15),
-                    GetRepeatedPattern("P_9", 15),
-                    GetRepeatedPattern("P_9", 15),
-                    GetRepeatedPattern("P_9", 15),
-                    GetRepeatedPattern("P_9", 15),
-                    GetRepeatedPattern("P_9", 15)
-                },
-                0
-            )
-        }
+            {
+                // 첫 번째 스폰: (0,6)
+                (
+                    new Vector3[] {
+                        new Vector3(0, 6f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_0", 7)
+                    },
+                    4
+                ),
+                // 두 번째 스폰: (-1,6), (1,6)
+                (
+                    new Vector3[] {
+                        new Vector3(-1f, 6f, 0),
+                        new Vector3(1f, 6f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_0", 6),
+                        GetRepeatedPattern("P_0", 6)
+                    },
+                    4
+                ),
+                // 세 번째 스폰: (-2,6), (2,6)
+                (
+                    new Vector3[] {
+                        new Vector3(-2f, 6f, 0),
+                        new Vector3(2f, 6f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_0", 5),
+                        GetRepeatedPattern("P_0", 5)
+                    },
+                    4
+                ),
+                // 네 번째 스폰: (3,6)
+                (
+                    new Vector3[] {
+                        new Vector3(3f, 6f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_25", 1), ConcatPatterns(GetRepeatedPattern("P_1",4), GetRepeatedPattern("P_4",25)))
+                    },
+                    3
+                ),
+                // 다섯 번째 스폰: (-1,6)
+                (
+                    new Vector3[] {
+                        new Vector3(-1f, 6f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_25", 1), ConcatPatterns(GetRepeatedPattern("P_1",4), GetRepeatedPattern("P_5",25)))
+                    },
+                    3
+                ),
+                // 여섯 번째 스폰: (3,3)
+                (
+                    new Vector3[] {
+                        new Vector3(3f, 3f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_25", 1), ConcatPatterns(GetRepeatedPattern("P_1",4), GetRepeatedPattern("P_4",25)))
+                    },
+                    4
+                ),
+                // 일곱 번째 스폰: (-3,2)
+                (
+                    new Vector3[] {
+                        new Vector3(-3f, 2f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_25", 1), ConcatPatterns(GetRepeatedPattern("P_1",4), GetRepeatedPattern("P_5",25)))
+                    },
+                    3
+                ),
+                // 여덟 번째 스폰: (-2,6)
+                (
+                    new Vector3[] {
+                        new Vector3(-2f, 6f, 0),
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_25", 1), ConcatPatterns(GetRepeatedPattern("P_1",4), GetRepeatedPattern("P_4",25))),
+                    },
+                    3
+                ),
+                // 아홉 번째 스폰: (3,2)
+                (
+                    new Vector3[] {
+                        new Vector3(3f, 2f, 0),
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_25", 1), ConcatPatterns(GetRepeatedPattern("P_1",4), GetRepeatedPattern("P_5",25))),
+                    },
+                    4
+                ),
+                // 열 번째 스폰: (-3,6), (3,4)
+                (
+                    new Vector3[] {
+                        new Vector3(-3f, 6f, 0),
+                        new Vector3(3f, 4f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_25", 1), ConcatPatterns(GetRepeatedPattern("P_1",4), GetRepeatedPattern("P_4",25))),
+                        ConcatPatterns(GetRepeatedPattern("P_25", 1), ConcatPatterns(GetRepeatedPattern("P_1",4), GetRepeatedPattern("P_5",25))),
+                    },
+                    3
+                ),
+            }
         },
         // 웨이브 8
         { 8, new List<(Vector3[], string[][], int)>()
             {
-                // 이벤트 1: Enemy_2 1마리, 위치 (-2, 4.5)
+                // 첫 번째 스폰: (3,2), (-3,2)
                 (
                     new Vector3[] {
-                        new Vector3(-2f, 4.5f, 0)
+                        new Vector3(3f, 2f, 0),
+                        new Vector3(-3f, 2f, 0)
                     },
                     new string[][] {
-                        // 패턴: N_4 4회 → N_1 4회 → N_5 4회 → N_1 4회
-                        ConcatPatterns(
-                            ConcatPatterns( GetRepeatedPattern("P_8", 4), GetRepeatedPattern("P_1", 4) ),
-                            ConcatPatterns( GetRepeatedPattern("P_9", 4), GetRepeatedPattern("P_1", 4) )
-                        )
+                        ConcatPatterns(GetRepeatedPattern("P_2", 2), GetRepeatedPattern("P_0", 25)),
+                        ConcatPatterns(GetRepeatedPattern("P_3", 2), GetRepeatedPattern("P_0", 25))
                     },
-                    2
+                    4
                 ),
-                // 이벤트 2: 게임 시작 5초 후 Enemy_0 3마리, 위치 (3,1.5), (4,1.5), (5,1.5)
+                // 두 번째 스폰: (3,3), (-3,3)
                 (
                     new Vector3[] {
-                        new Vector3(3f, 1.5f, 0),
-                        new Vector3(4f, 1.5f, 0),
-                        new Vector3(5f, 1.5f, 0)
+                        new Vector3(3f, 3f, 0),
+                        new Vector3(-3f, 3f, 0)
                     },
                     new string[][] {
-                        GetRepeatedPattern("P_11", 3),
-                        GetRepeatedPattern("P_11", 3),
-                        GetRepeatedPattern("P_11", 3)
+                        ConcatPatterns(GetRepeatedPattern("P_2", 2), GetRepeatedPattern("P_0", 25)),
+                        ConcatPatterns(GetRepeatedPattern("P_3", 2), GetRepeatedPattern("P_0", 25))
                     },
-                    0
+                    4
                 ),
-                // 이벤트 3: 바로 이어서(5초 후) Enemy_1 3마리, 위치 (3,-2.5), (4,-2.5), (5,-2.5)
+                // 세 번째 스폰: (3,4), (-3,4)
                 (
                     new Vector3[] {
-                        new Vector3(3f, -2.5f, 0),
-                        new Vector3(4f, -2.5f, 0),
-                        new Vector3(5f, -2.5f, 0)
+                        new Vector3(3f, 4f, 0),
+                        new Vector3(-3f, 4f, 0)
                     },
                     new string[][] {
-                        GetRepeatedPattern("P_3", 3),
-                        GetRepeatedPattern("P_3", 3),
-                        GetRepeatedPattern("P_3", 3)
+                        ConcatPatterns(GetRepeatedPattern("P_2", 2), GetRepeatedPattern("P_0", 25)),
+                        ConcatPatterns(GetRepeatedPattern("P_3", 2), GetRepeatedPattern("P_0", 25))
                     },
-                    1
+                    4
+                ),
+                // 네 번째 스폰: (3,4.5)
+                (
+                    new Vector3[] {
+                        new Vector3(3f, 4.5f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_2", 3), GetRepeatedPattern("P_4", 25))
+                    },
+                    4
+                ),
+                // 다섯 번째 스폰: (-3,4.5)
+                (
+                    new Vector3[] {
+                        new Vector3(-3f, 4.5f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_3", 3), GetRepeatedPattern("P_0", 25))
+                    },
+                    4
+                ),
+                // 여섯 번째 스폰: (3,4.5)
+                (
+                    new Vector3[] {
+                        new Vector3(3f, 4.5f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_2", 3), GetRepeatedPattern("P_5", 25))
+                    },
+                    4
+                ),
+                // 일곱 번째 스폰: (-3,4.5)
+                (
+                    new Vector3[] {
+                        new Vector3(-3f, 4.5f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_3", 3), GetRepeatedPattern("P_0", 25))
+                    },
+                    4
+                ),
+                // 여덟 번째 스폰: (3,4.5)
+                (
+                    new Vector3[] {
+                        new Vector3(3f, 4.5f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_2", 3), GetRepeatedPattern("P_4", 25))
+                    },
+                    4
+                ),
+                // 아홉 번째 스폰: (-3,4.5)
+                (
+                    new Vector3[] {
+                        new Vector3(-3f, 4.5f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_3", 3), GetRepeatedPattern("P_0", 25))
+                    },
+                    4
+                ),
+                // 열 번째 스폰: (3,4.5)
+                (
+                    new Vector3[] {
+                        new Vector3(3f, 4.5f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_2", 3), GetRepeatedPattern("P_5", 25))
+                    },
+                    4
+                ),
+                // 열하나 번째 스폰: (-3,4.5)
+                (
+                    new Vector3[] {
+                        new Vector3(-3f, 4.5f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_3", 3), GetRepeatedPattern("P_0", 25))
+                    },
+                    4
+                ),
+                // 12 번째 스폰: (3,4.5)
+                (
+                    new Vector3[] {
+                        new Vector3(3f, 4.5f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_2", 3), GetRepeatedPattern("P_4", 25))
+                    },
+                    4
+                ),
+                // 13 번째 스폰: (-3,4.5)
+                (
+                    new Vector3[] {
+                        new Vector3(-3f, 4.5f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_3", 3), GetRepeatedPattern("P_0", 25))
+                    },
+                    4
+                ),
+                // 14 번째 스폰: (3,4.5)
+                (
+                    new Vector3[] {
+                        new Vector3(3f, 4.5f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_2", 3), GetRepeatedPattern("P_5", 25))
+                    },
+                    4
+                ),
+                // 15 번째 스폰: (-3,4.5)
+                (
+                    new Vector3[] {
+                        new Vector3(-3f, 4.5f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_3", 3), GetRepeatedPattern("P_0", 25))
+                    },
+                    4
+                ),
+                // 16 번째 스폰: (3,4.5)
+                (
+                    new Vector3[] {
+                        new Vector3(3f, 4.5f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_2", 3), GetRepeatedPattern("P_4", 25))
+                    },
+                    4
+                ),
+                // 17 번째 스폰: (-3,4.5)
+                (
+                    new Vector3[] {
+                        new Vector3(-3f, 4.5f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_3", 3), GetRepeatedPattern("P_0", 25))
+                    },
+                    4
+                ),
+                // 18 번째 스폰: (3,4.5)
+                (
+                    new Vector3[] {
+                        new Vector3(3f, 4.5f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_2", 3), GetRepeatedPattern("P_5", 25))
+                    },
+                    4
                 )
             }
         },
         // 웨이브 9
         { 9, new List<(Vector3[] positions, string[][] patterns, int enemyType)>()
             {
-                // 스폰 이벤트 1
+                // 첫 번째 스폰: (2,6), (-2,6)
                 (
-                    new Vector3[] { new Vector3(0f, 4.6f, 0) },
-                    new string[][] { ConcatPatterns(GetRepeatedPattern("P_0", 4), GetRepeatedPattern("P_16", 15)) },
-                    0
+                    new Vector3[] {
+                        new Vector3(2f, 6f, 0),
+                        new Vector3(-2f, 6f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_0", 25),
+                        GetRepeatedPattern("P_0", 25)
+                    },
+                    3
                 ),
-                // 스폰 이벤트 2
+                // 두 번째 스폰: (1,6), (-1,6)
                 (
-                    new Vector3[] { new Vector3(0f, 4.6f, 0) },
-                    new string[][] { ConcatPatterns(GetRepeatedPattern("P_0", 4), GetRepeatedPattern("P_16", 15)) },
-                    0
+                    new Vector3[] {
+                        new Vector3(1f, 6f, 0),
+                        new Vector3(-1f, 6f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_0", 25),
+                        GetRepeatedPattern("P_0", 25)
+                    },
+                    3
                 ),
-                // 스폰 이벤트 3
+                // 세 번째 스폰: (0,6)
                 (
-                    new Vector3[] { new Vector3(0f, 4.6f, 0) },
-                    new string[][] { ConcatPatterns(GetRepeatedPattern("P_0", 4), GetRepeatedPattern("P_16", 15)) },
-                    0
+                    new Vector3[] {
+                        new Vector3(0, 6f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_0", 25)
+                    },
+                    3
                 ),
-                // 스폰 이벤트 4
+                // 네 번째 스폰: (1,6), (-1,6)
                 (
-                    new Vector3[] { new Vector3(0f, 4.6f, 0) },
-                    new string[][] { ConcatPatterns(GetRepeatedPattern("P_0", 4), GetRepeatedPattern("P_16", 15)) },
-                    0
+                    new Vector3[] {
+                        new Vector3(1f, 6f, 0),
+                        new Vector3(-1f, 6f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_0", 25),
+                        GetRepeatedPattern("P_0", 25)
+                    },
+                    3
                 ),
-                // 스폰 이벤트 5
+                // 다섯 번째 스폰: (2,6), (-2,6)
                 (
-                    new Vector3[] { new Vector3(0f, 4.6f, 0) },
-                    new string[][] { ConcatPatterns(GetRepeatedPattern("P_0", 4), GetRepeatedPattern("P_16", 15)) },
-                    0
-                )
+                    new Vector3[] {
+                        new Vector3(2f, 6f, 0),
+                        new Vector3(-2f, 6f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_0", 25),
+                        GetRepeatedPattern("P_0", 25)
+                    },
+                    3
+                ),
+                // 여섯 번째 스폰: (3,6)
+                (
+                    new Vector3[] {
+                        new Vector3(3f, 6f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_25", 1),GetRepeatedPattern("P_0", 25))
+                    },
+                    3
+                ),
+                // 7 번째 스폰: (-3,6)
+                (
+                    new Vector3[] {
+                        new Vector3(-3f, 6f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_25", 1),GetRepeatedPattern("P_0", 25))
+                    },
+                    3
+                ),
+                // 8 번째 스폰: (3,6)
+                (
+                    new Vector3[] {
+                        new Vector3(3f, 6f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_25", 1),GetRepeatedPattern("P_0", 25))
+                    },
+                    3
+                ),
+                // 9 번째 스폰: (-3,6)
+                (
+                    new Vector3[] {
+                        new Vector3(-3f, 6f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_25", 1),GetRepeatedPattern("P_0", 25))
+                    },
+                    3
+                ),
+                // 10 번째 스폰: (3,6), (-3,6)
+                (
+                    new Vector3[] {
+                        new Vector3(3f, 6f, 0),
+                        new Vector3(-3f, 6f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_25", 1),GetRepeatedPattern("P_0", 25)),
+                        ConcatPatterns(GetRepeatedPattern("P_25", 1),GetRepeatedPattern("P_0", 25))
+                    },
+                    3
+                ),
+                // 11 번째 스폰: (3,6), (-3,6)
+                (
+                    new Vector3[] {
+                        new Vector3(3f, 6f, 0),
+                        new Vector3(-3f, 6f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_25", 1),GetRepeatedPattern("P_0", 25)),
+                        ConcatPatterns(GetRepeatedPattern("P_25", 1),GetRepeatedPattern("P_0", 25))
+                    },
+                    3
+                ),
+                // 12 번째 스폰: (1,6)
+                (
+                    new Vector3[] {
+                        new Vector3(1, 6f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_20_D", 25)
+                    },
+                    3
+                ),
+                // 13 번째 스폰: (-1,6)
+                (
+                    new Vector3[] {
+                        new Vector3(-1, 6f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_20_D", 25)
+                    },
+                    4
+                ),
+                // 14 번째 스폰: (1,6)
+                (
+                    new Vector3[] {
+                        new Vector3(1, 6f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_20_D", 25)
+                    },
+                    3
+                ),
+                // 15 번째 스폰: (-1,6)
+                (
+                    new Vector3[] {
+                        new Vector3(-1, 6f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_20_D", 25)
+                    },
+                    3
+                ),
+                // 16 번째 스폰: (1,6)
+                (
+                    new Vector3[] {
+                        new Vector3(1, 6f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_20_D", 25)
+                    },
+                    4
+                ),
+                // 17 번째 스폰: (-1,6)
+                (
+                    new Vector3[] {
+                        new Vector3(-1, 6f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_20_D", 25)
+                    },
+                    3
+                ),
+                // 18 번째 스폰: (1,6)
+                (
+                    new Vector3[] {
+                        new Vector3(1, 6f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_20_D", 25)
+                    },
+                    3
+                ),
+                // 19 번째 스폰: (-1,6)
+                (
+                    new Vector3[] {
+                        new Vector3(-1, 6f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_20_D", 25)
+                    },
+                    4
+                ),
+                // 20 번째 스폰: (1,6)
+                (
+                    new Vector3[] {
+                        new Vector3(1, 6f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_20_D", 25)
+                    },
+                    4
+                ),
+                // 21 번째 스폰: (-1,6)
+                (
+                    new Vector3[] {
+                        new Vector3(-1, 6f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_20_D", 25)
+                    },
+                    3
+                ),
             }
         },
         // 웨이브 10
         { 10, new List<(Vector3[] positions, string[][] patterns, int enemyType)>()
             {
-        // 그룹 A: 5번 반복, 매 번 2마리 스폰
+                // 첫 번째 스폰: (3,4)
                 (
                     new Vector3[] {
-                        new Vector3(-1f, 4.6f, 0),
-                        new Vector3(1f, 4.6f, 0)
+                        new Vector3(3f, 4f, 0)
                     },
                     new string[][] {
-                        ConcatPatterns(GetRepeatedPattern("P_0", 3), GetRepeatedPattern("P_8", 20)),
-                        ConcatPatterns(GetRepeatedPattern("P_0", 3), GetRepeatedPattern("P_9", 20))
+                        GetRepeatedPattern("P_19", 1)
                     },
-                    0
+                    5
                 ),
+                // 두 번째 스폰: (3,4)
                 (
                     new Vector3[] {
-                        new Vector3(-1f, 4.6f, 0),
-                        new Vector3(1f, 4.6f, 0)
+                        new Vector3(3f, 4f, 0)
                     },
                     new string[][] {
-                        ConcatPatterns(GetRepeatedPattern("P_0", 3), GetRepeatedPattern("P_8", 20)),
-                        ConcatPatterns(GetRepeatedPattern("P_0", 3), GetRepeatedPattern("P_9", 20))
+                        GetRepeatedPattern("P_19", 1)
                     },
-                    0
+                    5
                 ),
+                // 세 번째 스폰: (3,4)
                 (
                     new Vector3[] {
-                        new Vector3(-1f, 4.6f, 0),
-                        new Vector3(1f, 4.6f, 0)
+                        new Vector3(3f, 4f, 0)
                     },
                     new string[][] {
-                        ConcatPatterns(GetRepeatedPattern("P_0", 3), GetRepeatedPattern("P_8", 20)),
-                        ConcatPatterns(GetRepeatedPattern("P_0", 3), GetRepeatedPattern("P_9", 20))
+                        GetRepeatedPattern("P_19", 1)
                     },
-                    0
+                    5
                 ),
+                // 네 번째 스폰: (3,1)
                 (
                     new Vector3[] {
-                        new Vector3(-1f, 4.6f, 0),
-                        new Vector3(1f, 4.6f, 0)
+                        new Vector3(3f, 1f, 0)
                     },
                     new string[][] {
-                        ConcatPatterns(GetRepeatedPattern("P_0", 3), GetRepeatedPattern("P_8", 20)),
-                        ConcatPatterns(GetRepeatedPattern("P_0", 3), GetRepeatedPattern("P_9", 20))
+                        ConcatPatterns(GetRepeatedPattern("P_3", 2), ConcatPatterns(GetRepeatedPattern("P_1", 1), GetRepeatedPattern("P_25_boss", 1)))
                     },
-                    0
+                    4
                 ),
+                // 다섯 번째 스폰: (-3,1)
                 (
                     new Vector3[] {
-                        new Vector3(-1f, 4.6f, 0),
-                        new Vector3(1f, 4.6f, 0)
+                        new Vector3(-3f, 1f, 0)
                     },
                     new string[][] {
-                        ConcatPatterns(GetRepeatedPattern("P_0", 3), GetRepeatedPattern("P_8", 20)),
-                        ConcatPatterns(GetRepeatedPattern("P_0", 3), GetRepeatedPattern("P_9", 20))
+                        ConcatPatterns(GetRepeatedPattern("P_2", 2), ConcatPatterns(GetRepeatedPattern("P_1", 1), GetRepeatedPattern("P_25_boss", 1)))
                     },
-                    0
+                    4
                 ),
-                // 그룹 B: 5초 후에 3마리 동시에 스폰
+                // 6 번째 스폰: (3,2)
                 (
                     new Vector3[] {
-                        new Vector3(-3f, 4.5f, 0),
-                        new Vector3(0f, 5.5f, 0),
-                        new Vector3(3f, 4.5f, 0)
+                        new Vector3(3f, 2f, 0)
                     },
                     new string[][] {
-                        GetRepeatedPattern("P_2", 1),
-                        GetRepeatedPattern("P_0", 1),
-                        GetRepeatedPattern("P_3", 1)
+                        ConcatPatterns(GetRepeatedPattern("P_3", 2), ConcatPatterns(GetRepeatedPattern("P_1", 1), GetRepeatedPattern("P_25_boss", 1)))
                     },
-                    0
-                )
+                    4
+                ),
+                // 7 번째 스폰: (-3,2)
+                (
+                    new Vector3[] {
+                        new Vector3(-3f, 2f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_2", 2), ConcatPatterns(GetRepeatedPattern("P_1", 1), GetRepeatedPattern("P_25_boss", 1)))
+                    },
+                    4
+                ),
+                // 8 번째 스폰: (3,3)
+                (
+                    new Vector3[] {
+                        new Vector3(3f, 3f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_3", 1), ConcatPatterns(GetRepeatedPattern("P_1", 1), GetRepeatedPattern("P_25_boss", 1)))
+                    },
+                    4
+                ),
+                // 9 번째 스폰: (-3,3)
+                (
+                    new Vector3[] {
+                        new Vector3(-3f, 3f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_2", 1), ConcatPatterns(GetRepeatedPattern("P_1", 1), GetRepeatedPattern("P_25_boss", 1)))
+                    },
+                    4
+                ),
+                // 10 번째 스폰: (3,4)
+                (
+                    new Vector3[] {
+                        new Vector3(3f, 4f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_3", 1), ConcatPatterns(GetRepeatedPattern("P_1", 1), GetRepeatedPattern("P_25_boss", 1)))
+                    },
+                    4
+                ),
+                // 11 번째 스폰: (-3,4)
+                (
+                    new Vector3[] {
+                        new Vector3(-3f, 4f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_2", 1), ConcatPatterns(GetRepeatedPattern("P_1", 1), GetRepeatedPattern("P_25_boss", 1)))
+                    },
+                    4
+                ),
             }
         },
         // 웨이브 11
         { 11, new List<(Vector3[] positions, string[][] patterns, int enemyType)>()
             {
-        // 그룹 A: 5회 반복, 매 회 (-3, -1)에서 Enemy_0 스폰, 패턴: P_6 3회 + P_17 15회
+                // 첫 번째 스폰: (3,2)
                 (
-                    new Vector3[] { new Vector3(-3f, -1f, 0) },
-                    new string[][] { ConcatPatterns(GetRepeatedPattern("P_6", 3), GetRepeatedPattern("P_17", 15)) },
-                    0
+                    new Vector3[] {
+                        new Vector3(3f, 2f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_28", 1)
+                    },
+                    6
                 ),
+                // 2 번째 스폰: (-3,2)
                 (
-                    new Vector3[] { new Vector3(-3f, -1f, 0) },
-                    new string[][] { ConcatPatterns(GetRepeatedPattern("P_6", 3), GetRepeatedPattern("P_17", 15)) },
-                    0
+                    new Vector3[] {
+                        new Vector3(-3f, 2f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_29", 1)
+                    },
+                    6
                 ),
+                // 3 번째 스폰: (3,2)
                 (
-                    new Vector3[] { new Vector3(-3f, -1f, 0) },
-                    new string[][] { ConcatPatterns(GetRepeatedPattern("P_6", 3), GetRepeatedPattern("P_17", 15)) },
-            0
+                    new Vector3[] {
+                        new Vector3(3f, 2f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_28", 1)
+                    },
+                    6
                 ),
+                // 4 번째 스폰: (-3,2)
                 (
-                    new Vector3[] { new Vector3(-3f, -1f, 0) },
-                    new string[][] { ConcatPatterns(GetRepeatedPattern("P_6", 3), GetRepeatedPattern("P_17", 15)) },
-                    0
+                    new Vector3[] {
+                        new Vector3(-3f, 2f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_29", 1)
+                    },
+                    6
                 ),
+                // 5 번째 스폰: (3,2)
                 (
-                    new Vector3[] { new Vector3(-3f, -1f, 0) },
-                    new string[][] { ConcatPatterns(GetRepeatedPattern("P_6", 3), GetRepeatedPattern("P_17", 15)) },
-                    0
+                    new Vector3[] {
+                        new Vector3(3f, 2f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_28", 1)
+                    },
+                    6
                 ),
-                // 그룹 B: 5초 후, 5회 반복, 매 회 (3, -1)에서 Enemy_0 스폰, 패턴: P_5 3회 + P_16 15회
+                // 6 번째 스폰: (-3,2)
                 (
-                    new Vector3[] { new Vector3(3f, -1f, 0) },
-                    new string[][] { ConcatPatterns(GetRepeatedPattern("P_5", 3), GetRepeatedPattern("P_16", 15)) },
-                    0
+                    new Vector3[] {
+                        new Vector3(-3f, 2f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_29", 1)
+                    },
+                    6
                 ),
+                // 7 번째 스폰: (3,2)
                 (
-                    new Vector3[] { new Vector3(3f, -1f, 0) },
-                    new string[][] { ConcatPatterns(GetRepeatedPattern("P_5", 3), GetRepeatedPattern("P_16", 15)) },
-                    0
+                    new Vector3[] {
+                        new Vector3(3f, 2f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_28", 1)
+                    },
+                    6
                 ),
+                // 8 번째 스폰: (-3,2)
                 (
-                    new Vector3[] { new Vector3(3f, -1f, 0) },
-                    new string[][] { ConcatPatterns(GetRepeatedPattern("P_5", 3), GetRepeatedPattern("P_16", 15)) },
-                    0
+                    new Vector3[] {
+                        new Vector3(-3f, 2f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_29", 1)
+                    },
+                    6
                 ),
+                // 9 번째 스폰: (3,2)
                 (
-                    new Vector3[] { new Vector3(3f, -1f, 0) },
-                    new string[][] { ConcatPatterns(GetRepeatedPattern("P_5", 3), GetRepeatedPattern("P_16", 15)) },
-                    0
+                    new Vector3[] {
+                        new Vector3(3f, 2f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_28", 1)
+                    },
+                    6
                 ),
+                // 10 번째 스폰: (-3,2)
                 (
-                    new Vector3[] { new Vector3(3f, -1f, 0) },
-                    new string[][] { ConcatPatterns(GetRepeatedPattern("P_5", 3), GetRepeatedPattern("P_16", 15)) },
-                    0
-                )
+                    new Vector3[] {
+                        new Vector3(-3f, 2f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_29", 1)
+                    },
+                    6
+                ),
+                // 11 번째 스폰: (3,2)
+                (
+                    new Vector3[] {
+                        new Vector3(3f, 2f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_28", 1)
+                    },
+                    6
+                ),
+                // 12 번째 스폰: (-3,2)
+                (
+                    new Vector3[] {
+                        new Vector3(-3f, 2f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_29", 1)
+                    },
+                    6
+                ),
+                // 13 번째 스폰: (3,2)
+                (
+                    new Vector3[] {
+                        new Vector3(3f, 2f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_28", 1)
+                    },
+                    6
+                ),
+                // 14 번째 스폰: (-3,2)
+                (
+                    new Vector3[] {
+                        new Vector3(-3f, 2f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_29", 1)
+                    },
+                    6
+                ),
+
             }
         },
         // 웨이브 12
         { 12, new List<(Vector3[] positions, string[][] patterns, int enemyType)>()
             {
-        // 그룹 A: 5회 반복, 매 회 (-2, -1.5)에서 Enemy_0 스폰, 패턴: P_2 2회 + P_1 5회 + P_3 1회 + P_0 4,3,2,1,0회
+                // 첫 번째 스폰: (0,6)
                 (
                     new Vector3[] {
-                        new Vector3(-2f, -1.5f, 0),
-                        new Vector3(2f, -1.5f, 0) },
-                    new string[][] {
-                        // 패턴: P_2 2회 → P_1 5회 → P_3 1회 → P_0 4회
-                        ConcatPatterns(
-                            ConcatPatterns( GetRepeatedPattern("P_2", 2), GetRepeatedPattern("P_1", 5) ),
-                            ConcatPatterns( GetRepeatedPattern("P_3", 1), GetRepeatedPattern("P_0", 4) )
-                        ), // 패턴: P_3 2회 → P_1 5회 → P_2 1회 → P_0 4회
-                        ConcatPatterns(
-                            ConcatPatterns( GetRepeatedPattern("P_3", 2), GetRepeatedPattern("P_1", 5) ),
-                            ConcatPatterns( GetRepeatedPattern("P_2", 1), GetRepeatedPattern("P_0", 4) )
-                        )
+                        new Vector3(0, 6f, 0)
                     },
-                    0
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_0", 3), GetRepeatedPattern("P_27", 1))
+                    },
+                    7
                 ),
+                // 2 번째 스폰: (3,4)
                 (
                     new Vector3[] {
-                        new Vector3(-2f, -1.5f, 0),
-                        new Vector3(2f, -1.5f, 0) },
-                    new string[][] {
-                        // 패턴: P_2 2회 → P_1 5회 → P_3 1회 → P_0 3회
-                        ConcatPatterns(
-                            ConcatPatterns( GetRepeatedPattern("P_2", 2), GetRepeatedPattern("P_1", 5) ),
-                            ConcatPatterns( GetRepeatedPattern("P_3", 1), GetRepeatedPattern("P_0", 3) )
-                        ), // 패턴: P_3 2회 → P_1 5회 → P_2 1회 → P_0 3회
-                        ConcatPatterns(
-                            ConcatPatterns( GetRepeatedPattern("P_3", 2), GetRepeatedPattern("P_1", 5) ),
-                            ConcatPatterns( GetRepeatedPattern("P_2", 1), GetRepeatedPattern("P_0", 3) )
-                        )
+                        new Vector3(3f, 4f, 0)
                     },
-                    0
+                    new string[][] {
+                        GetRepeatedPattern("P_19", 1)
+                    },
+                    6
                 ),
+                // 3 번째 스폰: (3,4)
                 (
                     new Vector3[] {
-                        new Vector3(-2f, -1.5f, 0),
-                        new Vector3(2f, -1.5f, 0) },
-                    new string[][] {
-                        // 패턴: P_2 2회 → P_1 5회 → P_3 1회 → P_0 2회
-                        ConcatPatterns(
-                            ConcatPatterns( GetRepeatedPattern("P_2", 2), GetRepeatedPattern("P_1", 5) ),
-                            ConcatPatterns( GetRepeatedPattern("P_3", 1), GetRepeatedPattern("P_0", 2) )
-                        ), // 패턴: P_3 2회 → P_1 5회 → P_2 1회 → P_0 2회
-                        ConcatPatterns(
-                            ConcatPatterns( GetRepeatedPattern("P_3", 2), GetRepeatedPattern("P_1", 5) ),
-                            ConcatPatterns( GetRepeatedPattern("P_2", 1), GetRepeatedPattern("P_0", 2) )
-                        )
+                        new Vector3(3f, 4f, 0)
                     },
-                    0
+                    new string[][] {
+                        GetRepeatedPattern("P_19", 1)
+                    },
+                    6
                 ),
+                // 4 번째 스폰: (3,4)
                 (
                     new Vector3[] {
-                        new Vector3(-2f, -1.5f, 0),
-                        new Vector3(2f, -1.5f, 0) },
-                    new string[][] {
-                        // 패턴: P_2 2회 → P_1 5회 → P_3 1회 → P_0 1회
-                        ConcatPatterns(
-                            ConcatPatterns( GetRepeatedPattern("P_2", 2), GetRepeatedPattern("P_1", 5) ),
-                            ConcatPatterns( GetRepeatedPattern("P_3", 1), GetRepeatedPattern("P_0", 1) )
-                        ), // 패턴: P_3 2회 → P_1 5회 → P_2 1회 → P_0 1회
-                        ConcatPatterns(
-                            ConcatPatterns( GetRepeatedPattern("P_3", 2), GetRepeatedPattern("P_1", 5) ),
-                            ConcatPatterns( GetRepeatedPattern("P_2", 1), GetRepeatedPattern("P_0", 1) )
-                        )
+                        new Vector3(3f, 4f, 0)
                     },
-                    0
+                    new string[][] {
+                        GetRepeatedPattern("P_19", 1)
+                    },
+                    6
                 ),
+                // 5 번째 스폰: (0,6), (-1,6)
                 (
                     new Vector3[] {
-                        new Vector3(-2f, -1.5f, 0),
-                        new Vector3(2f, -1.5f, 0) },
-                    new string[][] {
-                        // 패턴: P_2 2회 → P_1 5회 → P_3 1회 → P_0 0회
-                        ConcatPatterns(
-                            ConcatPatterns( GetRepeatedPattern("P_2", 2), GetRepeatedPattern("P_1", 5) ),
-                            GetRepeatedPattern("P_3", 1)
-                        ), // 패턴: P_3 2회 → P_1 5회 → P_2 1회 → P_0 0회
-                        ConcatPatterns(
-                            ConcatPatterns( GetRepeatedPattern("P_3", 2), GetRepeatedPattern("P_1", 5) ),
-                            GetRepeatedPattern("P_2", 1)
-                        )
+                        new Vector3(0, 6f, 0),
+                        new Vector3(-1f, 6f, 0)
                     },
-                    0
+                    new string[][] {
+                        GetRepeatedPattern("P_0", 25),
+                        GetRepeatedPattern("P_0", 25)
+                    },
+                    4
+                ),
+                // 6 번째 스폰: (1,6), (2,6)
+                (
+                    new Vector3[] {
+                        new Vector3(1f, 6f, 0),
+                        new Vector3(2f, 6f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_0", 25),
+                        GetRepeatedPattern("P_0", 25)
+                    },
+                    4
+                ),
+                // 7 번째 스폰: (-2,6)
+                (
+                    new Vector3[] {
+                        new Vector3(-2f, 6f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_0", 25)
+                    },
+                    4
                 ),
             }
         }, 
         // 웨이브 13
-        { 13, new List<(Vector3[], string[][], int)>()
+        { 13, new List<(Vector3[] positions, string[][] patterns, int enemyType)>()
             {
-                // 첫 번째 스폰: 좌표 {(-2,4.6), (0,4.6), (2,4.6)} – 각 "N_0" 4회 실행, enemyType 0
+                // 첫 번째 스폰: (0,6)
                 (
                     new Vector3[] {
-                        new Vector3(0, 1.5f, 0),
-                        new Vector3(0, 1.5f, 0),
-                        new Vector3(0, 1.5f, 0),
-                        new Vector3(0, 1.5f, 0),
-                        new Vector3(0, 1.5f, 0),
-                        new Vector3(0, 1.5f, 0),
-                        new Vector3(0, 1.5f, 0),
-                        new Vector3(0, 1.5f, 0),
-                        new Vector3(0, 1.5f, 0),
-                        new Vector3(0, 1.5f, 0),
-                        new Vector3(0, 1.5f, 0),
-                        new Vector3(0, 1.5f, 0),
+                        new Vector3(0, 6f, 0)
                     },
                     new string[][] {
-                        GetRepeatedPattern("P_4", 2),
-                        GetRepeatedPattern("P_5", 2),
-                        GetRepeatedPattern("P_6", 2),
-                        GetRepeatedPattern("P_7", 2),
-                        GetRepeatedPattern("P_8", 2),
-                        GetRepeatedPattern("P_9", 2),
-                        GetRepeatedPattern("P_10", 2),
-                        GetRepeatedPattern("P_11", 2),
-                        GetRepeatedPattern("P_12", 2),
-                        GetRepeatedPattern("P_13", 2),
-                        GetRepeatedPattern("P_14", 2),
-                        GetRepeatedPattern("P_15", 2),
+                        ConcatPatterns(GetRepeatedPattern("P_0", 4), ConcatPatterns(GetRepeatedPattern("P_0", 5),GetRepeatedPattern("P_1", 5)))
                     },
-                    0
+                    7
+                ),
+                // 2 번째 스폰: (-1,6), (1,6)
+                (
+                    new Vector3[] {
+                        new Vector3(-1f, 6f, 0),
+                        new Vector3(1f, 6f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_0", 8), GetRepeatedPattern("P_1", 5)),
+                        ConcatPatterns(GetRepeatedPattern("P_0", 8), GetRepeatedPattern("P_1", 5))
+                    },
+                    7
+                ),
+                // 3 번째 스폰: (2,6), (-2,6)
+                (
+                    new Vector3[] {
+                        new Vector3(2f, 6f, 0),
+                        new Vector3(-2f, 6f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_0", 9), GetRepeatedPattern("P_1", 6)),
+                        ConcatPatterns(GetRepeatedPattern("P_0", 9), GetRepeatedPattern("P_1", 6))
+                    },
+                    7
+                ),
+                // 4 번째 스폰: (0,6)
+                (
+                    new Vector3[] {
+                        new Vector3(0, 6f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(GetRepeatedPattern("P_0", 2), GetRepeatedPattern("P_27", 1))
+                    },
+                    7
+                ),
+                // 5 번째 스폰: (3,4)
+                (
+                    new Vector3[] {
+                        new Vector3(3f, 4f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_19", 1)
+                    },
+                    6
+                ),
+                // 6 번째 스폰: (3,4)
+                (
+                    new Vector3[] {
+                        new Vector3(3f, 4f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_19", 1)
+                    },
+                    6
+                ),
+                // 7 번째 스폰: (3,4)
+                (
+                    new Vector3[] {
+                        new Vector3(3f, 4f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_19", 1)
+                    },
+                    6
                 ),
             }
         },
         // 웨이브 14
         { 14, new List<(Vector3[] positions, string[][] patterns, int enemyType)>()
             {
-                // 인덱스 0: Enemy_1 그룹
+                // 첫 번째 스폰: (0,6)
                 (
                     new Vector3[] {
-                        new Vector3(-2f, 3.5f, 0),
-                        new Vector3(-2f, 2.5f, 0),
-                        new Vector3(-2f, -3.5f, 0),
-                        new Vector3(-2f, -4.5f, 0)
+                        new Vector3(0, 6f, 0)
                     },
                     new string[][] {
-                        GetRepeatedPattern("P_2", 20),
-                        GetRepeatedPattern("P_2", 20),
-                        GetRepeatedPattern("P_2", 20),
-                        GetRepeatedPattern("P_2", 20)
+                        GetRepeatedPattern("P_22", 1)
                     },
-                    1
-             ),
-                // 인덱스 1: Enemy_0 그룹 1
-                (
-                    new Vector3[] {
-                        new Vector3(-1f, 4.6f, 0),
-                        new Vector3(0f, 4.6f, 0),
-                        new Vector3(1f, 4.6f, 0),
-                        new Vector3(2f, 4.6f, 0)
-                    },
-                    new string[][] {
-                        GetRepeatedPattern("P_0", 4),
-                        GetRepeatedPattern("P_0", 4),
-                       GetRepeatedPattern("P_0", 4),
-                        GetRepeatedPattern("P_0", 4)
-                    },
-                    0
+                    7
                 ),
-                // 인덱스 2: Enemy_0 그룹 2
+                // 2 번째 스폰: (3,2)
                 (
                     new Vector3[] {
-                        new Vector3(-1f, 4.6f, 0),
-                        new Vector3(0f, 4.6f, 0),
-                        new Vector3(1f, 4.6f, 0),
-                        new Vector3(2f, 4.6f, 0)
+                        new Vector3(3f, 2f, 0)
                     },
                     new string[][] {
-                        GetRepeatedPattern("P_0", 3),
-                        GetRepeatedPattern("P_0", 3),
-                        GetRepeatedPattern("P_0", 3),
-                        GetRepeatedPattern("P_0", 3)
+                        GetRepeatedPattern("P_28", 1)
                     },
-                    0
-                )
+                    6
+                ),
+                // 3 번째 스폰: (-3,2)
+                (
+                    new Vector3[] {
+                        new Vector3(-3f, 2f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_29", 1)
+                    },
+                    6
+                ),
+                // 4 번째 스폰: (3,2)
+                (
+                    new Vector3[] {
+                        new Vector3(3f, 2f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_28", 1)
+                    },
+                    6
+                ),
+                // 5 번째 스폰: (-3,2)
+                (
+                    new Vector3[] {
+                        new Vector3(-3f, 2f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_29", 1)
+                    },
+                    6
+                ),
+                // 6 번째 스폰: (3,2)
+                (
+                    new Vector3[] {
+                        new Vector3(3f, 2f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_28", 1)
+                    },
+                    6
+                ),
+                // 7 번째 스폰: (-3,2)
+                (
+                    new Vector3[] {
+                        new Vector3(-3f, 2f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_29", 1)
+                    },
+                    6
+                ),
+                // 8 번째 스폰: (0,6)
+                (
+                    new Vector3[] {
+                        new Vector3(0, 6f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_22", 1)
+                    },
+                    7
+                ),
             }
         },
         // 웨이브 15
         { 15, new List<(Vector3[] positions, string[][] patterns, int enemyType)>()
             {
-                // 그룹 A: 5회 반복 (인덱스 0 ~ 4)
-                // 각 이벤트는 (2, -1.5)에서 스폰, 패턴은 P_11 (4회) + P_2 (4회) + P_0 (횟수 조절)
+                // 첫 번째 스폰: (-1.5,6), (0,6), (1.5,6)
                 (
-                    new Vector3[] { new Vector3(2f, -1.5f, 0) },
-                    new string[][] { ConcatPatterns( ConcatPatterns(GetRepeatedPattern("P_11", 4), GetRepeatedPattern("P_2", 4) ),
-                                                        GetRepeatedPattern("P_0", 4) ) },
-                    0
+                    new Vector3[] {
+                        new Vector3(-1.5f, 6f, 0),
+                        new Vector3(0, 6f, 0),
+                        new Vector3(1.5f, 6f, 0)
+                    },
+                    new string[][] {
+                        ConcatPatterns(ConcatPatterns(GetRepeatedPattern("P_0", 2), GetRepeatedPattern("P_0F", 7)), ConcatPatterns(GetRepeatedPattern("P_1", 7), GetRepeatedPattern("P_22F", 1))),
+                        ConcatPatterns(ConcatPatterns(GetRepeatedPattern("P_0", 2), GetRepeatedPattern("P_0F", 7)), GetRepeatedPattern("P_1", 7)),
+                        ConcatPatterns(ConcatPatterns(GetRepeatedPattern("P_0", 2), GetRepeatedPattern("P_0F", 7)), ConcatPatterns(GetRepeatedPattern("P_1", 7), GetRepeatedPattern("P_22F", 1))),
+                    },
+                    8
                 ),
+                // 2 번째 스폰: (3,4)
                 (
-                    new Vector3[] { new Vector3(2f, -1.5f, 0) },
-                    new string[][] { ConcatPatterns( ConcatPatterns(GetRepeatedPattern("P_11", 4), GetRepeatedPattern("P_2", 4) ),
-                                                        GetRepeatedPattern("P_0", 3) ) },
-                    0
+                    new Vector3[] {
+                        new Vector3(3f, 4f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_19", 1)
+                    },
+                    6
                 ),
+                // 3 번째 스폰: (3,4)
                 (
-                    new Vector3[] { new Vector3(2f, -1.5f, 0) },
-                    new string[][] { ConcatPatterns( ConcatPatterns(GetRepeatedPattern("P_11", 4), GetRepeatedPattern("P_2", 4) ),
-                                                        GetRepeatedPattern("P_0", 2) ) },
-                    0
+                    new Vector3[] {
+                        new Vector3(3f, 4f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_19", 1)
+                    },
+                    6
                 ),
+                // 4 번째 스폰: (3,4)
                 (
-                    new Vector3[] { new Vector3(2f, -1.5f, 0) },
-                    new string[][] { ConcatPatterns( ConcatPatterns(GetRepeatedPattern("P_11", 4), GetRepeatedPattern("P_2", 4) ),
-                                                        GetRepeatedPattern("P_0", 1) ) },
-                    0
+                    new Vector3[] {
+                        new Vector3(3f, 4f, 0)
+                    },
+                    new string[][] {
+                        GetRepeatedPattern("P_19", 1)
+                    },
+                    6
                 ),
-                (
-                    new Vector3[] { new Vector3(2f, -1.5f, 0) },
-                    new string[][] { ConcatPatterns( ConcatPatterns(GetRepeatedPattern("P_11", 4), GetRepeatedPattern("P_2", 4) ),
-                                                        GetRepeatedPattern("P_0", 0) ) },
-                    0
-                ),
-                // 그룹 B: 5회 반복 (인덱스 5 ~ 9)
-                // 각 이벤트는 (-2, -1.5)에서 스폰, 패턴은 P_10 2회 + P_17 15회
-                (
-                    new Vector3[] { new Vector3(-2f, -1.5f, 0) },
-                    new string[][] { ConcatPatterns(GetRepeatedPattern("P_10", 2), GetRepeatedPattern("P_17", 15)) },
-                    0
-                ),
-                (
-                    new Vector3[] { new Vector3(-2f, -1.5f, 0) },
-                    new string[][] { ConcatPatterns(GetRepeatedPattern("P_10", 2), GetRepeatedPattern("P_17", 15)) },
-                    0
-                ),
-                (
-                    new Vector3[] { new Vector3(-2f, -1.5f, 0) },
-                    new string[][] { ConcatPatterns(GetRepeatedPattern("P_10", 2), GetRepeatedPattern("P_17", 15)) },
-                    0
-                ),
-                (
-                    new Vector3[] { new Vector3(-2f, -1.5f, 0) },
-                    new string[][] { ConcatPatterns(GetRepeatedPattern("P_10", 2), GetRepeatedPattern("P_17", 15)) },
-                    0
-                ),
-                (
-                    new Vector3[] { new Vector3(-2f, -1.5f, 0) },
-                    new string[][] { ConcatPatterns(GetRepeatedPattern("P_10", 2), GetRepeatedPattern("P_17", 15)) },
-                    0
-                )
             }
         },
         // 웨이브 16
@@ -1738,25 +2276,61 @@ public class WaveManager : MonoBehaviour
             // 지연 처리 (Wave마다 커스텀 딜레이 반영)
             if (waveNumber == 1 && i == 1) yield return new WaitForSeconds(3f);
             if (waveNumber == 2 && i == 1) yield return new WaitForSeconds(3f);
+            // wave 3
             if (waveNumber == 3 && i == 1) yield return new WaitForSeconds(3f);
-            if (waveNumber == 3 && i == 2) yield return new WaitForSeconds(0.5f);
-            if (waveNumber == 3 && i == 3) yield return new WaitForSeconds(0.5f);
-            if (waveNumber == 3 && i == 4) yield return new WaitForSeconds(0.5f);
-            if (waveNumber == 3 && i == 5) yield return new WaitForSeconds(0.5f);
-            if (waveNumber == 4 && i == 2) yield return new WaitForSeconds(0.5f);
-            if (waveNumber == 4 && i == 3) yield return new WaitForSeconds(0.5f);
-            if (waveNumber == 4 && i == 4) yield return new WaitForSeconds(0.5f);
-            if (waveNumber == 4 && i == 5) yield return new WaitForSeconds(0.5f);
-            if (waveNumber == 4 && i == 6) yield return new WaitForSeconds(0.5f);
+            if (waveNumber == 3 && i >= 2) yield return new WaitForSeconds(0.5f);
+            // wave 4
+            if (waveNumber == 4 && i >= 2) yield return new WaitForSeconds(0.5f);
+            // wave 5
             if (waveNumber == 5 && i == 1) yield return new WaitForSeconds(3f);
+            // wave 6
             if (waveNumber == 6 && i == 1) yield return new WaitForSeconds(3f);
             if (waveNumber == 6 && i == 2) yield return new WaitForSeconds(3f);
             if (waveNumber == 6 && i == 3) yield return new WaitForSeconds(2f);
-            if (waveNumber == 7 && i == 1) yield return new WaitForSeconds(2f);
-            if (waveNumber == 7 && i == 2) yield return new WaitForSeconds(5f);
+            // wave 7
+            if (waveNumber == 7 && i == 1) yield return new WaitForSeconds(0.5f);
+            if (waveNumber == 7 && i == 2) yield return new WaitForSeconds(0.5f);
             if (waveNumber == 7 && i == 3) yield return new WaitForSeconds(2f);
-            if (waveNumber == 8 && i == 1) yield return new WaitForSeconds(5f);
-            if (waveNumber == 8 && i == 2) yield return new WaitForSeconds(5f);
+            if (waveNumber == 7 && i == 4) yield return new WaitForSeconds(0.5f);
+            if (waveNumber == 7 && i == 5) yield return new WaitForSeconds(0.5f);
+            if (waveNumber == 7 && i == 6) yield return new WaitForSeconds(0.5f);
+            if (waveNumber == 7 && i == 7) yield return new WaitForSeconds(0.5f);
+            if (waveNumber == 7 && i == 9) yield return new WaitForSeconds(0.5f);
+            // wave 8
+            if (waveNumber == 8 && i == 1) yield return new WaitForSeconds(0.5f);
+            if (waveNumber == 8 && i == 2) yield return new WaitForSeconds(0.5f);
+            if (waveNumber == 8 && i == 3) yield return new WaitForSeconds(2f);
+            if (waveNumber == 8 && i >= 4) yield return new WaitForSeconds(1f);
+            // wave 9
+            if (waveNumber == 9 && i <= 4) yield return new WaitForSeconds(0.2f);
+            if (waveNumber == 9 && i == 5) yield return new WaitForSeconds(2.2f);
+            if (waveNumber == 9 && i == 6) yield return new WaitForSeconds(0.5f);
+            if (waveNumber == 9 && i == 7) yield return new WaitForSeconds(0.5f);
+            if (waveNumber == 9 && i == 8) yield return new WaitForSeconds(0.5f);
+            if (waveNumber == 9 && i == 9) yield return new WaitForSeconds(0.5f);
+            if (waveNumber == 9 && i == 10) yield return new WaitForSeconds(0.5f);
+            if (waveNumber == 9 && i == 11) yield return new WaitForSeconds(1.5f);
+            if (waveNumber == 9 && i >= 12) yield return new WaitForSeconds(1f);
+            // wave 10
+            if (waveNumber == 10 && i == 1) yield return new WaitForSeconds(1f);
+            if (waveNumber == 10 && i == 2) yield return new WaitForSeconds(1f);
+            if (waveNumber == 10 && i == 3) yield return new WaitForSeconds(2f);
+            if (waveNumber == 10 && i >= 4) yield return new WaitForSeconds(0.5f);
+            // wave 11
+            if (waveNumber == 11 && i >= 1) yield return new WaitForSeconds(1f);
+            // wave 12
+            if (waveNumber == 12 && i >= 1) yield return new WaitForSeconds(0.5f);
+            // wave 13
+            if (waveNumber == 13 && i <= 2) yield return new WaitForSeconds(2f);
+            if (waveNumber == 13 && i == 3) yield return new WaitForSeconds(1f);
+            if (waveNumber == 13 && i >= 5) yield return new WaitForSeconds(0.5f);
+            // wave 14
+            if (waveNumber == 14 && i >= 2 && i < 7) yield return new WaitForSeconds(1f);
+            if (waveNumber == 14 && i == 7) yield return new WaitForSeconds(2f);
+            // wave 15
+            if (waveNumber == 15 && i == 1) yield return new WaitForSeconds(4f);
+            if (waveNumber == 15 && i >= 2) yield return new WaitForSeconds(0.5f);
+            // wave 16
             if (waveNumber == 16 && i == 1) yield return new WaitForSeconds(2f);
             if (waveNumber == 16 && i == 2) yield return new WaitForSeconds(1f);
             if (waveNumber == 16 && i == 3) yield return new WaitForSeconds(1f);
