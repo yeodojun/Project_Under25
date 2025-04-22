@@ -62,7 +62,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 1, w: -0.00000035762784}
   m_LocalPosition: {x: -0.03, y: 4.27, z: 0}
-  m_LocalScale: {x: 0.65359473, y: 0.47878745, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4121154633417657754}
@@ -163,7 +163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: 3
-  isFlipped: 0
+  isFlipped: 1
   health: 10
   dropChance: 0.05
   upgradeItemPrefab: {fileID: 2000207073148731593, guid: 8e034da5b64695342bb9fc2aa41b7d38, type: 3}
