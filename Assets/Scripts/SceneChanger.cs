@@ -9,6 +9,6 @@ public class SceneChanger : MonoBehaviour {
     }
 
     public void GameMainSceneChange() {
-        SceneManager.LoadScene("GameSelectScene");
+        SceneManager.LoadScene("ShootingScene");
     }
 }

@@ -103,7 +103,6 @@ public class Player : MonoBehaviour
     private bool isInvincible = false;
     private SpriteRenderer spriteRenderer;
     private Vector3 targetPosition;
-    private bool isTouching = false;
     public float moveSpeed = 5f;
     private float originalMoveSpeed;
     public GameObject gameOverPanel;
@@ -229,7 +228,6 @@ public class Player : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
-            isTouching = true;
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = transform.position.z;
             RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
@@ -239,10 +237,6 @@ public class Player : MonoBehaviour
                 return;
             }
             targetPosition = mousePos;
-        }
-        else
-        {
-            isTouching = false;
         }
         if (Vector3.Distance(transform.position, targetPosition) > 0.05f)
         {
