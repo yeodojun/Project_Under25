@@ -2333,7 +2333,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1993157158943672264, guid: 7704bbe70f6bbe8499007f7cc0e7887d, type: 3}
+  m_Sprite: {fileID: -2010476940462677713, guid: 63204b2e672354eb9b5d8772b828fd25, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -4876,7 +4876,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1993157158943672264, guid: 7704bbe70f6bbe8499007f7cc0e7887d, type: 3}
+  m_Sprite: {fileID: -2010476940462677713, guid: 63204b2e672354eb9b5d8772b828fd25, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -6335,7 +6335,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50c229c7e28b98145bb41e9ea3c4a13f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveDelay: 10
 --- !u!4 &1964446570
 Transform:
   m_ObjectHideFlags: 0
