@@ -93,7 +93,6 @@ public class Enemy : MonoBehaviour
         health -= damage;
         new WaitForSeconds(1f);
         animator.SetTrigger("End");
-        StartCoroutine(FlashDamage());
         if (health <= 0)
         {
             Die();

@@ -38,7 +38,7 @@ public class PatternManager : MonoBehaviour
         // "P_22"는 아래 TeleportPattern(), ExecutePattern()에서 별도로 처리
         // "P_23"도 아래 ZigzagMovement(), " 별도로 처리
         // "P_23B"도 아래 별도로 처리 '보스 전용'
-        { "P_24", null }// "P_24" 정지 패턴
+        // "P_24" 정지 패턴
         // "P_25"도 아래 KamikazeMovement(), " 별도로 처리
         // "P_25R"도 아래 별도로 처리
         // "P_25B"도 아래 별도로 처리 '보스 전용'
@@ -120,6 +120,10 @@ public class PatternManager : MonoBehaviour
             else if (pattern == "P_23B") // 새 지그제그 보스에서만 사용
             {
                 yield return StartCoroutine(ZigzagMovementBoss(enemy));
+            }
+            else if (pattern == "P_24")
+            {
+                yield return StartCoroutine(Stop(enemy));
             }
             else if (pattern == "P_25")  // 새 카미카제 패턴
             {
