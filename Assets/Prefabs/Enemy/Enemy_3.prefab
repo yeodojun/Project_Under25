@@ -62,7 +62,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 1, w: -0.00000035762784}
   m_LocalPosition: {x: -0.03, y: 4.27, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4121154633417657754}
@@ -115,7 +115,7 @@ SpriteRenderer:
   m_Sprite: {fileID: -19329861153970304, guid: 15125470af1bce446a9a38929a8bee4c, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
-  m_FlipY: 0
+  m_FlipY: 1
   m_DrawMode: 0
   m_Size: {x: 3.24, y: 3.75}
   m_AdaptiveModeThreshold: 0.5
@@ -163,7 +163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyType: 3
-  isFlipped: 1
+  isFlipped: 0
   health: 10
   dropChance: 0.05
   upgradeItemPrefab: {fileID: 2000207073148731593, guid: 8e034da5b64695342bb9fc2aa41b7d38, type: 3}
