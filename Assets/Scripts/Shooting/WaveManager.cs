@@ -110,10 +110,10 @@ public class WaveManager : MonoBehaviour
                     },
                     new string[][] {
                         // 패턴: N_0 2회 -> P_16 25회
-                        ConcatPatterns( GetRepeatedPattern("P_0", 2), GetRepeatedPattern("P_16", 25) )
+                        ConcatPatterns( GetRepeatedPattern("P_0", 4), GetRepeatedPattern("P_16", 25) )
 
                     },
-                    1
+                    0
                 ),
                 // 세번째 스폰: 3.5초에 좌표 {(0,6)}
                 (
@@ -122,10 +122,10 @@ public class WaveManager : MonoBehaviour
                     },
                     new string[][] {
                         // 패턴: N_0 2회 -> P_16 25회
-                        ConcatPatterns( GetRepeatedPattern("P_0", 2), GetRepeatedPattern("P_16", 25) )
+                        ConcatPatterns( GetRepeatedPattern("P_0", 4), GetRepeatedPattern("P_16", 25) )
 
                     },
-                    1
+                    0
                 ),
                 // 네번째 스폰: 4초에 좌표 {(0,6)}
                 (
@@ -134,10 +134,10 @@ public class WaveManager : MonoBehaviour
                     },
                     new string[][] {
                         // 패턴: N_0 2회 -> P_16 25회
-                        ConcatPatterns( GetRepeatedPattern("P_0", 2), GetRepeatedPattern("P_16", 25) )
+                        ConcatPatterns( GetRepeatedPattern("P_0", 4), GetRepeatedPattern("P_16", 25) )
 
                     },
-                    1
+                    0
                 ),
                 // 다섯번째 스폰: 4.5초에 좌표 {(0,6)}
                 (
@@ -146,10 +146,10 @@ public class WaveManager : MonoBehaviour
                     },
                     new string[][] {
                         // 패턴: N_0 2회 -> P_16 25회
-                        ConcatPatterns( GetRepeatedPattern("P_0", 2), GetRepeatedPattern("P_16", 25) )
+                        ConcatPatterns( GetRepeatedPattern("P_0", 4), GetRepeatedPattern("P_16", 25) )
 
                     },
-                    1
+                    0
                 ),
                 // 여섯번째 스폰: 5초에 좌표 {(0,6)}
                 (
@@ -158,10 +158,10 @@ public class WaveManager : MonoBehaviour
                     },
                     new string[][] {
                         // 패턴: N_0 2회 -> P_16 25회
-                        ConcatPatterns( GetRepeatedPattern("P_0", 2), GetRepeatedPattern("P_16", 25) )
+                        ConcatPatterns( GetRepeatedPattern("P_0", 4), GetRepeatedPattern("P_16", 25) )
 
                     },
-                    1
+                    0
                 ),
             }
         },
@@ -326,13 +326,13 @@ public class WaveManager : MonoBehaviour
                         new Vector3(-3, 6f, 0)
                     },
                     new string[][] {
-                        GetRepeatedPattern("P_5", 25),
-                        GetRepeatedPattern("P_5", 25),
+                        ConcatPatterns(ConcatPatterns(GetRepeatedPattern("P_25", 1), GetRepeatedPattern("P_24", 3)),GetRepeatedPattern("P_0", 25)),
+                        ConcatPatterns(ConcatPatterns(GetRepeatedPattern("P_25", 1), GetRepeatedPattern("P_24", 3)),GetRepeatedPattern("P_0", 25)),
                         GetRepeatedPattern("P_0", 25),
                         GetRepeatedPattern("P_0", 25),
                         GetRepeatedPattern("P_0", 25),
-                        GetRepeatedPattern("P_4", 25),
-                        GetRepeatedPattern("P_4", 25),
+                        ConcatPatterns(ConcatPatterns(GetRepeatedPattern("P_25", 1), GetRepeatedPattern("P_24", 3)),GetRepeatedPattern("P_0", 25)),
+                        ConcatPatterns(ConcatPatterns(GetRepeatedPattern("P_25", 1), GetRepeatedPattern("P_24", 3)),GetRepeatedPattern("P_0", 25))
                     },
                     3
                 ),
@@ -347,7 +347,7 @@ public class WaveManager : MonoBehaviour
                         new Vector3(-3, 4f, 0)
                     },
                     new string[][] {
-                        GetRepeatedPattern("P_5", 25),
+                        ConcatPatterns(ConcatPatterns(GetRepeatedPattern("P_25", 1), GetRepeatedPattern("P_24", 3)),GetRepeatedPattern("P_0", 25)),
                         GetRepeatedPattern("P_9", 25),
                         GetRepeatedPattern("P_9", 25),
                         GetRepeatedPattern("P_8", 25),
@@ -515,8 +515,8 @@ public class WaveManager : MonoBehaviour
                         new Vector3(-3f, 2f, 0)
                     },
                     new string[][] {
-                        ConcatPatterns(ConcatPatterns(GetRepeatedPattern("P_2", 2), GetRepeatedPattern("P_24", 2)), GetRepeatedPattern("P_0", 25)),
-                        ConcatPatterns(ConcatPatterns(GetRepeatedPattern("P_3", 2), GetRepeatedPattern("P_24", 2)), GetRepeatedPattern("P_0", 25))
+                        ConcatPatterns(ConcatPatterns(GetRepeatedPattern("P_3", 2), GetRepeatedPattern("P_24", 2)), GetRepeatedPattern("P_0", 25)),
+                        ConcatPatterns(ConcatPatterns(GetRepeatedPattern("P_2", 2), GetRepeatedPattern("P_24", 2)), GetRepeatedPattern("P_0", 25))
                     },
                     4
                 ),
@@ -527,8 +527,8 @@ public class WaveManager : MonoBehaviour
                         new Vector3(-3f, 3f, 0)
                     },
                     new string[][] {
-                        ConcatPatterns(ConcatPatterns(GetRepeatedPattern("P_2", 2), GetRepeatedPattern("P_24", 2)), GetRepeatedPattern("P_0", 25)),
-                        ConcatPatterns(ConcatPatterns(GetRepeatedPattern("P_3", 2), GetRepeatedPattern("P_24", 2)), GetRepeatedPattern("P_0", 25))
+                        ConcatPatterns(ConcatPatterns(GetRepeatedPattern("P_3", 2), GetRepeatedPattern("P_24", 2)), GetRepeatedPattern("P_0", 25)),
+                        ConcatPatterns(ConcatPatterns(GetRepeatedPattern("P_2", 2), GetRepeatedPattern("P_24", 2)), GetRepeatedPattern("P_0", 25))
                     },
                     4
                 ),
@@ -539,8 +539,8 @@ public class WaveManager : MonoBehaviour
                         new Vector3(-3f, 4f, 0)
                     },
                     new string[][] {
-                        ConcatPatterns(ConcatPatterns(GetRepeatedPattern("P_2", 2), GetRepeatedPattern("P_24", 2)), GetRepeatedPattern("P_0", 25)),
-                        ConcatPatterns(ConcatPatterns(GetRepeatedPattern("P_3", 2), GetRepeatedPattern("P_24", 2)), GetRepeatedPattern("P_0", 25))
+                        ConcatPatterns(ConcatPatterns(GetRepeatedPattern("P_3", 2), GetRepeatedPattern("P_24", 2)), GetRepeatedPattern("P_0", 25)),
+                        ConcatPatterns(ConcatPatterns(GetRepeatedPattern("P_2", 2), GetRepeatedPattern("P_24", 2)), GetRepeatedPattern("P_0", 25))
                     },
                     4
                 ),
@@ -550,7 +550,7 @@ public class WaveManager : MonoBehaviour
                         new Vector3(3f, 4.5f, 0)
                     },
                     new string[][] {
-                        ConcatPatterns(GetRepeatedPattern("P_2", 3), GetRepeatedPattern("P_4", 25))
+                        ConcatPatterns(GetRepeatedPattern("P_3", 2), GetRepeatedPattern("P_20D", 25))
                     },
                     4
                 ),
@@ -560,7 +560,7 @@ public class WaveManager : MonoBehaviour
                         new Vector3(-3f, 4.5f, 0)
                     },
                     new string[][] {
-                        ConcatPatterns(GetRepeatedPattern("P_3", 3), GetRepeatedPattern("P_0", 25))
+                        ConcatPatterns(GetRepeatedPattern("P_2", 2), GetRepeatedPattern("P_20D", 25))
                     },
                     4
                 ),
@@ -570,7 +570,7 @@ public class WaveManager : MonoBehaviour
                         new Vector3(3f, 4.5f, 0)
                     },
                     new string[][] {
-                        ConcatPatterns(GetRepeatedPattern("P_2", 3), GetRepeatedPattern("P_5", 25))
+                        ConcatPatterns(GetRepeatedPattern("P_3", 2), GetRepeatedPattern("P_20D", 25))
                     },
                     4
                 ),
@@ -580,7 +580,7 @@ public class WaveManager : MonoBehaviour
                         new Vector3(-3f, 4.5f, 0)
                     },
                     new string[][] {
-                        ConcatPatterns(GetRepeatedPattern("P_3", 3), GetRepeatedPattern("P_0", 25))
+                        ConcatPatterns(GetRepeatedPattern("P_2", 2), GetRepeatedPattern("P_20D", 25))
                     },
                     4
                 ),
@@ -590,7 +590,7 @@ public class WaveManager : MonoBehaviour
                         new Vector3(3f, 4.5f, 0)
                     },
                     new string[][] {
-                        ConcatPatterns(GetRepeatedPattern("P_2", 3), GetRepeatedPattern("P_4", 25))
+                        ConcatPatterns(GetRepeatedPattern("P_3", 2), GetRepeatedPattern("P_20D", 25))
                     },
                     4
                 ),
@@ -600,7 +600,7 @@ public class WaveManager : MonoBehaviour
                         new Vector3(-3f, 4.5f, 0)
                     },
                     new string[][] {
-                        ConcatPatterns(GetRepeatedPattern("P_3", 3), GetRepeatedPattern("P_0", 25))
+                        ConcatPatterns(GetRepeatedPattern("P_2", 2), GetRepeatedPattern("P_20D", 25))
                     },
                     4
                 ),
@@ -610,7 +610,7 @@ public class WaveManager : MonoBehaviour
                         new Vector3(3f, 4.5f, 0)
                     },
                     new string[][] {
-                        ConcatPatterns(GetRepeatedPattern("P_2", 3), GetRepeatedPattern("P_5", 25))
+                        ConcatPatterns(GetRepeatedPattern("P_3", 2), GetRepeatedPattern("P_20D", 25))
                     },
                     4
                 ),
@@ -620,7 +620,7 @@ public class WaveManager : MonoBehaviour
                         new Vector3(-3f, 4.5f, 0)
                     },
                     new string[][] {
-                        ConcatPatterns(GetRepeatedPattern("P_3", 3), GetRepeatedPattern("P_0", 25))
+                        ConcatPatterns(GetRepeatedPattern("P_2", 2), GetRepeatedPattern("P_20D", 25))
                     },
                     4
                 ),
@@ -630,7 +630,7 @@ public class WaveManager : MonoBehaviour
                         new Vector3(3f, 4.5f, 0)
                     },
                     new string[][] {
-                        ConcatPatterns(GetRepeatedPattern("P_2", 3), GetRepeatedPattern("P_4", 25))
+                        ConcatPatterns(GetRepeatedPattern("P_3", 2), GetRepeatedPattern("P_20D", 25))
                     },
                     4
                 ),
@@ -640,7 +640,7 @@ public class WaveManager : MonoBehaviour
                         new Vector3(-3f, 4.5f, 0)
                     },
                     new string[][] {
-                        ConcatPatterns(GetRepeatedPattern("P_3", 3), GetRepeatedPattern("P_0", 25))
+                        ConcatPatterns(GetRepeatedPattern("P_2", 2), GetRepeatedPattern("P_20D", 25))
                     },
                     4
                 ),
@@ -650,7 +650,7 @@ public class WaveManager : MonoBehaviour
                         new Vector3(3f, 4.5f, 0)
                     },
                     new string[][] {
-                        ConcatPatterns(GetRepeatedPattern("P_2", 3), GetRepeatedPattern("P_5", 25))
+                        ConcatPatterns(GetRepeatedPattern("P_3", 2), GetRepeatedPattern("P_20D", 25))
                     },
                     4
                 ),
@@ -660,7 +660,7 @@ public class WaveManager : MonoBehaviour
                         new Vector3(-3f, 4.5f, 0)
                     },
                     new string[][] {
-                        ConcatPatterns(GetRepeatedPattern("P_3", 3), GetRepeatedPattern("P_0", 25))
+                        ConcatPatterns(GetRepeatedPattern("P_2", 2), GetRepeatedPattern("P_20D", 25))
                     },
                     4
                 ),
@@ -670,7 +670,7 @@ public class WaveManager : MonoBehaviour
                         new Vector3(3f, 4.5f, 0)
                     },
                     new string[][] {
-                        ConcatPatterns(GetRepeatedPattern("P_2", 3), GetRepeatedPattern("P_4", 25))
+                        ConcatPatterns(GetRepeatedPattern("P_3", 2), GetRepeatedPattern("P_20D", 25))
                     },
                     4
                 ),
@@ -680,7 +680,7 @@ public class WaveManager : MonoBehaviour
                         new Vector3(-3f, 4.5f, 0)
                     },
                     new string[][] {
-                        ConcatPatterns(GetRepeatedPattern("P_3", 3), GetRepeatedPattern("P_0", 25))
+                        ConcatPatterns(GetRepeatedPattern("P_2", 2), GetRepeatedPattern("P_20D", 25))
                     },
                     4
                 ),
@@ -690,7 +690,7 @@ public class WaveManager : MonoBehaviour
                         new Vector3(3f, 4.5f, 0)
                     },
                     new string[][] {
-                        ConcatPatterns(GetRepeatedPattern("P_2", 3), GetRepeatedPattern("P_5", 25))
+                        ConcatPatterns(GetRepeatedPattern("P_3", 2), GetRepeatedPattern("P_20D", 25))
                     },
                     4
                 )
