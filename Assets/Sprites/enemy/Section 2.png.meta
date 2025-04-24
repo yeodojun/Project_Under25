@@ -128,133 +128,133 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Paper Ariplane
+      name: Elite AirPlane Hit
       rect:
         serializedVersion: 2
-        x: 31
-        y: 720
-        width: 242
-        height: 268
+        x: 0
+        y: 700
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 0872c5cf7935bbff0800000000000000
-      internalID: -19329861153970304
+      spriteID: 7f4212cc977b817488fcb7fc38163cfc
+      internalID: -1834117927
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Wright Ariplane
+      name: Wright Airplane Hit
       rect:
         serializedVersion: 2
-        x: 305
-        y: 711
-        width: 293
-        height: 276
+        x: 300
+        y: 700
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 234ccfef3b7fa7440800000000000000
-      internalID: 4934528694186984498
+      spriteID: cea2fb3b78f23234c870172d0bde3485
+      internalID: -444057177
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Elite Airplane
+      name: Paper Airplane Hit
       rect:
         serializedVersion: 2
-        x: 609
-        y: 699
-        width: 290
-        height: 291
+        x: 600
+        y: 700
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 739d87ac9cde85f30800000000000000
-      internalID: 4564659673281124663
+      spriteID: 7f62d0c7992eec04e8a37f93234bd074
+      internalID: 1017397414
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Paper Ariplane Hit
+      name: Elite AirPlane
       rect:
         serializedVersion: 2
-        x: 32
-        y: 416
-        width: 242
-        height: 268
+        x: 0
+        y: 400
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: c4005820a147a5820800000000000000
-      internalID: 2907764164481318988
+      spriteID: 8060a761c1ca91840ab9b5fa318825a1
+      internalID: 786269031
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Wright Ariplane Hit
+      name: Wright Airplane
       rect:
         serializedVersion: 2
-        x: 302
-        y: 410
-        width: 293
-        height: 276
+        x: 300
+        y: 400
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 9227e3026ea401e90800000000000000
-      internalID: -7057058263845670359
+      spriteID: d9d81fb95298ff148a1f07f3b91280f4
+      internalID: 925187503
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Elite Airplane Hit
+      name: Paper Airplane
       rect:
         serializedVersion: 2
-        x: 609
-        y: 402
-        width: 290
-        height: 291
+        x: 600
+        y: 400
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: c9c21495e70daac30800000000000000
-      internalID: 4371535629398387868
+      spriteID: a2736d23ced2b054e9577b3160e0756b
+      internalID: 1624810190
       vertices: []
       indices: 
       edges: []
@@ -273,12 +273,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Elite Airplane: 4564659673281124663
-      Elite Airplane Hit: 4371535629398387868
-      Paper Ariplane: -19329861153970304
-      Paper Ariplane Hit: 2907764164481318988
-      Wright Ariplane: 4934528694186984498
-      Wright Ariplane Hit: -7057058263845670359
+      Elite AirPlane: 786269031
+      Elite AirPlane Hit: -1834117927
+      Paper Airplane: 1624810190
+      Paper Airplane Hit: 1017397414
+      Wright Airplane: 925187503
+      Wright Airplane Hit: -444057177
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

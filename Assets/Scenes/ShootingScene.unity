@@ -2656,7 +2656,6 @@ GameObject:
   - component: {fileID: 735763602}
   - component: {fileID: 735763601}
   - component: {fileID: 735763600}
-  - component: {fileID: 735763603}
   m_Layer: 3
   m_Name: Wall1
   m_TagString: Wall
@@ -2780,28 +2779,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &735763603
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 735763599}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: db43e6ccae9696f48b1cc0f5e95683f0, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &755253654
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4192,31 +4169,31 @@ MonoBehaviour:
   enemyPoolItems:
   - enemyTypeName: Enemy_0
     prefab: {fileID: 2336088905530037732, guid: 62bb36d9019b35149a0878a13584f338, type: 3}
-    poolSize: 10
+    poolSize: 30
   - enemyTypeName: Enemy_1
     prefab: {fileID: 2336088905530037732, guid: 155b16a9fbbf24f4f81fa0e5ca9e79d2, type: 3}
-    poolSize: 10
+    poolSize: 30
   - enemyTypeName: Enemy_2
     prefab: {fileID: 2336088905530037732, guid: 220db0a82fce5a141a8701cdfdbf26d3, type: 3}
-    poolSize: 10
+    poolSize: 30
   - enemyTypeName: Enemy_3
     prefab: {fileID: 2336088905530037732, guid: 162f39331bccf2e42ae3dc576c4138ca, type: 3}
-    poolSize: 10
+    poolSize: 30
   - enemyTypeName: Enemy_4
     prefab: {fileID: 2336088905530037732, guid: 81d12962081c31b49a36f278445508be, type: 3}
-    poolSize: 10
+    poolSize: 30
   - enemyTypeName: Enemy_5
     prefab: {fileID: 2336088905530037732, guid: e84ca4d82de06f34aa63b41c0f1ad00a, type: 3}
-    poolSize: 10
+    poolSize: 30
   - enemyTypeName: Enemy_6
     prefab: {fileID: 2336088905530037732, guid: 8cdac425d20b69f4dae6c4dcc647460e, type: 3}
-    poolSize: 10
+    poolSize: 30
   - enemyTypeName: Enemy_7
     prefab: {fileID: 2336088905530037732, guid: b69f0d734ead608448a5e615e90a7336, type: 3}
-    poolSize: 10
+    poolSize: 30
   - enemyTypeName: Enemy_8
     prefab: {fileID: 2336088905530037732, guid: 3ffc99563b8455c4e83efb7b026afe7e, type: 3}
-    poolSize: 10
+    poolSize: 30
   poolItems:
   - weaponType: Bullet
     prefab: {fileID: 4093369639878249957, guid: 92bd293cdb926b142b06974877a036cd, type: 3}

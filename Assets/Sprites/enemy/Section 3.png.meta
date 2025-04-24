@@ -182,10 +182,10 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Fighter
+      name: Elite Fighter Hit
       rect:
         serializedVersion: 2
-        x: 0
+        x: 1
         y: 700
         width: 300
         height: 300
@@ -197,74 +197,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9728d00abe5ccdd479245725e3dbde01
-      internalID: -1202969261
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Supersonic Fighter
-      rect:
-        serializedVersion: 2
-        x: 300
-        y: 700
-        width: 300
-        height: 300
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8ee116676cff80b40ab933bf88c8eeee
-      internalID: 481933974
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Elite Fighter
-      rect:
-        serializedVersion: 2
-        x: 600
-        y: 700
-        width: 300
-        height: 300
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5771c8531e5073942b805a9fb2e5dc5e
-      internalID: 95426641
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Fighter Hit
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 400
-        width: 300
-        height: 300
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: be1aa035f32860044867051693c54c94
-      internalID: 38040253
+      spriteID: 3ccd221c1fe34f44db0ab16f9d065033
+      internalID: 1396146846
       vertices: []
       indices: 
       edges: []
@@ -274,7 +208,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 300
-        y: 401
+        y: 700
         width: 300
         height: 300
       alignment: 0
@@ -285,14 +219,80 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bacbfd317c111f242aaa3480d71863c1
-      internalID: -1789878241
+      spriteID: 07bfac926d54d1c4487680a3df461311
+      internalID: 1260957535
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Elite Fighter Hit
+      name: Fighter Hit
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 700
+        width: 300
+        height: 300
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a482acfa49c74194cb92142535f1828f
+      internalID: -1446441175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Elite Fighter
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 400
+        width: 300
+        height: 300
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 559462b0b2c96ea4d8ebb89bbaab8bdc
+      internalID: -1681781736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Supersonic Fighter
+      rect:
+        serializedVersion: 2
+        x: 301
+        y: 399
+        width: 300
+        height: 300
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e08e9d11e83bb694c93ced825b2a641e
+      internalID: 1437527745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fighter
       rect:
         serializedVersion: 2
         x: 600
@@ -307,8 +307,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 03102537d55b69f41ae039ba15842288
-      internalID: 170186265
+      spriteID: e953b08424f5c8e49a855be042563b9c
+      internalID: -1544367715
       vertices: []
       indices: 
       edges: []
@@ -327,12 +327,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Elite Fighter: 95426641
-      Elite Fighter Hit: 170186265
-      Fighter: -1202969261
-      Fighter Hit: 38040253
-      Supersonic Fighter: 481933974
-      Supersonic Fighter Hit: -1789878241
+      Elite Fighter: -1681781736
+      Elite Fighter Hit: 1396146846
+      Fighter: -1544367715
+      Fighter Hit: -1446441175
+      Supersonic Fighter: 1437527745
+      Supersonic Fighter Hit: 1260957535
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -98,7 +98,7 @@ public class PatternManager : MonoBehaviour
                 bool clockwise = pattern == "P_16";
                 yield return StartCoroutine(MoveInCircle(enemy, clockwise, 2f, 72f));
             }
-            else if (pattern == "P_18" || pattern == "P_19" || pattern == "P_20" || pattern == "P_21")
+            else if (pattern == "P_18" || pattern == "P_19" || pattern == "P_20" || pattern == "P_21" || pattern == "P_20D")
             {
                 yield return StartCoroutine(MoveInWave(enemy, pattern));
             }
@@ -288,7 +288,7 @@ public class PatternManager : MonoBehaviour
             {
                 waveAmplitude = -waveAmplitude;
             }
-            if (pattern == "P_20D" && newX >= 2.3f)
+            if (pattern == "P_20D" && newY <= -5.4f)
             {
                 Pool.Instance.ReturnEnemy(enemy);
             }
@@ -312,6 +312,21 @@ public class PatternManager : MonoBehaviour
             }
 
             enemy.transform.position = new Vector3(newX, newY, 0);
+            ScreenReturn(enemy);
+            yield return null;
+        }
+    }
+    private IEnumerator ScreenReturn(GameObject enemy)
+    {
+        float enemyX = enemy.transform.position.x;
+        float enemyY = enemy.transform.position.y;
+        if (enemyX > screenRight || enemyX < screenLeft)
+        {
+            Pool.Instance.ReturnEnemy(enemy);
+            yield return null;
+        }
+        if (enemyY > screenTop || enemyY < screenBottom)
+        {
             Pool.Instance.ReturnEnemy(enemy);
             yield return null;
         }

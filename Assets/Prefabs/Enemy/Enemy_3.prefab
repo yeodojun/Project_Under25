@@ -42,8 +42,8 @@ GameObject:
   - component: {fileID: 5824396333813525715}
   - component: {fileID: 4015382953097200867}
   - component: {fileID: 8022782016161154857}
+  - component: {fileID: 7903487280759984318}
   - component: {fileID: 5017721296246766955}
-  - component: {fileID: 2094001382184105886}
   - component: {fileID: -794007754168675488}
   m_Layer: 7
   m_Name: Enemy_3
@@ -112,12 +112,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: -19329861153970304, guid: 15125470af1bce446a9a38929a8bee4c, type: 3}
+  m_Sprite: {fileID: 1624810190, guid: 15125470af1bce446a9a38929a8bee4c, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
-  m_FlipY: 1
+  m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 3.24, y: 3.75}
+  m_Size: {x: 3, y: 3}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -150,28 +150,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &5017721296246766955
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2336088905530037732}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9592910b40fbf7b47a8feb84defefb66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyType: 3
-  isFlipped: 0
-  health: 10
-  dropChance: 0.05
-  upgradeItemPrefab: {fileID: 2000207073148731593, guid: 8e034da5b64695342bb9fc2aa41b7d38, type: 3}
-  scoreValue: 10
-  firePoint: {fileID: 4121154633417657754}
-  damageSprite: {fileID: 0}
-  deathDelay: 0.6
---- !u!60 &2094001382184105886
+--- !u!60 &7903487280759984318
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -209,8 +188,8 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.42, y: 2.68}
-    newSize: {x: 3.24, y: 3.75}
+    oldSize: {x: 3, y: 3}
+    newSize: {x: 3, y: 3}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -593,6 +572,27 @@ PolygonCollider2D:
       - {x: -0.03, y: 0.5}
       - {x: -0.02, y: 0.48999998}
   m_UseDelaunayMesh: 0
+--- !u!114 &5017721296246766955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2336088905530037732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9592910b40fbf7b47a8feb84defefb66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyType: 3
+  isFlipped: 0
+  health: 10
+  dropChance: 0.05
+  upgradeItemPrefab: {fileID: 2000207073148731593, guid: 8e034da5b64695342bb9fc2aa41b7d38, type: 3}
+  scoreValue: 10
+  firePoint: {fileID: 4121154633417657754}
+  damageSprite: {fileID: 0}
+  deathDelay: 0.6
 --- !u!95 &-794007754168675488
 Animator:
   serializedVersion: 7
