@@ -592,7 +592,7 @@ MonoBehaviour:
   scoreValue: 10
   firePoint: {fileID: 4121154633417657754}
   damageSprite: {fileID: 0}
-  deathDelay: 0.6
+  deathDelay: 0.8
 --- !u!95 &-794007754168675488
 Animator:
   serializedVersion: 7

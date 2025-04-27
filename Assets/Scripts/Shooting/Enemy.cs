@@ -7,23 +7,24 @@ public class Enemy : MonoBehaviour
     public int enemyType = 0;
     public bool isFlipped = false; // Enemy_1이면 true로 설정
     private bool hasDamaged = false;
-
+    public float hitEndDelay = 1f;
+    public AudioClip hitClip;
+    private AudioSource audioSource;
     public int health = 10; // 기본 적 체력
     public float dropChance = 0.05f; // 업그레이드 아이템 드롭 확률
     public GameObject upgradeItemPrefab; // 업그레이드 아이템 프리팹
     public int scoreValue = 5; // 적 처치 시 획득 점수
     public Transform firePoint;          // 총알 발사 위치
     private SpriteRenderer spriteRenderer;
-    private Sprite originalSprite;
-    public Sprite damageSprite;
     Animator animator;
     public float deathDelay = 0.4f;
 
     void Awake()
     {
         animator = GetComponent<Animator>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        originalSprite = spriteRenderer.sprite;
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
 
         // 타입별 체력 설정 및 풀링 발사 코루틴 시작
         switch (enemyType)
@@ -90,20 +91,18 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(int damage)
     {
         animator.SetTrigger("Hit");
+        if (hitClip != null)
+            audioSource.PlayOneShot(hitClip);
         health -= damage;
-        new WaitForSeconds(1f);
-        animator.SetTrigger("End");
+        Invoke(nameof(EndHit), hitEndDelay);
         if (health <= 0)
         {
             Die();
         }
     }
-    private IEnumerator FlashDamage()
+    private void EndHit()
     {
-        spriteRenderer.sprite = damageSprite;
-        yield return new WaitForSeconds(0.05f);
-        spriteRenderer.sprite = originalSprite;
-
+        animator.SetTrigger("End");
     }
 
     void Die()
@@ -129,6 +128,10 @@ public class Enemy : MonoBehaviour
             // 업그레이드 아이템도 풀링으로
             Pool.Instance.SpawnWeapon("UpgradeItem", transform.position, Quaternion.identity);
         }
+        Invoke(nameof(ReturnAfterDeath), deathDelay);
+    }
+    void ReturnAfterDeath()
+    {
         GetComponent<Collider2D>().enabled = true;
         Pool.Instance.ReturnEnemy("Enemy_" + enemyType, gameObject);
     }

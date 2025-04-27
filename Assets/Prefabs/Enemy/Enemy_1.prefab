@@ -170,7 +170,7 @@ MonoBehaviour:
   scoreValue: 30
   firePoint: {fileID: 0}
   damageSprite: {fileID: 1492410606854234322, guid: 0cb40be7ba1647245bc407492ac78c92, type: 3}
-  deathDelay: 0.4
+  deathDelay: 0.8
 --- !u!60 &2087593829471019536
 PolygonCollider2D:
   m_ObjectHideFlags: 0
