@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     public bool isFlipped = false; // Enemy_1이면 true로 설정
     private bool hasDamaged = false;
     public float hitEndDelay = 1f;
+    public AudioClip AttackClip;
     public AudioClip hitClip;
     private AudioSource audioSource;
     public int health = 10; // 기본 적 체력
@@ -177,6 +178,8 @@ public class Enemy : MonoBehaviour
         {
             for (int i = 0; i < shotsPerCycle; i++)
             {
+                if (AttackClip != null)
+                    audioSource.PlayOneShot(AttackClip);
                 // 좌우로 조금씩 벌리기
                 Vector3 spawnPos = firePoint.position + new Vector3(offset * (i - (shotsPerCycle - 1) / 2f), 0f, 0f);
                 SpawnPooledBullet(bulletType, spawnPos, damage, isEnemy11);
