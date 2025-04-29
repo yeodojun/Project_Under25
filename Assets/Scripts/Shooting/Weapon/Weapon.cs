@@ -32,9 +32,12 @@ public class Weapon : MonoBehaviour
         hasHit = false;
         lifetimeTimer = 0f;
         if (weaponType == "UBeam" || weaponType == "Bullet1")
-            damage = 3;
+            damage = 5;
+        else if (weaponType == "BBeam")
+            damage = 2;
         else
             damage = 1;
+         
 
         // 만약 레이저(Beam, BBeam)라면 스폰 시 플레이어와의 상대 오프셋을 저장
         if (weaponType == "Beam" || weaponType == "BBeam")

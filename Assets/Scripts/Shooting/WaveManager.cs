@@ -15,7 +15,7 @@ public class WaveManager : MonoBehaviour
     // enemyType: 0이면 기본 적(Enemy_0), 1이면 새 적(Enemy_1)
     private Dictionary<int, List<(Vector3[] positions, string[][] patterns, int enemyType)>> waveData =
         new Dictionary<int, List<(Vector3[], string[][], int)>>()
-    {/*
+    {
         // 웨이브 1
         { 1, new List<(Vector3[], string[][], int)>()
             {
@@ -504,7 +504,7 @@ public class WaveManager : MonoBehaviour
                     3
                 ),
             }
-        },*/
+        },
         // 웨이브 8
         { 8, new List<(Vector3[], string[][], int)>()
             {

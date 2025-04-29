@@ -129,8 +129,8 @@ TextureImporter:
       name: E_6_0
       rect:
         serializedVersion: 2
-        x: 72
-        y: 366
+        x: 76
+        y: 377
         width: 163
         height: 182
       alignment: 0
@@ -151,8 +151,8 @@ TextureImporter:
       name: E_6_1
       rect:
         serializedVersion: 2
-        x: 71
-        y: 49
+        x: 65
+        y: 42
         width: 163
         height: 182
       alignment: 0

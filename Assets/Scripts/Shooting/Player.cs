@@ -77,8 +77,8 @@ public class Player : MonoBehaviour
     // raserLevel 2: Beam 2개 → 좌표 (0.5,5,0)와 (-0.5,5,0)
     private static readonly GunFireInfo[] raserLevel2Pattern = new GunFireInfo[]
     {
-        new GunFireInfo(new Vector3(0.5f, 5f, 0f), "Beam"),
-        new GunFireInfo(new Vector3(-0.5f, 5f, 0f), "Beam")
+        new GunFireInfo(new Vector3(0.3f, 5f, 0f), "Beam"),
+        new GunFireInfo(new Vector3(-0.3f, 5f, 0f), "Beam")
     };
     // raserLevel 3: Beam 1 + BBeam 1, 모두 (0,5,0)
     private static readonly GunFireInfo[] raserLevel3Pattern = new GunFireInfo[]

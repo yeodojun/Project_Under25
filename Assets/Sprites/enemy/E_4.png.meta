@@ -129,8 +129,8 @@ TextureImporter:
       name: E_4_0
       rect:
         serializedVersion: 2
-        x: 11
-        y: 354
+        x: 18
+        y: 347
         width: 262
         height: 228
       alignment: 0
@@ -151,8 +151,8 @@ TextureImporter:
       name: E_4_1
       rect:
         serializedVersion: 2
-        x: 15
-        y: 39
+        x: 12
+        y: 40
         width: 262
         height: 228
       alignment: 0
