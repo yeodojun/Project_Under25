@@ -56,7 +56,7 @@ public class Enemy : MonoBehaviour
                 return;
             case 7:
                 health = 70;
-                StartCoroutine(EnemyAttackCycle("Gun", 0.3f, 0.3f, damage: 1, 2, 1f));
+                StartCoroutine(EnemyAttackCycle("Gun", 1f, 1f, damage: 1, 2, 1f));
                 return;
             case 8:
                 health = 350;

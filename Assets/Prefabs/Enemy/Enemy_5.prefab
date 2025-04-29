@@ -163,12 +163,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: 5
   isFlipped: 0
+  hitEndDelay: 0
+  AttackClip: {fileID: 0}
+  hitClip: {fileID: 0}
   health: 10
   dropChance: 1
   upgradeItemPrefab: {fileID: 2000207073148731593, guid: 8e034da5b64695342bb9fc2aa41b7d38, type: 3}
   scoreValue: 250
   firePoint: {fileID: 4121154633417657754}
-  damageSprite: {fileID: 0}
   deathDelay: 0.4
 --- !u!60 &4585446521029870843
 PolygonCollider2D:
