@@ -36,6 +36,7 @@ public class ScoreManager : MonoBehaviour
         UpdateScoreText();
         UpdateHealth();
         UpdateBomb();
+        Health();
     }
 
     public void Health()
