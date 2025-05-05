@@ -60,7 +60,7 @@ public class Enemy : MonoBehaviour
                 return;
             case 8:
                 health = 350;
-                StartCoroutine(EnemyAttackCycle("Laser", 4f, 4f, damage: 1));
+                StartCoroutine(EnemyAttackCycle("Laser", 3f, 1f, damage: 1));
                 return;
             case 9:
                 health = 50;
@@ -68,7 +68,7 @@ public class Enemy : MonoBehaviour
                 return;
             case 10:
                 health = 70;
-                StartCoroutine(EnemyAttackCycle("Laser", 4f, 4f, damage: 1));
+                StartCoroutine(EnemyAttackCycle("Laser", 5f, 3f, damage: 1));
                 return;
             case 11:
                 health = 30;
@@ -76,7 +76,7 @@ public class Enemy : MonoBehaviour
                 return;
             case 12:
                 health = 500;
-                StartCoroutine(EnemyAttackCycle("LaserGun", 2f, 2f, damage: 1));
+                StartCoroutine(EnemyAttackCycle("Laser", 4f, 2f, damage: 1, 2, 1f));
                 return;
             case 101:
                 health = 500;

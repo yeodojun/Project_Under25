@@ -96,7 +96,8 @@ public class EnemyBullet : MonoBehaviour
         }
         else if (bulletType == "Laser")
         {
-            // y가 -10 이하이면 반환
+            lifetime += Time.deltaTime;
+            // 2초 후에 반환
             if (lifetime >= 2f)
             {
                 Pool.Instance.ReturnWeapon(bulletType, gameObject);
