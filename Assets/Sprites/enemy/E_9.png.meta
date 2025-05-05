@@ -129,10 +129,10 @@ TextureImporter:
       name: E_9_0
       rect:
         serializedVersion: 2
-        x: 347
-        y: 522
-        width: 179
-        height: 132
+        x: 316
+        y: 843
+        width: 177
+        height: 130
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -147,11 +147,33 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: E_9_1
+      rect:
+        serializedVersion: 2
+        x: 323
+        y: 291
+        width: 177
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44ed61a8261b9524d8ede3242d0ea3f1
+      internalID: -929038043
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: ebf8f927400efde40a8dc8fbbe618dd1
     internalID: 0
     vertices: []
     indices: 
@@ -162,6 +184,7 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       E_9_0: 5099352721713968164
+      E_9_1: -929038043
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

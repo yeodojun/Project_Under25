@@ -147,10 +147,10 @@ TextureImporter:
       name: E_12_0
       rect:
         serializedVersion: 2
-        x: 302
-        y: 520
-        width: 183
-        height: 144
+        x: 333
+        y: 851
+        width: 181
+        height: 142
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,133 +166,23 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: E_12_1
+      name: E_12_7
       rect:
         serializedVersion: 2
-        x: 312
-        y: 496
-        width: 25
-        height: 37
+        x: 327
+        y: 347
+        width: 181
+        height: 142
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 2068f24c90e271c70800000000000000
-      internalID: 8941666204648441346
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: E_12_2
-      rect:
-        serializedVersion: 2
-        x: 342
-        y: 473
-        width: 18
-        height: 47
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 2c824e233e50be2c0800000000000000
-      internalID: -4401417737454999358
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: E_12_3
-      rect:
-        serializedVersion: 2
-        x: 437
-        y: 481
-        width: 16
-        height: 39
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: b18bc974c03068580800000000000000
-      internalID: -8825363068509964261
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: E_12_4
-      rect:
-        serializedVersion: 2
-        x: 459
-        y: 496
-        width: 18
-        height: 42
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 147d80ea43dfa8dc0800000000000000
-      internalID: -3635815346448312511
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: E_12_5
-      rect:
-        serializedVersion: 2
-        x: 375
-        y: 463
-        width: 10
-        height: 54
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 64adffe71dff60230800000000000000
-      internalID: 3604849827000605254
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: E_12_6
-      rect:
-        serializedVersion: 2
-        x: 412
-        y: 472
-        width: 17
-        height: 42
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: bce4c3b89021c93a0800000000000000
-      internalID: -6657426316960444725
+      spriteID: d42bd631a26719e4b9aa13046da1ed09
+      internalID: -1322278246
       vertices: []
       indices: 
       edges: []
@@ -301,7 +191,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 16adb2aaf3b11b94c868638ca165a08c
     internalID: 0
     vertices: []
     indices: 
@@ -313,11 +203,18 @@ TextureImporter:
     nameFileIdTable:
       E_12_0: 2896417796254025455
       E_12_1: 8941666204648441346
+      E_12_10: 199242357
+      E_12_11: 801920506
+      E_12_12: -975075372
+      E_12_13: -1280124412
       E_12_2: -4401417737454999358
       E_12_3: -8825363068509964261
       E_12_4: -3635815346448312511
       E_12_5: 3604849827000605254
       E_12_6: -6657426316960444725
+      E_12_7: -1322278246
+      E_12_8: -1143116352
+      E_12_9: 911249980
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

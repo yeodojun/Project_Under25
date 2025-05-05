@@ -138,37 +138,15 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: E_8_0
-      rect:
-        serializedVersion: 2
-        x: 310
-        y: 549
-        width: 15
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: fd20012c349890340800000000000000
-      internalID: 4830542999443210975
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: E_8_1
       rect:
         serializedVersion: 2
-        x: 324
-        y: 480
-        width: 130
-        height: 250
+        x: 303
+        y: 760
+        width: 239
+        height: 248
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -185,12 +163,12 @@ TextureImporter:
       name: E_8_2
       rect:
         serializedVersion: 2
-        x: 449
-        y: 539
-        width: 86
-        height: 117
+        x: 311
+        y: 241
+        width: 239
+        height: 246
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -203,55 +181,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: E_8_3
-      rect:
-        serializedVersion: 2
-        x: 536
-        y: 546
-        width: 15
-        height: 62
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 775786976d7ad0850800000000000000
-      internalID: 6344911989636625783
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: E_8_4
-      rect:
-        serializedVersion: 2
-        x: 438
-        y: 486
-        width: 39
-        height: 37
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7a005a839691bd6e0800000000000000
-      internalID: -1811826485373894489
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 90796d5ab12b4c641b3a1484b5e6753e
     internalID: 0
     vertices: []
     indices: 
