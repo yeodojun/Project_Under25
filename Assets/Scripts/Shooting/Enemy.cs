@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
     public int enemyType = 0;
     public bool isFlipped = false; // Enemy_1이면 true로 설정
     private bool hasDamaged = false;
-    public float hitEndDelay = 1f;
+    public float hitEndDelay = 0f;
     public AudioClip AttackClip;
     public AudioClip hitClip;
     private AudioSource audioSource;

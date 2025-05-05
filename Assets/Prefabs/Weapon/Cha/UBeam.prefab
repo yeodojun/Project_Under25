@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2372100480033646432}
   - component: {fileID: 1521278375011576390}
   - component: {fileID: -1651980139891362518}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: UBeam
   m_TagString: UBeam
   m_Icon: {fileID: 0}

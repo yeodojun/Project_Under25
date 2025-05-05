@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2272849798738876068}
   - component: {fileID: 8822655887096246201}
   - component: {fileID: -3128012015446540021}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: UpgradeItem
   m_TagString: Upgrade
   m_Icon: {fileID: 0}
@@ -193,7 +193,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8903373052806735733}
   - component: {fileID: 7772713173843670353}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

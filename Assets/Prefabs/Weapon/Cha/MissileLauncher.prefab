@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7995515230422177173}
   - component: {fileID: 6722825169120369341}
   - component: {fileID: 7277781550128235946}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: MissileLauncher
   m_TagString: MissileLauncher
   m_Icon: {fileID: 0}

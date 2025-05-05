@@ -24,10 +24,10 @@ TagManager:
   - UI
   - a
   - Enemy
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - EnemyWeapon
+  - PlayerWeapon
+  - UpgradeItem
   - 
   - 
   - 

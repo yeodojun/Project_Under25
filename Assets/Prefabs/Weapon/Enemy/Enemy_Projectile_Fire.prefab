@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1066950144657490224}
   - component: {fileID: 1352019825343987954}
   - component: {fileID: 5823953381178116245}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Enemy_Projectile_Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,3 +179,4 @@ MonoBehaviour:
   speed: 0.8
   damage: 1
   direction: {x: 0, y: 0, z: 0}
+  direction1: {x: 0, y: 0, z: 0}
