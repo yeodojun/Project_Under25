@@ -22,7 +22,7 @@ TagManager:
   - Wall
   - Water
   - UI
-  - a
+  - BackGround
   - Enemy
   - Player
   - EnemyWeapon

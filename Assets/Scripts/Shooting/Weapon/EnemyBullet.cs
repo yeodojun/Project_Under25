@@ -1,4 +1,3 @@
-using System.Numerics;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 
@@ -23,7 +22,13 @@ public class EnemyBullet : MonoBehaviour
             if (player != null)
             {
                 direction = (player.transform.position - transform.position).normalized;
+                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                transform.rotation = Quaternion.AngleAxis(angle - 90f, Vector3.forward);
             }
+        }
+        if (bulletType == "Laser")
+        {
+            transform.position += new Vector3(0f, -1.5f, 0f);
         }
     }
 
