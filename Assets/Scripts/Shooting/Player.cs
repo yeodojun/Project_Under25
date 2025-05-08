@@ -573,7 +573,7 @@ public class Player : MonoBehaviour
         canShoot = true;
     }
 
-    public void ApplySpeedReduction(float reductionPercent, float duration = 3f)
+    public void ApplySpeedReduction(float reductionPercent, float duration = 1f)
     {
         StopCoroutine("RestoreSpeed");
         moveSpeed = originalMoveSpeed * (1 - reductionPercent);

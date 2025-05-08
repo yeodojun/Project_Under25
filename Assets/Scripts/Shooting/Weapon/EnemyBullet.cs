@@ -127,6 +127,10 @@ public class EnemyBullet : MonoBehaviour
                     player.TakeDamage(damage);
                     Pool.Instance.ReturnWeapon(bulletType, gameObject);
                 }
+                if (bulletType == "Scream")
+                {
+                    player.ApplySpeedReduction(0.4f, 1f);
+                }
                 
             }
         }
