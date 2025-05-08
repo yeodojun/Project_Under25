@@ -1,25 +1,25 @@
 fileFormatVersion: 2
-guid: 0cb40be7ba1647245bc407492ac78c92
+guid: 6810c9e0e8d850642b1f50641c2488a9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 707831198676715256
-    second: Section 1_0
+      213: 1621968431925224637
+    second: E_0,1,2_0
   - first:
-      213: -2423195362809005209
-    second: Section 1_1
+      213: 3211532660120911598
+    second: E_0,1,2_1
   - first:
-      213: 5989874763250247093
-    second: Section 1_2
+      213: 2614735558249029948
+    second: E_0,1,2_2
   - first:
-      213: 1133583194184671567
-    second: Section 1_3
+      213: -2813052302789195783
+    second: E_0,1,2_3
   - first:
-      213: 1492410606854234322
-    second: Section 1_4
+      213: -339181481898179190
+    second: E_0,1,2_4
   - first:
-      213: -694810083675997077
-    second: Section 1_5
+      213: -1313894154189075293
+    second: E_0,1,2_5
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -124,11 +124,24 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Dragon
+      name: E_0,1,2_0
       rect:
         serializedVersion: 2
         x: 48
@@ -136,21 +149,21 @@ TextureImporter:
         width: 206
         height: 280
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8f6801699b8b2d900800000000000000
-      internalID: 707831198676715256
+      spriteID: db4eccdf1b3628610800000000000000
+      internalID: 1621968431925224637
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shield Dragon
+      name: E_0,1,2_1
       rect:
         serializedVersion: 2
         x: 350
@@ -158,21 +171,21 @@ TextureImporter:
         width: 206
         height: 286
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 76b356af7a41f5ed0800000000000000
-      internalID: -2423195362809005209
+      spriteID: eee721f50f7a19c20800000000000000
+      internalID: 3211532660120911598
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Elite Dragon
+      name: E_0,1,2_2
       rect:
         serializedVersion: 2
         x: 649
@@ -180,21 +193,21 @@ TextureImporter:
         width: 206
         height: 280
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5b5ab988c5f402350800000000000000
-      internalID: 5989874763250247093
+      spriteID: c3124030328694420800000000000000
+      internalID: 2614735558249029948
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dragon Hit
+      name: E_0,1,2_3
       rect:
         serializedVersion: 2
         x: 50
@@ -202,21 +215,21 @@ TextureImporter:
         width: 206
         height: 280
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f41eabcb8eb4bbf00800000000000000
-      internalID: 1133583194184671567
+      spriteID: 9f7c7a5b5d706f8d0800000000000000
+      internalID: -2813052302789195783
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Shield Dragon Hit
+      name: E_0,1,2_4
       rect:
         serializedVersion: 2
         x: 346
@@ -224,21 +237,21 @@ TextureImporter:
         width: 206
         height: 286
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2d062903a8b16b410800000000000000
-      internalID: 1492410606854234322
+      spriteID: a8581114d3cfa4bf0800000000000000
+      internalID: -339181481898179190
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Elite Dragon Hit
+      name: E_0,1,2_5
       rect:
         serializedVersion: 2
         x: 651
@@ -246,15 +259,15 @@ TextureImporter:
         width: 206
         height: 280
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b6cf12009e98b56f0800000000000000
-      internalID: -694810083675997077
+      spriteID: 3ac09136a3c14cde0800000000000000
+      internalID: -1313894154189075293
       vertices: []
       indices: 
       edges: []
@@ -263,7 +276,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 3e54798dc170bb94b8107f16d8b9c3ce
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -272,13 +285,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      Dragon: 707831198676715256
-      Dragon Hit: 1133583194184671567
-      Elite Dragon: 5989874763250247093
-      Elite Dragon Hit: -694810083675997077
-      Shield Dragon: -2423195362809005209
-      Shield Dragon Hit: 1492410606854234322
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
