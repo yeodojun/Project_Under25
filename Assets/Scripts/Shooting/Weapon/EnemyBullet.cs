@@ -30,6 +30,10 @@ public class EnemyBullet : MonoBehaviour
         {
             transform.position += new Vector3(0f, -1.5f, 0f);
         }
+        if (bulletType == "Scream")
+        {
+            transform.position += new Vector3(0f, -1.5f, 0f);
+        }
     }
 
 
@@ -121,8 +125,9 @@ public class EnemyBullet : MonoBehaviour
                 if (bulletType != "Scream")
                 {
                     player.TakeDamage(damage);
+                    Pool.Instance.ReturnWeapon(bulletType, gameObject);
                 }
-                Pool.Instance.ReturnWeapon(bulletType, gameObject);
+                
             }
         }
     }
